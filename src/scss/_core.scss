@@ -1,0 +1,144 @@
+// Core styles
+
+body {
+  margin: 0;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont,
+  "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+  "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgba(255,255,255,.2);
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: rgba(0,0,0,.3);
+    border-radius: 8px;
+  }
+}
+
+svg {
+  vertical-align: middle;
+  fill: currentColor;
+}
+
+.section--icon {
+  fill: none;
+  stroke: #fff;
+  margin-right: .3rem;
+}
+
+a {
+  color: currentColor;
+  font-weight: 600;
+}
+
+.container {
+  width: 780px;
+  height: 600px;
+  background-color: map-get($color, mainGray);
+  overflow: hidden;
+}
+
+.mainNav {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  background-color: map-get($color, secondaryGray);
+  color: #fff;
+
+  &__panels {
+    flex: 1;
+    text-align: right;
+
+    button {
+      position: relative;
+      height: 3rem;
+      background: none;
+      color: rgba(255,255,255,.6);
+      border: none;
+      box-shadow: none;
+      cursor: pointer;
+      vertical-align: middle;
+      padding: 0 1rem;
+      font-size: 1rem;
+      outline: none;
+
+      &::after {
+        content: '';
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        left: 0;
+        bottom: 0;
+        background-color: #fff;
+        visibility: hidden;
+        transform: scaleX(0);
+        transition: all .1s ease;
+      }
+
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    .active {
+      color: #fff;
+
+      &::after {
+        visibility: visible;
+        transform: scaleX(1);
+      }
+    }
+  }
+}
+
+.logo {
+  fill: rgba(255,255,255,.6);
+
+  &:hover {
+    fill: #fff;
+  }
+}
+
+.mainContent {
+  padding: 1rem;
+  height: calc(100% - 84px); // 48px(nav) + 32px(top/bottom padding) + 4px(top/bottom white gap)
+}
+
+// Alert helpers
+.alert {
+  &--success {
+    background-color: map-get($state, success);
+    color: map-get($state, success-text);
+    padding: .2rem .4rem;
+  }
+
+  &--warning {
+    background-color: map-get($state, warning);
+    color: map-get($state, warning-text);
+    padding: .2rem .4rem;
+  }
+
+  &--danger {
+    background-color: map-get($state, danger);
+    color: map-get($state, danger-text);
+    padding: .2rem .4rem;
+  }
+}
+
+.code {
+  word-break: break-word;
+  word-wrap: break-word;
+  color: #FFFCBF;
+  background-color: rgba(0,0,0,.3);
+  margin-bottom: .5rem;
+  padding: .2rem;
+}

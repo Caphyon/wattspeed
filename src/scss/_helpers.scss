@@ -1,0 +1,58 @@
+// Helpers
+
+//- Spacing helpers
+.mb0 {
+  margin-bottom: 0 !important;
+}
+
+.mt0 {
+  margin-top: 0 !important;
+}
+
+//- Text helpers
+.text {
+
+  &--slim {
+    font-weight: 300 !important;
+  }
+
+  &--strong {
+    font-weight: 600 !important;
+  }
+
+  &--uppercase {
+    text-transform: uppercase;
+  }
+
+  &--muted {
+    opacity: .5;
+    color: #fff;
+  }
+
+  &--success {
+    color: map-get($state, success-text);
+  }
+
+  &--warning {
+    color: map-get($state, warning-text);
+  }
+
+  &--danger {
+    color: map-get($state, danger-text);
+  }
+
+  &--center {
+    text-align: center !important;
+  }
+
+  &--vcenter {
+    vertical-align: middle !important;
+  }
+}
+
+// List helper
+.list-unstyled {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
