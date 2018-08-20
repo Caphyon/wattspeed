@@ -4,7 +4,6 @@
   "version": "1.0.0",
   "author": "https://github.com/Caphyon",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "dev": "cross-env webpack --watch --mode=development --progress --hide-modules",
     "build": "cross-env webpack --mode=production --progress --hide-modules"
