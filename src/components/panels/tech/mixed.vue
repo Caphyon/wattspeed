@@ -12,11 +12,11 @@
             </h3>
         </template>
         <template v-if="isHttps">
-            <ul v-if="results.length">
-                <li v-for="item in results">
-                    {{item}}
-                </li>
-            </ul>
+          <ul v-if="results.length" class="list-unstyled">
+            <li v-for="item in results" class="alert--danger">
+              {{item}}
+            </li>
+          </ul>
         </template>
         <template v-if="isHttps && !hasMixedContent">
           <div class="state">
@@ -58,3 +58,11 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+  ul {
+    li:not(:last-of-type) {
+      margin-bottom: 1rem;
+    }
+  }
+</style>
