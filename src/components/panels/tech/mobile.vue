@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     screenshot() {
-      if (this.loading) return "";
+      if (this.loading || !this.data.screenshot) return "";
       var str = [
         "data:",
         this.data.screenshot.mime_type,
@@ -72,7 +72,7 @@ export default {
         };
         return ruleStrings[name];
       };
-      if (this.loading) return {};
+      if (this.loading || !this.data.formattedResults) return {};
       const ruleResults = this.data.formattedResults.ruleResults;
       const items = [];
       for (let key in ruleResults) {

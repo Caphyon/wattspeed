@@ -89,7 +89,7 @@ module.exports = (env, argv) => {
           from: 'src/assets',
           to: 'assets',
           transform(content, path) {
-            if (path.indexOf(".js") == -1 || argv.mode !== 'production')
+            if (path.includes(".js") || argv.mode !== 'production')
               return content;
             return UglifyJS.minify(content.toString("utf8")).code;
           }

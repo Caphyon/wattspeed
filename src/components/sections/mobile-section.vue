@@ -45,7 +45,7 @@ export default {
       return !this.loading && !!this.data.error;
     },
     isMobileFriendly() {
-      return !this.loading && !!this.data.ruleGroups.USABILITY.pass;
+      return !this.loading && this.data.ruleGroups && !!this.data.ruleGroups.USABILITY.pass;
     }
   }
 };
