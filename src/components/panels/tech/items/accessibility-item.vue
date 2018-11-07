@@ -1,7 +1,6 @@
 <template>
     <div class="scrollable--issue" v-bind:class="classObject">
         <h3 class="mt0 mb0" v-html="title"></h3>
-        <!-- <small class="text--muted mt0">{{standard}}</small> -->
         <p v-html="description"> 
         </p>
         <ul class="list-unstyled">

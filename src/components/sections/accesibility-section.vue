@@ -10,8 +10,6 @@
 const ACCESSIBILITY_URL =
   "https://cux80nnn5f.execute-api.us-east-1.amazonaws.com/dev/audit";
 
-// const ACCESSIBILITY_URL = "http://localhost:3000/audit";
-
 import Vue from "vue";
 import BaseSection from "./base-section.vue";
 import SectionContainer from "./section-container.vue";
