@@ -8,8 +8,8 @@
         </svg>
       </a>
       <div class="mainNav__panels">
-        <button @click="changePanel('tech', $event)" class="active">Tech</button>
-        <button @click="changePanel('about', $event)">About</button>
+        <button @click="changePanel('tech')" v-bind:class="{ active: currentPanel == 'tech' }">Tech</button>
+        <button @click="changePanel('about')" v-bind:class="{ active: currentPanel == 'about' }">About</button>
       </div>
     </nav>
     <component v-bind:is="currentPanel"></component>
@@ -76,15 +76,9 @@ export default {
   },
 
   methods: {
-    changePanel(panel, e) {
+    changePanel(panel) {
       if (panel === this.currentPanel) return;
       this.currentPanel = panel;
-
-      if (e) {
-        // Set active class
-        [...document.querySelectorAll(".mainNav__panels button")].forEach(el => el.classList.remove("active"))
-        e.target.classList.add("active");
-      }
     },
     injectScript(tab) {
       // Get all content scripts

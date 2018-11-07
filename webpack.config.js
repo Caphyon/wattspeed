@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ArchivePlugin = require('webpack-archive-plugin');
 const Dotenv = require('dotenv-webpack');
+const UglifyJS = require("uglify-js");
 
 module.exports = (env, argv) => {
   const config = {
@@ -84,7 +85,15 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({ template: "index.html" }),
       new VueLoaderPlugin(),
       new CopyWebpackPlugin([
-        { from: 'src/assets', to: 'assets' },
+        {
+          from: 'src/assets',
+          to: 'assets',
+          transform(content, path) {
+            if (!path.includes(".js") || argv.mode !== 'production')
+              return content;
+            return UglifyJS.minify(content.toString("utf8")).code;
+          }
+        },
         { from: 'src/manifest.json', to: 'manifest.json' }
       ]),
       new Dotenv()],
