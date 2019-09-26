@@ -1,10 +1,10 @@
 <template>
     <section-container>
-        <p v-if="isMobileFriendly" class="alert--success">
-            Awesome! This page is mobile-friendly.
+        <p v-if="mobile_friendly" class="alert--success">
+          {{mobile_friendly}}
         </p>
         <p v-else class="alert--danger">
-            Not mobile-friendly.
+          {{not_mobile_friendly}}
         </p>
     </section-container>
 </template>
@@ -25,20 +25,39 @@ export default {
       panelName: "mobile",
       title: "Mobile",
       data: {},
-      icon: "mobile"
+      icon: "mobile",
+      mobile_friendly: "",
+      not_mobile_friendly: ""
     };
   },
   mounted() {
-    const request = new Request(
-      encodeURI(`${MOBILE_READY_URL}?url=${this.tab.url}`),
-      {
-        method: "GET"
-      }
-    );
-    this.makeRequest(request, data => {
-      this.data = data;
-      this.loading = false;
+    this.allMobile();
+    EventBus.$on("refreshData", () => {
+      this.allMobile();
     });
+  },
+  methods: {
+    allMobile() {
+      const request = new Request(
+        `${MOBILE_READY_URL}?url=${this.tab.url}&strategy=mobile`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "*/*",
+            "x-api-key": process.env.MOBILE_KEY
+          }
+        }
+      );
+      this.makeRequest(request, data => {
+        this.data = data;
+        if (data.audits["viewport"].score === 0 || data.audits['viewport'].score === null) {
+          this.not_mobile_friendly = "This page is not mobile friendly!";
+        } else {
+          this.mobile_friendly = "Awesome! This page is mobile friendly!"
+        }
+        this.loading = false;
+      });
+    }
   },
   computed: {
     hasErrors() {

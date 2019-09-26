@@ -32,20 +32,27 @@ export default {
     };
   },
   mounted() {
-    this.isHttps = this.tab.url.indexOf("https") > -1;
-    if (this.isHttps) {
-      chrome.tabs.sendMessage(
-        this.tab.id,
-        { action: "GET_MIXED_DATA" },
-        response => {
-          this.checkContent(response.mixedData);
-        }
-      );
-    } else {
-      this.loading = false;
-    }
+    this.allMixed();
+    EventBus.$on("refreshData", () => {
+      this.allMixed();
+    });
   },
   methods: {
+    allMixed() {
+      this.loading = true;
+      this.isHttps = this.tab.url.indexOf("https") > -1;
+      if (this.isHttps) {
+        chrome.tabs.sendMessage(
+          this.tab.id,
+          { action: "GET_MIXED_DATA" },
+          response => {
+            this.checkContent(response.mixedData);
+          }
+        );
+      } else {
+        this.loading = false;
+      }
+    },
     checkContent(contents) {
       const result = {
         status: false,

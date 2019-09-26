@@ -3,12 +3,12 @@
         <p v-if="isValid" class="alert--success">No errors found.</p>
         <template v-else>
           <p class="alert--danger">Errors found while checking the page.</p>
-            <ul class="list-unstyled">
-              <li v-for="message in getMessages()" v-bind:class="[message.class]">
-                <p class="mt0">{{message.msg}}</p>
-                <p clss="code">{{message.mark}}</p>
-              </li>
-            </ul>
+          <ul class="list-unstyled">
+            <li v-for="(message, index) in getMessages()" :key="index" v-bind:class="[message.class]">
+              <p class="mt0">{{message.msg}}</p>
+              <p clss="code">{{message.mark}}</p>
+            </li>
+          </ul>
         </template>
     </section-container>
 </template>
@@ -42,17 +42,24 @@ export default {
     };
   },
   mounted() {
-    this.loading = true;
-    const url = encodeURI(`${W3_API_URL}?doc=${this.tab.url}&out=json`);
-    const request = new Request(url, {
-      method: "GET"
-    });
-    this.makeRequest(request, data => {
-      this.htmlData = data;
-      this.loading = false;
+    this.allHtml();
+
+    EventBus.$on("refreshData", () => {
+      this.allHtml();
     });
   },
   methods: {
+    allHtml() {
+      this.loading = true;
+      const url = encodeURI(`${W3_API_URL}?doc=${this.tab.url}&out=json`);
+      const request = new Request(url, {
+        method: "GET"
+      });
+      this.makeRequest(request, data => {
+        this.htmlData = data;
+        this.loading = false;
+      });
+    },
     /**
      * Using W3 Api, this function iterates through returned messages
      * returning an array with formatted messages

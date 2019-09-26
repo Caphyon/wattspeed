@@ -32,19 +32,28 @@ export default {
     };
   },
   mounted() {
-    const request = new Request(`${ACCESSIBILITY_URL}?url=${this.tab.url}`, {
-      method: "POST",
-      headers: {
-        Accept: "*/*",
-        "x-api-key": process.env.ACCESSIBILITY_KEY
-      }
+    this.allAccessibility();
+    EventBus.$on("refreshData", () => {
+      this.allAccessibility();
     });
-    this.makeRequest(request, data => {
-      this.issues = data.issuesCount;
-      this.score = data.score;
-      this.data = data.issues;
-      this.loading = false;
-    });
+  },
+  methods: {
+    allAccessibility() {
+      this.loading = true;
+      const request = new Request(`${ACCESSIBILITY_URL}?url=${this.tab.url}`, {
+        method: "POST",
+        headers: {
+          Accept: "*/*",
+          "x-api-key": process.env.ACCESSIBILITY_KEY
+        }
+      });
+      this.makeRequest(request, data => {
+        this.issues = data.issuesCount;
+        this.score = data.score;
+        this.data = data.issues;
+        this.loading = false;
+      });
+    }
   }
 };
 </script>
