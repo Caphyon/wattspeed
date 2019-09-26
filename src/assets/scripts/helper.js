@@ -23,7 +23,8 @@
       descr: false,
       metas: false,
       lang: false,
-      cookies: false
+      cookies: false,
+      headers: false
     };
 
     /**
@@ -106,6 +107,19 @@
 
       return this.storage.scripts || getScripts();
     };
+
+    this.getLDJSON = function(){
+      function getLDJSON(){
+        var $ldscripts = []
+        $elements = document.querySelectorAll("[type='application/ld+json']");
+        for ( var i = 0, len = $elements.length; i < len; i++){
+          $ldscripts.push('<script type="application/ld+json">'+ $elements[i].innerHTML);
+        }
+        return (self.storage.ldscripts = $ldscripts) && $ldscripts;
+      }
+
+      return this.storage.ldscripts || getLDJSON();
+    }
 
     /**
      * Iterates through pages' elements, parsing their attrs on first run,
@@ -229,6 +243,25 @@
     };
 
     /**
+     * Headers
+     */
+    this.parseHeaders = function() {
+      function parseHeaders() {
+        const client = new XMLHttpRequest();
+        client.open("GET", "getHeaders.txt", true);
+        client.send();
+        client.onreadystatechange = function() {
+          if(this.readyState == this.HEADERS_RECEIVED) {
+            var $headers = [];
+            $headers[0] = this.getAllResponseHeaders();
+            return(self.storage.headers = $headers) && $headers;
+          }
+        }
+      }
+      return this.storage.headers || parseHeaders();
+    };
+
+    /**
      * Iterates through page' elements and tries to parse html's
      * language
      */
@@ -253,11 +286,13 @@
       return {
         classes: this.parseClasses(),
         scripts: this.parseScripts(),
+        ldscripts: this.getLDJSON(),
         attrs: this.parseAttrs(),
         links: this.parseLinks(),
         comments: this.parseComments(),
         metas: this.parseMetas(),
-        cookies: this.parseCookies()
+        cookies: this.parseCookies(),
+        headers: this.parseHeaders()
       };
     };
 
