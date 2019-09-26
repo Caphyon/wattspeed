@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing tech.vue component Should render corectly 1`] = `
+<div
+  class="mainContent"
+>
+  <div
+    class="sections"
+  >
+    <tech-section-stub />
+     
+    <html5-section-stub />
+     
+    <performance-section-stub />
+     
+    <mobile-section-stub />
+     
+    <mixed-section-stub />
+     
+    <accesibility-section-stub />
+  </div>
+</div>
+`;

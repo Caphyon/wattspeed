@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mobile-section component Should show that is mobile friendly 1`] = `
+<section-container-stub>
+  <p
+    class="alert--success"
+  >
+    
+      This page is mobile friendly!
+    
+  </p>
+</section-container-stub>
+`;
+
+exports[`mobile-section component Should show that is not mobile friendly 1`] = `
+<section-container-stub>
+  <p
+    class="alert--danger"
+  >
+    
+      This page is not mobile friendly!
+    
+  </p>
+</section-container-stub>
+`;

@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tech-section.vue Testing tech-section.vue component 1`] = `
+<section-container-stub>
+  <ul
+    class="list-unstyled"
+  >
+    <li>
+      <img
+        class="text--vcenter"
+        src="https://www.google.com/s2/favicons?domain=http://www.google.com/analytics/"
+      />
+       
+      <span
+        class="text--vcenter"
+      >
+        Google Analytics
+      </span>
+    </li>
+    <li>
+      <img
+        class="text--vcenter"
+        src="https://www.google.com/s2/favicons?domain=http://www.w3.org/Graphics/SVG/"
+      />
+       
+      <span
+        class="text--vcenter"
+      >
+        SVG
+      </span>
+    </li>
+     
+    <!---->
+  </ul>
+</section-container-stub>
+`;
+
+exports[`tech-section.vue Testing tech-section.vue component when no tech found 1`] = `
+<section-container-stub>
+  <ul
+    class="list-unstyled"
+  >
+     
+    <!---->
+  </ul>
+</section-container-stub>
+`;

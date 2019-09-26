@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`performance-item.vue Global 1`] = `
+<div
+  class="alert--success scrollable--issue alert--danger"
+>
+  <h4
+    class="mt0 mb0"
+  >
+    Use video formats for animated content
+  </h4>
+   
+  <p
+    class="mb0"
+  >
+    Large GIFs are inefficient for delivering animated content
+  </p>
+</div>
+`;
+
+exports[`performance-item.vue Snapshot for speed-item component level danger 1`] = `
+<div
+  class="alert--success scrollable--issue alert--danger"
+>
+  <h4
+    class="mt0 mb0"
+  >
+    Use video formats for animated content
+  </h4>
+   
+  <p
+    class="mb0"
+  >
+    Large GIFs are inefficient for delivering animated content
+  </p>
+</div>
+`;
+
+exports[`performance-item.vue Snapshot for speed-item component level success 1`] = `
+<div
+  class="alert--success scrollable--issue"
+>
+  <h4
+    class="mt0 mb0"
+  >
+    Use video formats for animated content
+  </h4>
+   
+  <p
+    class="mb0"
+  >
+    Large GIFs are inefficient for delivering animated content
+  </p>
+</div>
+`;
+
+exports[`performance-item.vue Snapshot for speed-item component level warning 1`] = `
+<div
+  class="alert--success scrollable--issue alert--warning"
+>
+  <h4
+    class="mt0 mb0"
+  >
+    Use video formats for animated content
+  </h4>
+   
+  <p
+    class="mb0"
+  >
+    Large GIFs are inefficient for delivering animated content
+  </p>
+</div>
+`;

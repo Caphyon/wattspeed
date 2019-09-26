@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Container component Container with data 1`] = `
+<div
+  class="mainContent"
+>
+  <div
+    class="section__header"
+  >
+    <!---->
+     
+    <a
+      aria-label="Close button"
+      class="close"
+      href="#"
+    >
+      ×
+    </a>
+      
+    <p
+      class="text--center text--small px2 py1 mt0 mb0"
+    >
+      Descriere Test
+    </p>
+  </div>
+    
+  <p
+    class="alert--warning"
+  >
+    
+  </p>
+</div>
+`;

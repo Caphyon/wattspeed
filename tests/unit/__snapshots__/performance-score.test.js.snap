@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing speed-score comonent Should render the score of the page as danger 1`] = `
+<div
+  class="text--center"
+>
+  <h3
+    class="mt0 mb0 alert--danger"
+  >
+    14
+  </h3>
+   
+  <span
+    class="text--uppercase"
+  >
+    Desktop
+  </span>
+</div>
+`;
+
+exports[`Testing speed-score comonent Should render the score of the page as success 1`] = `
+<div
+  class="text--center"
+>
+  <h3
+    class="mt0 mb0 alert--success"
+  >
+    99
+  </h3>
+   
+  <span
+    class="text--uppercase"
+  >
+    Desktop
+  </span>
+</div>
+`;
+
+exports[`Testing speed-score comonent Should render the score of the page as warning 1`] = `
+<div
+  class="text--center"
+>
+  <h3
+    class="mt0 mb0 alert--warning"
+  >
+    82
+  </h3>
+   
+  <span
+    class="text--uppercase"
+  >
+    Desktop
+  </span>
+</div>
+`;
