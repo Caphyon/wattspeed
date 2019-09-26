@@ -1,10 +1,24 @@
 <template>
   <container>
     <div class="scrollable__container">
-      <a class="tech" v-for="tech in techs" :href="tech.url" target="_blank">
-        <img v-bind:src=" 'https://www.google.com/s2/favicons?domain=' + tech.url " width="16" height="16" class="text--vcenter">
+      <a class="tech" v-for="(tech, index) in techs" :key="index" :href="tech.url" target="_blank">
+        <img v-bind:src=" 'https://www.google.com/s2/favicons?domain=' + tech.url " width="16" height="16" class="text--vcenter"/>
         <span class="text--vcenter">{{tech.name}}</span>
       </a>
+      <template v-if="JSON_LD_TYPE.length > 0">
+        <a href="https://json-ld.org" target="_blank" class="tech">
+        <img src="https://www.google.com/s2/favicons?domain=https://json-ld.org" alt="json-ld favicon" width="16" height="16" class="text--vcenter"/>
+        <span>
+          JSON-LD:
+          <template v-if="JSON_LD_TYPE.length > 1">
+            [ {{JSON_LD_TYPE.join(', ')}} ]
+          </template>
+          <template v-else>
+            {{JSON_LD_TYPE[0]}}
+          </template>
+        </span>
+        </a>
+      </template>
     </div>
   </container>
 </template>
@@ -18,6 +32,7 @@ export default {
   mixins: [TechSection],
   data() {
     return {
+      panelName: 'technologies',
       desc:
         "The Technologies section contains a list of frameworks, libraries and other web tools that we found while analyzing the web page."
     };

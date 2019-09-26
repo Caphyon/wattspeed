@@ -7,7 +7,7 @@
         <template>
           <div v-if="!isValid">
             <ul class="list-unstyled">
-              <li class="scrollable--issue" v-for="message in getMessages()" v-bind:class="[message.class]">
+              <li class="scrollable--issue" v-for="(message, index) in extractMessages()" :key="index" v-bind:class="[message.class]">
                 <p class="mt0 mb0">{{message.msg}}</p>
                 <p class="code mb0">{{message.mark}}</p>
               </li>
@@ -26,6 +26,19 @@
             </svg>
           </div>
         </template>
+
+        <template slot="filters" v-if="types[0] === true && types[1] === true">
+          <div class="text--center text--small pt1">
+            <input hidden type="checkbox" id="Warnings" value="Warnings" v-model="filtered_results"/>
+            <label class="cursor--pointer px2" :class="setDisabled('Warnings', 'text--warning')" for="Warnings">
+              Warnings
+            </label>
+            <input hidden type="checkbox" id="Errors" value="Errors" v-model="filtered_results"/>
+            <label class="cursor--pointer px2" :class="setDisabled('Errors', 'text--danger')" for="Errors">
+              Errors
+            </label>
+          </div>
+        </template>
 </container>
 </template>
 <script>
@@ -38,9 +51,58 @@ export default {
   mixins: [HTML5Section],
   data() {
     return {
+      filtered_results: ["Warnings", "Errors"],
+      types: [ false, false ],
       desc:
-        "This validator checks the markup validity of a web page and can help you catch unintended mistakes you might have otherwise missed."
+        "This validator checks the markup validity of a web page and can help you catch unintended mistakes."
     };
+  },
+  methods: {
+    setDisabled(the_field, selected_color) {
+      if (!this.filtered_results.includes(the_field)) {
+        return 'text--muted';
+      }
+      return selected_color;
+    },
+    extractMessages() {
+      const mess = this.getMessages();
+      const results = [];
+
+      for (let i = 0; i < mess.length; i++) {
+        let msg = mess[i];
+
+        if (this.filtered_results.length == 0)
+          results.push({
+            msg: msg.msg,
+            mark: msg.mark,
+            class: msg.class,
+            type: msg.type
+          });
+        if (this.filtered_results.includes("Warnings") && msg.type == 'warning') {
+          results.push({
+            msg: msg.msg,
+            mark: msg.mark,
+            class: msg.class,
+            type: msg.type
+          });
+          if(!this.types[0]) {
+            this.types[0] = true;
+          }
+        }
+        if (this.filtered_results.includes("Errors") && msg.type == 'error') {
+          results.push({
+            msg: msg.msg,
+            mark: msg.mark,
+            class: msg.class,
+            type: msg.type
+          });
+          if(!this.types[1]) {
+            this.types[1] = true;
+          }
+        }
+      }
+      return results;
+    }
   }
-};
+}
 </script>
