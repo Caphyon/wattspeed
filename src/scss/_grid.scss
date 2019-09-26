@@ -54,7 +54,25 @@
     &--content {
       padding-left: 1rem;
       padding-right: 1rem;
-      margin: 1rem 0;
+      margin: .3rem 0;
     }
+  }
+}
+
+.__nodata {
+  cursor: default !important;
+
+  &:hover {
+    transform: scale(1) !important;
+  }
+}
+
+.border {
+  &--right {
+    border-right: 1px solid rgba(255,255,255,.3);
+  }
+
+  &--left {
+    border-left: 1px solid rgba(255,255,255,.3);
   }
 }

@@ -12,3 +12,10 @@ $state: (
   danger: rgba(255,82,82, .1),
   danger-text: #FF8282
 );
+
+$space: 1rem !default;
+$spacers: (
+  0: 0,
+  1: ($space *.5),
+  2: $space,
+);

@@ -1,12 +1,40 @@
 // Helpers
 
 //- Spacing helpers
-.mb0 {
-  margin-bottom: 0 !important;
+@each $spacer, $value in $spacers {
+  .mt#{$spacer} {
+    margin-top: $value !important;
+  }
+
+  .mb#{$spacer} {
+    margin-bottom: $value !important;
+  }
 }
 
-.mt0 {
-  margin-top: 0 !important;
+@each $spacer, $value in $spacers {
+  .p#{$spacer} {
+    padding: $value !important;
+  }
+
+  .pt#{$spacer} {
+    padding-top: $value !important;
+  }
+
+  .pb#{$spacer} {
+    padding-bottom: $value !important;
+  }
+
+  // Y-axis
+  .py#{$spacer} {
+    padding-top: $value !important;
+    padding-bottom: $value !important;
+  }
+
+  // X-axis
+  .px#{$spacer} {
+    padding-left: $value !important;
+    padding-right: $value !important;
+  }
 }
 
 //- Text helpers
@@ -27,6 +55,10 @@
   &--muted {
     opacity: .5;
     color: #fff;
+  }
+
+  &--small {
+    font-size: 90% !important;
   }
 
   &--success {
@@ -55,4 +87,11 @@
   margin: 0;
   padding: 0;
   list-style-type: none;
+}
+
+// Cursor
+.cursor {
+  &--pointer {
+    cursor:pointer;
+  }
 }
