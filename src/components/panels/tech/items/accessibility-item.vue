@@ -1,10 +1,10 @@
 <template>
     <div class="scrollable--issue" v-bind:class="classObject">
         <h3 class="mt0 mb0" v-html="title"></h3>
-        <p v-html="description"> 
+        <p v-html="description">
         </p>
         <ul class="list-unstyled">
-            <li class="code" v-for="snippet in snippets">{{snippet}}</li>
+            <li class="code mb0" v-for="(snippet, index) in snippets" :key="index">{{snippet}}</li>
         </ul>
     </div>
 </template>

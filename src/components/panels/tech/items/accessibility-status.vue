@@ -1,5 +1,5 @@
 <template>
-    <div class="section__header--stats">
+    <div class="section__header--stats px2 py1">
         <div class="text--center" v-if="issues">
           <h3 class="alert--danger mt0 mb0">{{issues}}</h3>
           <span class="text--uppercase">issues</span>
@@ -9,7 +9,7 @@
           <span class="text--uppercase">warnings</span>
         </div>
         <div class="text--center" v-if="score">
-          <h3 class="mt0 mb0" v-bind:class="classObject">{{score}}%</h3>
+          <h3 class="mt0 mb0" v-bind:class="classObject">{{score.toFixed(0)}}%</h3>
           <span class="text--uppercase">score</span>
         </div>
     </div>
@@ -19,8 +19,8 @@ export default {
   props: ["issues", "warnings", "score"],
   computed: {
     classObject() {
-      if (this.score < 90) return ["alert--warning"];
       if (this.score < 65) return ["alert--danger"];
+      if (this.score < 90) return ["alert--warning"];
       return ["alert--success"];
     }
   }
