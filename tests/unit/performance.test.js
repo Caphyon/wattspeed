@@ -12,23 +12,20 @@ describe("performance.vue", () => {
   config.methods["getPerformance"] = () => {};
 
   it("Testing speed component", () => {
-    const wrapper = shallowMount(speed, {
-      computed:{
-        mobileMessages(){
-          return {
-            title: "First Contentful Paint",
-            level: 0.63,
-            msg: "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).",
-          }
+    const wrapper = shallowMount(speed);
+    wrapper.setData({
+      filteredMobileData:[
+        {
+          title: "First Contentful Paint",
+          level: 0.63,
+          msg: "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).",
         },
-        desktopMessages(){
-          return {
-            title: "First Contentful Paint",
-            level: 0.63,
-            msg: "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).",
-          }
+        {
+          title: "First Contentful Paint",
+          level: 0.63,
+          msg: "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).",
         }
-      }
+      ]
     });
 
     // controll if the component is instance
@@ -44,7 +41,7 @@ describe("performance.vue", () => {
 
     expect(wrapper.findAll('.text--center.text--muted.mt0.mb1').wrappers.length).toBe(2);
     wrapper.find(speed_item).vm.$emit('data', 'key');
-    expect(wrapper.findAll(speed_item).wrappers.length).toBe(6);
+    expect(wrapper.findAll(speed_item).wrappers.length).toBe(2);
 
 
 

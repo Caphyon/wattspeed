@@ -10,14 +10,14 @@ exports[`performance.vue Testing speed component 1`] = `
         score="0"
         type="Mobile"
       />
-       
+
       <performance-score-stub
         score="0"
         type="Desktop"
       />
     </div>
   </template>
-   
+
   <div
     class="scrollable__container"
   >
@@ -27,37 +27,29 @@ exports[`performance.vue Testing speed component 1`] = `
       >
         Mobile
       </h4>
-       
+
       <performance-item-stub
-        data="First Contentful Paint"
+        data="[object Object]"
       />
       <performance-item-stub
-        data="0.63"
-      />
-      <performance-item-stub
-        data="First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
+        data="[object Object]"
       />
     </div>
-     
+
     <div>
       <h4
         class="text--center text--muted mt0 mb1"
       >
         Desktop
       </h4>
-       
-      <performance-item-stub
-        data="First Contentful Paint"
-      />
-      <performance-item-stub
-        data="0.63"
-      />
-      <performance-item-stub
-        data="First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)."
-      />
+
     </div>
   </div>
-   
-  <!---->
+
+  <template>
+    <filter-item-stub
+      filtercategories=""
+    />
+  </template>
 </container-stub>
 `;

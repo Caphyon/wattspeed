@@ -57,7 +57,9 @@ exports[`Testing Accesibility component Global 1`] = `
   </div>
     
   <template>
-    <!---->
+    <filter-item-stub
+      filtercategories=""
+    />
   </template>
 </container-stub>
 `;
@@ -121,7 +123,9 @@ exports[`Testing Accesibility component With data, score 100 1`] = `
   </div>
     
   <template>
-    <!---->
+    <filter-item-stub
+      filtercategories=""
+    />
   </template>
 </container-stub>
 `;
@@ -183,7 +187,9 @@ exports[`Testing Accesibility component With data, score under 100 1`] = `
   </div>
     
   <template>
-    <!---->
+    <filter-item-stub
+      filtercategories=""
+    />
   </template>
 </container-stub>
 `;
