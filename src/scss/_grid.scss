@@ -51,6 +51,12 @@
       }
     }
 
+    &--description {
+      width: 85%;
+      margin: 0 auto;
+      line-height: 1.2;
+    }
+
     &--content {
       padding-left: 1rem;
       padding-right: 1rem;
@@ -67,6 +73,11 @@
   }
 }
 
+.grid4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 1rem;
+}
 .border {
   &--right {
     border-right: 1px solid rgba(255,255,255,.3);

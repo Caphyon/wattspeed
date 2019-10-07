@@ -39,7 +39,6 @@
 
 //- Text helpers
 .text {
-
   &--slim {
     font-weight: 300 !important;
   }
@@ -61,6 +60,10 @@
     font-size: 90% !important;
   }
 
+  &--extrasmall {
+    font-size: 45% !important;
+  }
+
   &--success {
     color: map-get($state, success-text);
   }
@@ -75,6 +78,10 @@
 
   &--center {
     text-align: center !important;
+  }
+
+  &--right {
+    text-align: right !important;
   }
 
   &--vcenter {
@@ -94,4 +101,32 @@
   &--pointer {
     cursor:pointer;
   }
+}
+
+// Filter checkbox
+.filter {
+  &__checkbox {
+    border-radius: 2px;
+    padding: 0 .45rem !important;
+
+    &:not(:last-of-type) {
+      margin-right: 1rem;
+    }
+  }
+
+  &--success {
+    border: 1px solid map-get($state, success-text);
+    background-color: map-get($state, success);
+  }
+
+  &--warning {
+    border: 1px solid map-get($state, warning-text);
+    background-color: map-get($state, warning);
+  }
+
+  &--danger {
+    border: 1px solid map-get($state, danger-text);
+    background-color: map-get($state, danger);
+  }
+
 }
