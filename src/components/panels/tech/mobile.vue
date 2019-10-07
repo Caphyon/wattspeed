@@ -7,7 +7,7 @@
         </template>
         <div class="scrollable__container">
           <div>
-            <mobile-item v-for="item in items" :data="item" :key="item.msg"></mobile-item>
+            <mobile-item v-for="item in items" :data="item" :key="item.title"></mobile-item>
           </div>
           <div class="mobile">
             <img class="mobile--screen" v-if="screenshot" :src="screenshot"/>
@@ -34,13 +34,17 @@ export default {
   },
   computed: {
     screenshot() {
-      if (this.loading || !this.data) return "";
+      if (this.loading || !this.data){
+        return "";
+      }
       return this.data.audits["final-screenshot"].details.data;
     },
     items() {
       const items = [];
 
-      if (this.loading || !this.data.audits) return {};
+      if (this.loading || !this.data.audits){
+        return {}
+      }
 
       for (let key in this.data.audits) {
         if (key === "viewport" || key === "font-size" || key === "plugins" || key === "content-width") {

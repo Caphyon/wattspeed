@@ -1,7 +1,7 @@
 <template>
   <div class="text--center">
     <h3 class="mt0 mb0" v-bind:class="classObject">{{(score * 100).toFixed(0)}}</h3>
-    <span class="text--uppercase">{{type}}</span>
+    <span class="text--uppercase text--small">{{type}}</span>
   </div>
 </template>
 <script>

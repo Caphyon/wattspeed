@@ -18,27 +18,25 @@
           </g>
         </svg>
       </div>
-      <accessibility-item v-for="item in filter()" :data="item" :key="item.title"></accessibility-item>
-      <template slot="filters">
-        <div v-if="types[0] == true && types[1] == true" class="text--center text--small pt1">
-          <input hidden type="checkbox" id="Warnings" value="Warnings" v-model="filtered_results"/>
-          <label class="cursor--pointer px2" :class="setEnable('Warnings', 'text--warning')" for="Warnings">
-            Warnings
-          </label>
-          <input hidden type="checkbox" id="Errors" value="Errors" v-model="filtered_results"/>
-          <label class="cursor--pointer px2" :class="setEnable('Errors', 'text--danger')" for="Errors">
-            Errors
-          </label>
-        </div>
-      </template>
+      <accessibility-item v-for="item in filteredData" :data="item" :key="item.title"></accessibility-item>
+    <template slot="filters">
+          <filter-item :filterCategories="this.initialFilterTypes"
+                        @onFilter="updateFilteredResults">
+          </filter-item>
+        </template>
     </container>
 </template>
 <script>
 import Vue from "vue";
 import Container from "./container";
 import Item from "./items/accessibility-item";
+import FilterItem from './items/filter-item';
+
+let Constant = require('./../../../assets/utils/consts.js')
+
 Vue.component("container", Container);
 Vue.component("accessibility-item", Item);
+Vue.component("filter-item", FilterItem);
 
 import AccessibilitySection from "./../../sections/accesibility-section.vue";
 
@@ -46,41 +44,47 @@ export default {
   mixins: [AccessibilitySection],
   data() {
     return {
-      filtered_results: ["Warnings", "Errors"],
-      types: [false, false],
+      initialData: [],
+      filteredData: [],
+      filtered_results: [Constant.WARNINGS, Constant.ERRORS],
+      initialFilterTypes: [],
       desc:
         "The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect. (Tim Berners-Lee, W3C Director and inventor of the World Wide Web)"
     };
   },
+    watch: {
+    data: function() {
+      if (this.data) {
+        this.initialData = this.filteredData = this.computeInitialData(this.data);
+        this.initialFilterTypes = this.computeFilterCategories(this.data);
+      }
+    },
+  },
   methods: {
-    setEnable(the_field, selected_color) {
-      if (!this.filtered_results.includes(the_field)) {
-        return 'text--muted';
-      }
-      return selected_color;
-    },
-    filter(){
-      let filtredData = [];
-      for (let key in this.data){
-        let item = this.data[key];
+    computeInitialData(data) {
+      return data.map(crtItem=> {
+        let newItem ={};
+        newItem = crtItem
 
-        if (this.filtered_results.length == 0)
-          filtredData.push(item);
-        if (this.filtered_results.includes("Warnings") && item.severity == 'moderate') {
-          filtredData.push(item);
-          if(this.types[0] == false) {
-            this.types[0] = true;
-          }
+        if(crtItem.severity == 'critical' || crtItem.severity == "serious") {
+          newItem.class = 'alert--danger';
+          newItem.type = Constant.ERRORS;
+        } else if(crtItem.severity == 'moderate' || crtItem.severity == "minor") {
+          newItem.class = 'alert--warning';
+          newItem.type = Constant.WARNINGS;
         }
-        if (this.filtered_results.includes("Errors") && (item.severity == "critical" || item.severity == "serious") ){
-          filtredData.push(item);
-          if(this.types[1] == false) {
-            this.types[1] = true;
-          }
-        }
-      }
-      return filtredData
+
+        return newItem;
+      });
     },
+    computeFilterCategories(initialData) {
+      return [... new Set(initialData.map(item => item.type))];
+    },
+    updateFilteredResults(value) {
+      this.filteredData = this.initialData.filter(crtItem => {
+        return value.includes(crtItem.type);
+      });
+    }
   },
 };
 </script>

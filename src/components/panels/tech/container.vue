@@ -7,9 +7,9 @@
         </svg>
         <h4 class="mt0 mb0 text--strong">{{title}}</h4>
       </div>
-      <a class="close" aria-label="Close button" href="#" @click="close()">×</a>
+      <a class="close" aria-label="Close button" href="#" @click="close()" title="Close">×</a>
       <slot name="header"></slot>
-      <p class="text--center text--small px2 py1 mt0 mb0" v-if="desc">{{desc}}</p>
+      <p class="sections__container--description text--center text--small px2 py1" v-if="desc">{{desc}}</p>
     </div>
     <template v-if="loading">
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
@@ -26,14 +26,14 @@
       </svg>
     </template>
     <template v-else>
-      <slot name="filters"></slot>
       <template v-if="hasData">
         <div class="scrollable _word--break" :class="getContainerHeight()">
           <slot></slot>
         </div>
+        <slot name="filters"></slot>
       </template>
       <template v-else>
-        <p v-if="!!error" class="alert--danger">ERROR: {{error}}</p>
+        <p v-if="error" class="alert--danger">ERROR: {{error}}</p>
         <p v-else class="alert--warning">{{noDataMsg}}</p>
       </template>
     </template>
@@ -89,6 +89,10 @@ export default {
   }
 }
 
+.sections__container--title {
+  padding-left: 1.2rem;
+}
+
 ._word--break {
   word-break: break-word;
 }
@@ -122,16 +126,18 @@ export default {
   }
 
   &--performance {
-    height: calc(100vh - 290px) !important;
-    margin-top: 0;
+    height: calc(100vh - 300px) !important;
+    margin-top: 10px;
   }
 
   &--accessibility {
-    height: calc(100vh - 314px) !important;
+    height: calc(100vh - 300px) !important;
+    margin-top: 10px;
   }
 
   &--html {
-    height: calc(100vh - 270px) !important;
+    height: calc(100vh - 275px) !important;
+    margin-top: 10px;
   }
 }
 
@@ -140,7 +146,7 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  padding: 1rem;
+  padding: .5rem 1.2rem 1rem 1.2rem;
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 1;
@@ -190,4 +196,3 @@ export default {
   }
 }
 </style>
-

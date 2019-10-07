@@ -7,7 +7,7 @@
         <template>
           <div v-if="!isValid">
             <ul class="list-unstyled">
-              <li class="scrollable--issue" v-for="(message, index) in extractMessages()" :key="index" v-bind:class="[message.class]">
+              <li class="scrollable--issue" v-for="(message, index) in filteredData" :key="index" v-bind:class="[message.class]">
                 <p class="mt0 mb0">{{message.msg}}</p>
                 <p class="code mb0">{{message.mark}}</p>
               </li>
@@ -27,17 +27,10 @@
           </div>
         </template>
 
-        <template slot="filters" v-if="types[0] === true && types[1] === true">
-          <div class="text--center text--small pt1">
-            <input hidden type="checkbox" id="Warnings" value="Warnings" v-model="filtered_results"/>
-            <label class="cursor--pointer px2" :class="setDisabled('Warnings', 'text--warning')" for="Warnings">
-              Warnings
-            </label>
-            <input hidden type="checkbox" id="Errors" value="Errors" v-model="filtered_results"/>
-            <label class="cursor--pointer px2" :class="setDisabled('Errors', 'text--danger')" for="Errors">
-              Errors
-            </label>
-          </div>
+        <template slot="filters">
+          <filter-item :filterCategories="this.initialFilterTypes"
+                        @onFilter="updateFilteredResults">
+          </filter-item>
         </template>
 </container>
 </template>
@@ -45,63 +38,58 @@
 import Vue from "vue";
 import HTML5Section from "./../../sections/html5-section";
 import Container from "./container";
+import FilterItem from "./items/filter-item";
+
+let Constant = require('./../../../assets/utils/consts.js')
+
 Vue.component("container", Container);
+Vue.component("filter-item", FilterItem);
 
 export default {
   mixins: [HTML5Section],
   data() {
     return {
-      filtered_results: ["Warnings", "Errors"],
-      types: [ false, false ],
+      initialData: [],
+      filteredData: [],
+      initialFilterTypes: [],
       desc:
-        "This validator checks the markup validity of a web page and can help you catch unintended mistakes."
+        "This validator checks the markup validity of a web page and can help you catch unintended mistakes you might have otherwise missed."
     };
   },
-  methods: {
-    setDisabled(the_field, selected_color) {
-      if (!this.filtered_results.includes(the_field)) {
-        return 'text--muted';
+  watch: {
+    htmlData: function() {
+      if (this.htmlData) {
+        this.initialData = this.filteredData = this.computeInitialData(this.htmlData);
+        this.initialFilterTypes = this.computeFilterCategories(this.initialData);
       }
-      return selected_color;
     },
-    extractMessages() {
-      const mess = this.getMessages();
-      const results = [];
+  },
+  methods: {
+    computeInitialData(data) {
+      return data.messages.map(crtItem=> {
+        let newItem ={};
+        newItem.msg = crtItem.message;
+        newItem.mark = crtItem.extract;
 
-      for (let i = 0; i < mess.length; i++) {
-        let msg = mess[i];
+        if(crtItem.type == 'error') {
+          newItem.class = 'alert--danger';
+          newItem.type = Constant.ERRORS;
+        } else if(crtItem.type == 'info') {
+          newItem.class = 'alert--warning';
+          newItem.type = Constant.WARNINGS;
+        }
 
-        if (this.filtered_results.length == 0)
-          results.push({
-            msg: msg.msg,
-            mark: msg.mark,
-            class: msg.class,
-            type: msg.type
-          });
-        if (this.filtered_results.includes("Warnings") && msg.type == 'warning') {
-          results.push({
-            msg: msg.msg,
-            mark: msg.mark,
-            class: msg.class,
-            type: msg.type
-          });
-          if(!this.types[0]) {
-            this.types[0] = true;
-          }
-        }
-        if (this.filtered_results.includes("Errors") && msg.type == 'error') {
-          results.push({
-            msg: msg.msg,
-            mark: msg.mark,
-            class: msg.class,
-            type: msg.type
-          });
-          if(!this.types[1]) {
-            this.types[1] = true;
-          }
-        }
-      }
-      return results;
+        return newItem;
+      });
+    },
+
+    computeFilterCategories(initialData) {
+      return [... new Set(initialData.map(item => item.type))];
+    },
+    updateFilteredResults(value) {
+      this.filteredData = this.initialData.filter(crtItem => {
+        return value.includes(crtItem.type);
+      });
     }
   }
 }

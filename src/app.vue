@@ -7,7 +7,7 @@
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#logo"/>
         </svg>
       </a>
-      <button @click="refreshData()">
+      <button @click="refreshData()" title="Refresh data">
         <svg width="18" height="18" data-icon>
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#refresh"/>
         </svg>
@@ -30,26 +30,26 @@
     </svg>
   </template>
   <footer class="mainFooter">
-    <p class="mt0 mb0">Made by <a href="https://www.advancedwebranking.com/" target="_blank">
+    <p class="mt0 mb0">Made by <a href="https://www.advancedwebranking.com/?utm_source=awrstudyrextension&utm_medium=referral" target="_blank">
       Advanced Web Ranking</a>
     </p>
     <ul class="list-unstyled mainNav__panels">
       <li class="mainNav__panels--item">
-        <a href="https://twitter.com/awebranking" target="_blank">
+        <a href="https://twitter.com/awebranking" target="_blank" title="Find us on Twitter">
           <svg width="18" height="18" data-icon>
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#twitter"/>
           </svg>
         </a>
       </li>
       <li class="mainNav__panels--item">
-        <a href="https://www.facebook.com/AdvancedWebRanking" target="_blank">
+        <a href="https://www.facebook.com/AdvancedWebRanking" target="_blank" title="Find us on Facebook">
           <svg width="18" height="18" data-icon>
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#facebook"/>
           </svg>
         </a>
       </li>
       <li class="mainNav__panels--item">
-        <a href="https://github.com/Caphyon/awrstudyr" target="_blank">
+        <a href="https://github.com/Caphyon/awrstudyr" target="_blank" title="View the code on Github">
           <svg width="18" height="18" data-icon>
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#github"/>
           </svg>
