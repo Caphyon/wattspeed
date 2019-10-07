@@ -25,7 +25,7 @@
             <slot></slot>
         </div>
         <template v-else>
-            <template v-if="!!error">
+            <template v-if="error">
                 <p class="alert--danger">
                   ERROR: {{error}}
                 </p>

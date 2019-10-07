@@ -13,11 +13,12 @@
     </section-container>
 </template>
 <script>
-const W3_API_URL = "https://validator.w3.org/nu/";
 
 import Vue from "vue";
 import BaseSection from "./base-section.vue";
 import SectionContainer from "./section-container.vue";
+
+let Constant = require("../../assets/utils/consts.js");
 
 Vue.component("section-container", SectionContainer);
 
@@ -51,11 +52,12 @@ export default {
   methods: {
     allHtml() {
       this.loading = true;
-      const url = encodeURI(`${W3_API_URL}?doc=${this.tab.url}&out=json`);
+      const url = encodeURI(`${Constant.W3_API_URL}?doc=${this.tab.url}&out=json`);
       const request = new Request(url, {
         method: "GET"
       });
-      this.makeRequest(request, data => {
+
+      this.makeRequest(request, this.panelName, 'mobileAndDesktop', data => {
         this.htmlData = data;
         this.loading = false;
       });
@@ -65,7 +67,7 @@ export default {
      * returning an array with formatted messages
      */
     getMessages: function() {
-      if (!this.loading && this.htmlData.messages)
+      if (!this.loading && this.htmlData.messages) {
         return this.htmlData.messages.map(message => {
           return {
             msg: message.message,
@@ -74,6 +76,7 @@ export default {
             class: getClass(message.type)
           };
         });
+      }
       return [];
     }
   },

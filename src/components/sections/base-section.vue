@@ -16,12 +16,12 @@ export default {
     back() {
       this.$parent.changePanel("tech");
     },
-    makeRequest(request, callback) {
+    makeRequest(request, StorageName, strategy, callback) {
       const url = request.url || request;
-      const cache_key = btoa(url + this.tab.url);
+      const cache_key = btoa(StorageName + strategy + this.tab.url);
       chrome.storage.local.get(cache_key, result => {
         const data = result[cache_key];
-        if (!!data) {
+        if (data) {
           callback(JSON.parse(data));
           return;
         }
