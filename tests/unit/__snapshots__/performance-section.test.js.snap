@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`performance-section.vue Testing performance-section.vue component 1`] = `
+<section-container-stub>
+  <div
+    class="section__header--stats px2 py1"
+  >
+    <performance-score-stub
+      score="0"
+      type="Mobile"
+    />
+     
+    <performance-score-stub
+      score="0"
+      type="Desktop"
+    />
+  </div>
+</section-container-stub>
+`;

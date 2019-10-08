@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing html5_section.vue component Should render component with data 1`] = `
+<section-container-stub>
+  <p
+    class="alert--danger"
+  >
+    Errors found while checking the page.
+  </p>
+   
+  <ul
+    class="list-unstyled"
+  >
+    <li
+      class="alert--warning"
+    >
+      <p
+        class="mt0"
+      >
+        Using “windows-1252” instead of the declared encoding “iso-8859-1”.
+      </p>
+       
+      <p
+        clss="code"
+      >
+        
+      </p>
+    </li>
+  </ul>
+</section-container-stub>
+`;
+
+exports[`Testing html5_section.vue component Should render component with no data 1`] = `
+<section-container-stub>
+  <p
+    class="alert--success"
+  >
+    No errors found.
+  </p>
+</section-container-stub>
+`;

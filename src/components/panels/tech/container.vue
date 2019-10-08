@@ -1,15 +1,15 @@
 <template>
   <div class="mainContent">
     <div class="section__header">
-      <div class="section__header--title">
+      <div class="sections__container--title" v-if="title">
         <svg width="20" height="20" class="section--icon">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" v-bind:xlink:href="icon"></use>
         </svg>
-        <h3 class="mt0 mb0 text--uppercase text--strong" v-if="title">{{title}}</h3>
+        <h4 class="mt0 mb0 text--strong">{{title}}</h4>
       </div>
-      <a class="close" aria-label="Close button" href="#" v-on:click="close()">×</a>
+      <a class="close" aria-label="Close button" href="#" @click="close()" title="Close">×</a>
       <slot name="header"></slot>
-      <p class="text--center" v-if="desc">{{desc}}</p>
+      <p class="sections__container--description text--center text--small px2 py1" v-if="desc">{{desc}}</p>
     </div>
     <template v-if="loading">
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
@@ -27,12 +27,13 @@
     </template>
     <template v-else>
       <template v-if="hasData">
-        <div class="scrollable">
+        <div class="scrollable _word--break" :class="getContainerHeight()">
           <slot></slot>
         </div>
+        <slot name="filters"></slot>
       </template>
       <template v-else>
-        <p v-if="!!error" class="alert--danger">ERROR: {{error}}</p>
+        <p v-if="error" class="alert--danger">ERROR: {{error}}</p>
         <p v-else class="alert--warning">{{noDataMsg}}</p>
       </template>
     </template>
@@ -49,6 +50,18 @@ export default {
     }
   },
   methods: {
+    getContainerHeight() {
+      switch(this.currentPanel){
+        case "performance":
+          return 'scrollable--performance';
+        case "accessibility":
+          return 'scrollable--accessibility';
+        case "html5":
+          return 'scrollable--html';
+        default:
+          return '_h--350';
+      }
+    },
     close() {
       EventBus.$emit("changePanel", "tech");
     }
@@ -65,7 +78,7 @@ export default {
     background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,.3));
     color: #fff;
     margin: -1rem -1rem 0 -1rem;
-    padding: 1rem;
+    padding-bottom: 1rem;
 
     &--title {
       display: flex;
@@ -76,10 +89,25 @@ export default {
   }
 }
 
+.sections__container--title {
+  padding-left: 1.2rem;
+}
+
+._word--break {
+  word-break: break-word;
+}
+
+._h {
+  &--350 {
+    height: 350px !important;
+  }
+}
+
+
 // Sections - scrollable area
 .scrollable {
   width: 100%;
-  height: 310px;
+  height: 345px;
   overflow-y: auto;
   margin-top: 1rem;
 
@@ -96,6 +124,21 @@ export default {
       margin-bottom: 1rem;
     }
   }
+
+  &--performance {
+    height: calc(100vh - 300px) !important;
+    margin-top: 10px;
+  }
+
+  &--accessibility {
+    height: calc(100vh - 300px) !important;
+    margin-top: 10px;
+  }
+
+  &--html {
+    height: calc(100vh - 275px) !important;
+    margin-top: 10px;
+  }
 }
 
 // Close button
@@ -103,7 +146,7 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  padding: 1rem;
+  padding: .5rem 1.2rem 1rem 1.2rem;
   font-size: 1.5rem;
   font-weight: 700;
   line-height: 1;
@@ -153,4 +196,3 @@ export default {
   }
 }
 </style>
-

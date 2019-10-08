@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Accesibility-Section component Score 100 1`] = `
+<section-container-stub>
+  <p
+    class="alert--success"
+  >
+    
+    No accessibility issues found.
+  
+  </p>
+</section-container-stub>
+`;
+
+exports[`Testing Accesibility-Section component Score under 100 1`] = `
+<section-container-stub>
+  <accessibility-status-stub
+    issues="2"
+    score="67"
+    warnings="1"
+  />
+</section-container-stub>
+`;

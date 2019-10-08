@@ -1,17 +1,44 @@
 // Helpers
 
 //- Spacing helpers
-.mb0 {
-  margin-bottom: 0 !important;
+@each $spacer, $value in $spacers {
+  .mt#{$spacer} {
+    margin-top: $value !important;
+  }
+
+  .mb#{$spacer} {
+    margin-bottom: $value !important;
+  }
 }
 
-.mt0 {
-  margin-top: 0 !important;
+@each $spacer, $value in $spacers {
+  .p#{$spacer} {
+    padding: $value !important;
+  }
+
+  .pt#{$spacer} {
+    padding-top: $value !important;
+  }
+
+  .pb#{$spacer} {
+    padding-bottom: $value !important;
+  }
+
+  // Y-axis
+  .py#{$spacer} {
+    padding-top: $value !important;
+    padding-bottom: $value !important;
+  }
+
+  // X-axis
+  .px#{$spacer} {
+    padding-left: $value !important;
+    padding-right: $value !important;
+  }
 }
 
 //- Text helpers
 .text {
-
   &--slim {
     font-weight: 300 !important;
   }
@@ -27,6 +54,14 @@
   &--muted {
     opacity: .5;
     color: #fff;
+  }
+
+  &--small {
+    font-size: 90% !important;
+  }
+
+  &--extrasmall {
+    font-size: 45% !important;
   }
 
   &--success {
@@ -45,6 +80,10 @@
     text-align: center !important;
   }
 
+  &--right {
+    text-align: right !important;
+  }
+
   &--vcenter {
     vertical-align: middle !important;
   }
@@ -55,4 +94,39 @@
   margin: 0;
   padding: 0;
   list-style-type: none;
+}
+
+// Cursor
+.cursor {
+  &--pointer {
+    cursor:pointer;
+  }
+}
+
+// Filter checkbox
+.filter {
+  &__checkbox {
+    border-radius: 2px;
+    padding: 0 .45rem !important;
+
+    &:not(:last-of-type) {
+      margin-right: 1rem;
+    }
+  }
+
+  &--success {
+    border: 1px solid map-get($state, success-text);
+    background-color: map-get($state, success);
+  }
+
+  &--warning {
+    border: 1px solid map-get($state, warning-text);
+    background-color: map-get($state, warning);
+  }
+
+  &--danger {
+    border: 1px solid map-get($state, danger-text);
+    background-color: map-get($state, danger);
+  }
+
 }

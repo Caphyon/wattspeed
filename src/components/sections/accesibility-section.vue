@@ -7,13 +7,14 @@
     </section-container>
 </template>
 <script>
-const ACCESSIBILITY_URL =
-  "https://cux80nnn5f.execute-api.us-east-1.amazonaws.com/dev/audit";
 
 import Vue from "vue";
 import BaseSection from "./base-section.vue";
 import SectionContainer from "./section-container.vue";
 import Status from "./../panels/tech/items/accessibility-status.vue";
+import marked from 'marked'
+
+let Constant = require("../../assets/utils/consts.js");
 
 Vue.component("section-container", SectionContainer);
 Vue.component("accessibility-status", Status);
@@ -32,19 +33,73 @@ export default {
     };
   },
   mounted() {
-    const request = new Request(`${ACCESSIBILITY_URL}?url=${this.tab.url}`, {
-      method: "POST",
-      headers: {
-        Accept: "*/*",
-        "x-api-key": process.env.ACCESSIBILITY_KEY
-      }
+    this.allAccessibility();
+    EventBus.$on("refreshData", () => {
+      this.allAccessibility();
     });
-    this.makeRequest(request, data => {
-      this.issues = data.issuesCount;
-      this.score = data.score;
-      this.data = data.issues;
-      this.loading = false;
-    });
+  },
+  methods: {
+    allAccessibility() {
+      this.loading = true;
+      const request = new Request(`${Constant.ACCESSIBILITY_URL}&url=${this.tab.url}`, {
+          method: 'GET',
+        });
+      this.makeRequest(request, this.panelName, 'desktop', data => {
+        let temp = [];
+        data.lighthouseResult.categories.accessibility.auditRefs.forEach(element => {
+          if (element.weight > 0){
+            if(data.lighthouseResult.audits[element.id].score !== 1){
+              temp.push(data.lighthouseResult.audits[element.id])
+            }
+          }
+        });
+        let finaldata = this.parse(temp);
+        this.issues = temp.length;
+        this.score = (data.lighthouseResult.categories.accessibility.score * 100);
+        this.data = finaldata.issues;
+        this.loading = false;
+      });
+    },
+    /* UTILS */
+    getLink(description){
+      description = description.toString();
+      let i = description.indexOf("[Learn more]");
+      if (i === -1) return "";
+      description = description.substr(i);
+      i = description.indexOf("(");
+      if (i === -1) return "";
+      const end = description.indexOf(")");
+      return description.slice(i+1, end);
+    },
+    removeLink(description){
+      let i = description.indexOf("[Learn more]");
+      if (i === -1) return description;
+      return description.substr(0, i);
+    },
+    parse(data){
+      let result = {};
+      let issues = [];
+      for (let e in data){
+        let obj = {};
+          e = data[e];
+          obj.title = marked(e.title);
+          // Use marked on description too, just in case
+          let desc = marked(this.removeLink(e.description));
+          // Remove enclosing <p></p>
+          desc = desc.substr(desc.indexOf('<p>')+3, desc.length-8);
+          obj.description = desc;
+          obj.link = this.getLink(e.description);
+          //change severity path if the version of ligthouse changes (5.2.0 now)
+          obj.severity = e.details.debugData.impact;
+          let snippets = [];
+          if (e.details)
+              snippets = e.details.items.map(e => e.node.snippet);
+          obj.snippets = snippets;
+          issues.push(obj);
+          result['issues'] = issues
+      };
+      return result;
+  },
   }
 };
 </script>

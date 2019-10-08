@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Testing Mobile component Container with data 1`] = `
+<container-stub>
+  <template>
+    <h3
+      class="text--success text--center text--strong mb0"
+    >
+      
+        
+      
+    </h3>
+  </template>
+   
+  <div
+    class="scrollable__container"
+  >
+    <div />
+     
+    <div
+      class="mobile"
+    >
+      <!---->
+       
+      <img
+        class="mobile--frame"
+        height="305"
+        src="/assets/icons/mobile-frame.svg"
+      />
+    </div>
+  </div>
+</container-stub>
+`;

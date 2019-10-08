@@ -1,20 +1,17 @@
 <template>
     <container>
         <template slot="header">
-          <h3 v-if="isMobileFriendly" class="text--success text--center text--strong mb0">
-            Awesome! This page is mobile-friendly.
-          </h3>
-          <h3 v-else class="text--danger text--center text--strong mb0">
-            Not mobile-friendly.
+          <h3 class="text--success text--center text--strong mb0">
+            {{mobile_friendly}}
           </h3>
         </template>
         <div class="scrollable__container">
           <div>
-            <mobile-item v-for="item in items" :data="item" :key="item.msg"></mobile-item>
+            <mobile-item v-for="item in items" :data="item" :key="item.title"></mobile-item>
           </div>
           <div class="mobile">
             <img class="mobile--screen" v-if="screenshot" :src="screenshot"/>
-            <img class="mobile--frame" src="/assets/icons/mobile-frame.svg" height="305">
+            <img class="mobile--frame" src="/assets/icons/mobile-frame.svg" height="305"/>
           </div>
         </div>
     </container>
@@ -37,50 +34,26 @@ export default {
   },
   computed: {
     screenshot() {
-      if (this.loading || !this.data.screenshot) return "";
-      var str = [
-        "data:",
-        this.data.screenshot.mime_type,
-        ";base64,",
-        this.data.screenshot.data
-      ].join("");
-      str = str.replace(/\-/g, "+");
-      str = str.replace(/_/g, "/");
-      return str;
+      if (this.loading || !this.data){
+        return "";
+      }
+      return this.data.audits["final-screenshot"].details.data;
     },
     items() {
-      const ruleToString = (name, passed) => {
-        const ruleStrings = {
-          ConfigureViewport: passed
-            ? "Mobile viewport is set."
-            : "Mobile viewport not set.",
-          UseLegibleFontSizes: passed
-            ? "Text isn't too small to read."
-            : "Text too small to read.",
-          AvoidPlugins: passed
-            ? "Doesn't use incompatible plugins."
-            : "Uses incompatible plugins.",
-          SizeContentToViewport: passed
-            ? "Content not wider than screen."
-            : "Content wider than screen.",
-          SizeTapTargetsAppropriately: passed
-            ? "Links not too far away from each other."
-            : "Links too close together.",
-          AvoidInterstitials: passed
-            ? "Content not blocked by app install interstitial."
-            : "Content blocked by app install interstitial."
-        };
-        return ruleStrings[name];
-      };
-      if (this.loading || !this.data.formattedResults) return {};
-      const ruleResults = this.data.formattedResults.ruleResults;
       const items = [];
-      for (let key in ruleResults) {
-        const value = ruleResults[key];
-        items.push({
-          passed: value.ruleImpact == 0.0,
-          msg: ruleToString(key, value.ruleImpact == 0.0)
-        });
+
+      if (this.loading || !this.data.audits){
+        return {}
+      }
+
+      for (let key in this.data.audits) {
+        if (key === "viewport" || key === "font-size" || key === "plugins" || key === "content-width") {
+          const value = this.data.audits[key];
+          items.push({
+            passed: value.score,
+            title: value.title
+          });
+        }
       }
       return items;
     }

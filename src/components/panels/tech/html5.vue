@@ -7,7 +7,7 @@
         <template>
           <div v-if="!isValid">
             <ul class="list-unstyled">
-              <li class="scrollable--issue" v-for="message in getMessages()" v-bind:class="[message.class]">
+              <li class="scrollable--issue" v-for="(message, index) in filteredData" :key="index" v-bind:class="[message.class]">
                 <p class="mt0 mb0">{{message.msg}}</p>
                 <p class="code mb0">{{message.mark}}</p>
               </li>
@@ -26,21 +26,71 @@
             </svg>
           </div>
         </template>
+
+        <template slot="filters">
+          <filter-item :filterCategories="this.initialFilterTypes"
+                        @onFilter="updateFilteredResults">
+          </filter-item>
+        </template>
 </container>
 </template>
 <script>
 import Vue from "vue";
 import HTML5Section from "./../../sections/html5-section";
 import Container from "./container";
+import FilterItem from "./items/filter-item";
+
+let Constant = require('./../../../assets/utils/consts.js')
+
 Vue.component("container", Container);
+Vue.component("filter-item", FilterItem);
 
 export default {
   mixins: [HTML5Section],
   data() {
     return {
+      initialData: [],
+      filteredData: [],
+      initialFilterTypes: [],
       desc:
         "This validator checks the markup validity of a web page and can help you catch unintended mistakes you might have otherwise missed."
     };
+  },
+  watch: {
+    htmlData: function() {
+      if (this.htmlData) {
+        this.initialData = this.filteredData = this.computeInitialData(this.htmlData);
+        this.initialFilterTypes = this.computeFilterCategories(this.initialData);
+      }
+    },
+  },
+  methods: {
+    computeInitialData(data) {
+      return data.messages.map(crtItem=> {
+        let newItem ={};
+        newItem.msg = crtItem.message;
+        newItem.mark = crtItem.extract;
+
+        if(crtItem.type == 'error') {
+          newItem.class = 'alert--danger';
+          newItem.type = Constant.ERRORS;
+        } else if(crtItem.type == 'info') {
+          newItem.class = 'alert--warning';
+          newItem.type = Constant.WARNINGS;
+        }
+
+        return newItem;
+      });
+    },
+
+    computeFilterCategories(initialData) {
+      return [... new Set(initialData.map(item => item.type))];
+    },
+    updateFilteredResults(value) {
+      this.filteredData = this.initialData.filter(crtItem => {
+        return value.includes(crtItem.type);
+      });
+    }
   }
-};
+}
 </script>

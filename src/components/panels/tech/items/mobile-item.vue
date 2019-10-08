@@ -6,7 +6,7 @@ export default {
   props: ["data"],
   computed: {
     msg() {
-      return this.data.msg;
+      return this.data.title;
     },
     classObject() {
       return [this.data.passed ? "alert--success" : "alert--danger"];

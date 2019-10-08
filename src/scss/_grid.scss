@@ -51,10 +51,39 @@
       }
     }
 
+    &--description {
+      width: 85%;
+      margin: 0 auto;
+      line-height: 1.2;
+    }
+
     &--content {
       padding-left: 1rem;
       padding-right: 1rem;
-      margin: 1rem 0;
+      margin: .3rem 0;
     }
+  }
+}
+
+.__nodata {
+  cursor: default !important;
+
+  &:hover {
+    transform: scale(1) !important;
+  }
+}
+
+.grid4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 1rem;
+}
+.border {
+  &--right {
+    border-right: 1px solid rgba(255,255,255,.3);
+  }
+
+  &--left {
+    border-left: 1px solid rgba(255,255,255,.3);
   }
 }

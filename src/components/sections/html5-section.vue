@@ -3,21 +3,22 @@
         <p v-if="isValid" class="alert--success">No errors found.</p>
         <template v-else>
           <p class="alert--danger">Errors found while checking the page.</p>
-            <ul class="list-unstyled">
-              <li v-for="message in getMessages()" v-bind:class="[message.class]">
-                <p class="mt0">{{message.msg}}</p>
-                <p clss="code">{{message.mark}}</p>
-              </li>
-            </ul>
+          <ul class="list-unstyled">
+            <li v-for="(message, index) in getMessages()" :key="index" v-bind:class="[message.class]">
+              <p class="mt0">{{message.msg}}</p>
+              <p clss="code">{{message.mark}}</p>
+            </li>
+          </ul>
         </template>
     </section-container>
 </template>
 <script>
-const W3_API_URL = "https://validator.w3.org/nu/";
 
 import Vue from "vue";
 import BaseSection from "./base-section.vue";
 import SectionContainer from "./section-container.vue";
+
+let Constant = require("../../assets/utils/consts.js");
 
 Vue.component("section-container", SectionContainer);
 
@@ -42,23 +43,31 @@ export default {
     };
   },
   mounted() {
-    this.loading = true;
-    const url = encodeURI(`${W3_API_URL}?doc=${this.tab.url}&out=json`);
-    const request = new Request(url, {
-      method: "GET"
-    });
-    this.makeRequest(request, data => {
-      this.htmlData = data;
-      this.loading = false;
+    this.allHtml();
+
+    EventBus.$on("refreshData", () => {
+      this.allHtml();
     });
   },
   methods: {
+    allHtml() {
+      this.loading = true;
+      const url = encodeURI(`${Constant.W3_API_URL}?doc=${this.tab.url}&out=json`);
+      const request = new Request(url, {
+        method: "GET"
+      });
+
+      this.makeRequest(request, this.panelName, 'mobileAndDesktop', data => {
+        this.htmlData = data;
+        this.loading = false;
+      });
+    },
     /**
      * Using W3 Api, this function iterates through returned messages
      * returning an array with formatted messages
      */
     getMessages: function() {
-      if (!this.loading && this.htmlData.messages)
+      if (!this.loading && this.htmlData.messages) {
         return this.htmlData.messages.map(message => {
           return {
             msg: message.message,
@@ -67,6 +76,7 @@ export default {
             class: getClass(message.type)
           };
         });
+      }
       return [];
     }
   },

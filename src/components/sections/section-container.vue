@@ -1,5 +1,5 @@
 <template>
-    <div class="sections__container" v-on:click="select()">
+    <div class="sections__container" :class="loading ? '__nodata' : ''" @click="select()">
       <div class="sections__container--title">
         <svg width="20" height="20" class="section--icon">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" v-bind:xlink:href="icon"></use>
@@ -25,14 +25,14 @@
             <slot></slot>
         </div>
         <template v-else>
-            <template v-if="!!error">
+            <template v-if="error">
                 <p class="alert--danger">
-                    ERROR: {{error}}
+                  ERROR: {{error}}
                 </p>
             </template>
             <template v-else>
                 <p class="alert--warning">
-                    {{noDataMsg}}
+                  {{noDataMsg}}
                 </p>
             </template>
         </template>
@@ -59,6 +59,9 @@ export default {
     },
     noDataMsg() {
       return this.$parent.noDataMsg;
+    },
+    currentPanel() {
+        return this.$parent.panelName;
     }
   },
   methods: {

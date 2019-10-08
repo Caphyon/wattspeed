@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`accessibility-item.vue Snapshot for accessibility-item component with data 1`] = `
+<div
+  class="scrollable--issue alert--danger"
+>
+  <h3
+    class="mt0 mb0"
+  >
+    <p>
+      Background and foreground colors do not have a sufficient contrast ratio.
+    </p>
+    
+
+  </h3>
+   
+  <p>
+    Low-contrast text is difficult or impossible for many users to read. 
+    <br />
+    <a
+      href="https://dequeuniversity.com/rules/axe/2.2/color-contrast?application=lighthouse"
+      target="_blank"
+    >
+      Learn more
+    </a>
+  </p>
+   
+  <ul
+    class="list-unstyled"
+  >
+    <li
+      class="code mb0"
+    >
+      &lt;li&gt;
+    </li>
+    <li
+      class="code mb0"
+    >
+      &lt;li&gt;** Apple&nbsp;Arcade and Apple&nbsp;TV+ require a subscription.&lt;/li&gt;
+    </li>
+    <li
+      class="code mb0"
+    >
+      &lt;li&gt;Case and band combinations can be made within collections (Apple&nbsp;Watch, Apple&nbsp;Watch&nbsp;Nike, and Apple&nbsp;Watch&nbsp;Hermès) only.&lt;/li&gt;
+    </li>
+    <li
+      class="code mb0"
+    >
+      &lt;div class="ac-gf-footer-shop" x-ms-format-detection="none"&gt;
+		More ways to shop: &lt;a href="/retail/"&gt;Find an Apple Store&lt;/a&gt; or &lt;a href="https://locate.apple.com/"&gt;other retailer&lt;/a&gt; near you. &lt;span class="nowrap"&gt;Or call 1-800-MY-APPLE.&lt;/span&gt;
+	&lt;/div&gt;
+    </li>
+    <li
+      class="code mb0"
+    >
+      &lt;span class="nowrap"&gt;Or call 1-800-MY-APPLE.&lt;/span&gt;
+    </li>
+    <li
+      class="code mb0"
+    >
+      &lt;div class="ac-gf-footer-legal-copyright"&gt;Copyright ©
+			
+			2019
+			Apple Inc. All rights reserved.&lt;/div&gt;
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`accessibility-item.vue Snapshot for accessibility-item component without data 1`] = `
+<div
+  class="scrollable--issue alert--warning"
+>
+  <h3
+    class="mt0 mb0"
+  />
+   
+  <p>
+    undefined
+    <br />
+    <a
+      href="undefined"
+      target="_blank"
+    >
+      Learn more
+    </a>
+  </p>
+   
+  <ul
+    class="list-unstyled"
+  />
+</div>
+`;

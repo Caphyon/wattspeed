@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`accessibility-status.vue Snapshot for accessibility-item component with data  1`] = `
+<div
+  class="section__header--stats px2 py1"
+>
+  <div
+    class="text--center"
+  >
+    <h3
+      class="alert--danger mt0 mb0"
+    >
+      1
+    </h3>
+     
+    <span
+      class="text--uppercase"
+    >
+      issues
+    </span>
+  </div>
+   
+  <div
+    class="text--center"
+  >
+    <h3
+      class="alert--warning mt0 mb0"
+    >
+      1
+    </h3>
+     
+    <span
+      class="text--uppercase"
+    >
+      warnings
+    </span>
+  </div>
+   
+  <div
+    class="text--center"
+  >
+    <h3
+      class="mt0 mb0 alert--success"
+    >
+      93%
+    </h3>
+     
+    <span
+      class="text--uppercase"
+    >
+      score
+    </span>
+  </div>
+</div>
+`;
+
+exports[`accessibility-status.vue Snapshot for accessibility-status component without data 1`] = `
+<div
+  class="section__header--stats px2 py1"
+>
+  <!---->
+   
+  <!---->
+   
+  <!---->
+</div>
+`;

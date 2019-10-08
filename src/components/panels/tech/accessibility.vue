@@ -18,15 +18,25 @@
           </g>
         </svg>
       </div>
-      <accessibility-item v-for="item in data" :data="item" :key="item.title"></accessibility-item>
+      <accessibility-item v-for="item in filteredData" :data="item" :key="item.title"></accessibility-item>
+    <template slot="filters">
+          <filter-item :filterCategories="this.initialFilterTypes"
+                        @onFilter="updateFilteredResults">
+          </filter-item>
+        </template>
     </container>
 </template>
 <script>
 import Vue from "vue";
 import Container from "./container";
 import Item from "./items/accessibility-item";
+import FilterItem from './items/filter-item';
+
+let Constant = require('./../../../assets/utils/consts.js')
+
 Vue.component("container", Container);
 Vue.component("accessibility-item", Item);
+Vue.component("filter-item", FilterItem);
 
 import AccessibilitySection from "./../../sections/accesibility-section.vue";
 
@@ -34,9 +44,47 @@ export default {
   mixins: [AccessibilitySection],
   data() {
     return {
+      initialData: [],
+      filteredData: [],
+      filtered_results: [Constant.WARNINGS, Constant.ERRORS],
+      initialFilterTypes: [],
       desc:
         "The power of the Web is in its universality. Access by everyone regardless of disability is an essential aspect. (Tim Berners-Lee, W3C Director and inventor of the World Wide Web)"
     };
-  }
+  },
+    watch: {
+    data: function() {
+      if (this.data) {
+        this.initialData = this.filteredData = this.computeInitialData(this.data);
+        this.initialFilterTypes = this.computeFilterCategories(this.data);
+      }
+    },
+  },
+  methods: {
+    computeInitialData(data) {
+      return data.map(crtItem=> {
+        let newItem ={};
+        newItem = crtItem
+
+        if(crtItem.severity == 'critical' || crtItem.severity == "serious") {
+          newItem.class = 'alert--danger';
+          newItem.type = Constant.ERRORS;
+        } else if(crtItem.severity == 'moderate' || crtItem.severity == "minor") {
+          newItem.class = 'alert--warning';
+          newItem.type = Constant.WARNINGS;
+        }
+
+        return newItem;
+      });
+    },
+    computeFilterCategories(initialData) {
+      return [... new Set(initialData.map(item => item.type))];
+    },
+    updateFilteredResults(value) {
+      this.filteredData = this.initialData.filter(crtItem => {
+        return value.includes(crtItem.type);
+      });
+    }
+  },
 };
 </script>

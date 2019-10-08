@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`filter-item.vue Testing filter-item component 1`] = `
+<div
+  class="text--right text--extrasmall py1"
+>
+  <label
+    class="cursor--pointer filter__checkbox filter--success text--success"
+    title="Toggle success checks"
+  />
+
+  <label
+    class="cursor--pointer filter__checkbox filter--warning text--warning"
+    title="Toggle warning checks"
+  />
+
+  <label
+    class="cursor--pointer filter__checkbox filter--danger text--danger"
+    title="Toggle error checks"
+  />
+</div>
+`;

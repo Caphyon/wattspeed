@@ -4,13 +4,14 @@
     <nav class="mainNav">
       <a href="https://awrstudyr.com" target="_blank">
         <svg width="130" height="30" class="logo">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#logo"></use>
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#logo"/>
         </svg>
       </a>
-      <div class="mainNav__panels">
-        <button @click="changePanel('tech')" v-bind:class="{ active: currentPanel == 'tech' }">Tech</button>
-        <button @click="changePanel('about')" v-bind:class="{ active: currentPanel == 'about' }">About</button>
-      </div>
+      <button @click="refreshData()" title="Refresh data">
+        <svg width="18" height="18" data-icon>
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#refresh"/>
+        </svg>
+      </button>
     </nav>
     <component v-bind:is="currentPanel"></component>
   </template>
@@ -28,23 +29,49 @@
       </path>
     </svg>
   </template>
+  <footer class="mainFooter">
+    <p class="mt0 mb0">Made by <a href="https://www.advancedwebranking.com/?utm_source=awrstudyrextension&utm_medium=referral" target="_blank">
+      Advanced Web Ranking</a>
+    </p>
+    <ul class="list-unstyled mainNav__panels">
+      <li class="mainNav__panels--item">
+        <a href="https://twitter.com/awebranking" target="_blank" title="Find us on Twitter">
+          <svg width="18" height="18" data-icon>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#twitter"/>
+          </svg>
+        </a>
+      </li>
+      <li class="mainNav__panels--item">
+        <a href="https://www.facebook.com/AdvancedWebRanking" target="_blank" title="Find us on Facebook">
+          <svg width="18" height="18" data-icon>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#facebook"/>
+          </svg>
+        </a>
+      </li>
+      <li class="mainNav__panels--item">
+        <a href="https://github.com/Caphyon/awrstudyr" target="_blank" title="View the code on Github">
+          <svg width="18" height="18" data-icon>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#github"/>
+          </svg>
+        </a>
+      </li>
+    </ul>
+  </footer>
 </div>
 </template>
 <script>
 import Vue from "vue";
 import Tech from "./components/panels/tech";
-import About from "./components/panels/about";
 import Technology from "./components/panels/tech/technology";
 import HTML5 from "./components/panels/tech/html5";
-import Speed from "./components/panels/tech/speed";
+import Performance from "./components/panels/tech/performance";
 import Mobile from "./components/panels/tech/mobile";
 import Mixed from "./components/panels/tech/mixed";
 import Accessibility from "./components/panels/tech/accessibility";
 Vue.component("tech", Tech);
-Vue.component("about", About);
 Vue.component("technology", Technology);
 Vue.component("html5", HTML5);
-Vue.component("speed", Speed);
+Vue.component("performance", Performance);
 Vue.component("mobile", Mobile);
 Vue.component("mixed", Mixed);
 Vue.component("accessibility", Accessibility);
@@ -56,7 +83,6 @@ export default {
       tab: null
     };
   },
-
   mounted() {
     EventBus.$on("changePanel", this.changePanel);
 
@@ -79,6 +105,11 @@ export default {
     changePanel(panel) {
       if (panel === this.currentPanel) return;
       this.currentPanel = panel;
+    },
+    refreshData() {
+      chrome.storage.local.clear();
+      EventBus.$emit("changePanel", "tech");
+      EventBus.$emit("refreshData");
     },
     injectScript(tab) {
       // Get all content scripts
