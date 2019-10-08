@@ -8,7 +8,7 @@ AWRStudyr is a browser extension by [AWR](https://www.advancedwebranking.com/) t
 - Google Lighthouse scores
 - HTML5 validation
 - Accessibility checker
-- Mixed content detection
+- Mixed content & JSON-LD structured data snippet detection
 
 and more...
 
@@ -28,4 +28,3 @@ and more...
 ## How to run it
 - Install dependencies: `npm install`
 - Dev mode, output in _dist_: `npm run dev`
-- Create _build.zip_ file: `npm run build`
