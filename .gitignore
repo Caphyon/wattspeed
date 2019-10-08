@@ -3,7 +3,7 @@ node_modules/
 package-lock.json
 dist/
 .env
-build.zip
+dist.*
 npm-debug.log
 yarn-error.log
 
