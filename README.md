@@ -5,7 +5,7 @@
 AWRStudyr is a browser extension by [AWR](https://www.advancedwebranking.com/) that offers powerful web technologies insights each time you open a new web page.
 
 - Mobile-friendly test
-- Google PageSpeed scores
+- Google Lighthouse scores
 - HTML5 validation
 - Accessibility checker
 - Mixed content detection
