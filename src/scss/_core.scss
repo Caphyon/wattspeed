@@ -111,6 +111,10 @@ a {
   background-color: map-get($color, secondaryGray);
   font-size: 90%;
   padding: 0 1rem;
+
+  > p {
+    flex: 1;
+  }
 }
 
 // Alert helpers
