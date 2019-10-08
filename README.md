@@ -1,8 +1,8 @@
+## AWRStudyr &bull; [https://www.awrstudyr.com/](https://www.awrstudyr.com/)
+
+AWRStudyr is a browser extension by [Advanced Web Ranking](https://www.advancedwebranking.com/) that offers powerful web technologies insights each time you open a new web page.
+
 [![AWRStudyr](/docs/awrstudyr.jpg)](https://www.awrstudyr.com/)
-
-## AWRStudyr
-
-AWRStudyr is a browser extension by [AWR](https://www.advancedwebranking.com/) that offers powerful web technologies insights each time you open a new web page.
 
 - Mobile-friendly test
 - Google Lighthouse scores
@@ -19,9 +19,7 @@ and more...
 - What CMS powers the forum, blog or the online shop?
 - What CSS and JS frameworks are used to build that user interface?
 
-## Install
-
-- [Website](https://www.awrstudyr.com/)
+## Install the browser extension
 - [Chrome extension](https://chrome.google.com/webstore/detail/awrstudyr/mbkehkfjhncahcaggkncdaacfnikmoid)
 - [Firefox Add-on](https://addons.mozilla.org/en-US/firefox/addon/awrstudyr/)
 
