@@ -7,7 +7,7 @@
         </h3>
       </template>
 
-      <div v-if="data.length === 0" class="state">
+      <div v-if="!data" class="state">
         <svg viewBox="0 0 386.9 345.3" xmlns="http://www.w3.org/2000/svg" width="250">
           <path d="m121.7 215.3 54.5 54.5 120-120c14.1 19.7 22.5 43.9 22.5 70 0 66.6-53.9 120.5-120.5 120.5s-120.5-54-120.5-120.5 54-120.5 120.5-120.5c25.6 0 49.4 8 68.9 21.6" fill="none" stroke="#6ed499" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="10" class="state--success"/>
           <g class="state--sparks" style="transform-origin: center center">
