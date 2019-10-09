@@ -246,19 +246,23 @@
      * Headers
      */
     this.parseHeaders = function() {
-      function parseHeaders() {
-        const client = new XMLHttpRequest();
-        client.open("GET", "getHeaders.txt", true);
-        client.send();
-        client.onreadystatechange = function() {
-          if(this.readyState == this.HEADERS_RECEIVED) {
-            var $headers = [];
-            $headers[0] = this.getAllResponseHeaders();
-            return(self.storage.headers = $headers) && $headers;
+      try {
+        function parseHeaders() {
+          const client = new XMLHttpRequest();
+          client.open("GET", "", true);
+          client.send();
+          client.onreadystatechange = function() {
+            if(this.readyState == this.HEADERS_RECEIVED) {
+              var $headers = [];
+              $headers[0] = this.getAllResponseHeaders();
+              return(self.storage.headers = $headers) && $headers;
+            }
           }
         }
+        return this.storage.headers || parseHeaders();
+      } catch (error) {
+        return '';
       }
-      return this.storage.headers || parseHeaders();
     };
 
     /**
