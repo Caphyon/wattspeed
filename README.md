@@ -21,7 +21,6 @@ and more...
 
 ## Install the browser extension
 - [Chrome extension](https://chrome.google.com/webstore/detail/awrstudyr/mbkehkfjhncahcaggkncdaacfnikmoid)
-- [Firefox Add-on](https://addons.mozilla.org/en-US/firefox/addon/awrstudyr/)
 
 ## How to run it
 - Install dependencies: `npm install`
