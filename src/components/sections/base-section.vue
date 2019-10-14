@@ -12,6 +12,9 @@ export default {
       loading: true,
     };
   },
+  beforeDestroy() {
+    EventBus.$off("refreshData");
+ },
   methods: {
     back() {
       this.$parent.changePanel("tech");

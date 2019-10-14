@@ -41,23 +41,28 @@ export default {
   methods: {
     allAccessibility() {
       this.loading = true;
-      const request = new Request(`${Constant.ACCESSIBILITY_URL}&url=${this.tab.url}`, {
+      const request = new Request(`${Constant.API_URL}?url=${this.tab.url}&action=lighthouse&section=accessibility&device=desktop`, {
           method: 'GET',
         });
       this.makeRequest(request, this.panelName, 'desktop', data => {
-        let temp = [];
-        data.lighthouseResult.categories.accessibility.auditRefs.forEach(element => {
-          if (element.weight > 0){
-            if(data.lighthouseResult.audits[element.id].score !== 1){
-              temp.push(data.lighthouseResult.audits[element.id])
+        if (data.code == 1) {
+          this.$emit('tooManyRequets');
+        } else {
+          let resData = JSON.parse(data.body)
+          let temp = [];
+          resData.categories.accessibility.auditRefs.forEach(element => {
+            if (element.weight > 0){
+              if(resData.audits[element.id].score !== 1){
+                temp.push(resData.audits[element.id])
+              }
             }
-          }
-        });
-        let finaldata = this.parse(temp);
-        this.issues = temp.length;
-        this.score = (data.lighthouseResult.categories.accessibility.score * 100);
-        this.data = finaldata.issues;
-        this.loading = false;
+          });
+          let finaldata = this.parse(temp);
+          this.issues = temp.length;
+          this.score = (resData.categories.accessibility.score * 100);
+          this.data = finaldata.issues;
+          this.loading = false;
+        }
       });
     },
     /* UTILS */

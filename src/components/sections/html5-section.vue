@@ -44,7 +44,6 @@ export default {
   },
   mounted() {
     this.allHtml();
-
     EventBus.$on("refreshData", () => {
       this.allHtml();
     });
@@ -52,14 +51,18 @@ export default {
   methods: {
     allHtml() {
       this.loading = true;
-      const url = encodeURI(`${Constant.W3_API_URL}?doc=${this.tab.url}&out=json`);
+      const url = encodeURI(`${Constant.API_URL}?url=${this.tab.url}&action=validate_html`);
       const request = new Request(url, {
         method: "GET"
       });
 
       this.makeRequest(request, this.panelName, 'mobileAndDesktop', data => {
-        this.htmlData = data;
-        this.loading = false;
+        if (data.code == 1) {
+          this.$emit('tooManyRequets');
+        } else {
+          this.htmlData = JSON.parse(data.body);
+          this.loading = false;
+        }
       });
     },
     /**

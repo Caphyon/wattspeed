@@ -25,11 +25,16 @@
             <slot></slot>
         </div>
         <template v-else>
-            <template v-if="error">
-                <p class="alert--danger">
-                  ERROR: {{error}}
-                </p>
-            </template>
+          <template v-if="error">
+              <p class="alert--danger">
+                ERROR: {{error}}
+              </p>
+          </template>
+          <template v-else-if="isValid">
+            <p class="alert--success">
+              This page does not contains HTML5 errors!
+            </p>
+          </template>
             <template v-else>
                 <p class="alert--warning">
                   {{noDataMsg}}
@@ -53,6 +58,9 @@ export default {
     },
     hasData() {
       return this.$parent.hasData;
+    },
+    isValid() {
+      return this.$parent.isValid;
     },
     error() {
       return this.$parent.error;
