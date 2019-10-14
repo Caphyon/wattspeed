@@ -146,3 +146,35 @@ a {
   margin-bottom: .5rem;
   padding: .2rem;
 }
+
+.quota-exceeded {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 120px);
+  align-items: center;
+  justify-content: center;
+
+  .watch {
+    filter: drop-shadow(0 25px 10px rgba(0,0,0,0.5));
+  }
+
+  .line {
+    display: block;
+    transform-origin: center;
+    transform: rotate(360deg);
+    animation: rotate 10s linear infinite;
+
+    &--alt {
+      animation-duration: 20s;
+    }
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
