@@ -1,8 +1,11 @@
 <template>
     <container>
-        <template slot="header">
-          <h3 class="text--success text--center text--strong mb0">
+        <template v-if="!error" slot="header">
+          <h3 v-if="mobile_friendly" class="text--success text--center text--strong mb0">
             {{mobile_friendly}}
+          </h3>
+          <h3 v-if="not_mobile_friendly" class="text--danger text--center text--strong mb0">
+            {{not_mobile_friendly}}
           </h3>
         </template>
         <div class="scrollable__container">

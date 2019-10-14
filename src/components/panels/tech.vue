@@ -1,12 +1,17 @@
 <template>
   <div class="mainContent">
-    <div class="sections">
-      <tech-section></tech-section>
-      <html5-section></html5-section>
-      <performance-section></performance-section>
-      <mobile-section></mobile-section>
-      <mixed-section></mixed-section>
-      <accesibility-section></accesibility-section>
+    <template v-if="requestLimit">
+      <p class="text--center text--danger">
+        You have reached you request quota per hour, try again later :)
+      </p>
+    </template>
+    <div v-else class="sections">
+        <tech-section></tech-section>
+        <html5-section @tooManyRequets="handleTooManyRequests"></html5-section>
+        <performance-section @tooManyRequets="handleTooManyRequests"></performance-section>
+        <mobile-section @tooManyRequets="handleTooManyRequests"></mobile-section>
+        <mixed-section></mixed-section>
+        <accesibility-section @tooManyRequets="handleTooManyRequests"></accesibility-section>
     </div>
   </div>
 </template>
@@ -30,6 +35,11 @@ Vue.component("mixed-section", Mixed);
 Vue.component("accesibility-section", Accesibility);
 
 export default {
+  data: function(){
+    return {
+      requestLimit: false
+    }
+  },
   computed: {
     tab() {
       return this.$parent.tab;
@@ -38,6 +48,9 @@ export default {
   methods: {
     changePanel(tab) {
       this.$parent.changePanel(tab);
+    },
+    handleTooManyRequests(){
+      this.requestLimit = true;
     }
   }
 };

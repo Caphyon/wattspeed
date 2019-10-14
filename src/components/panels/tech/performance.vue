@@ -1,7 +1,7 @@
 <template>
     <container>
       <template slot="header">
-        <div class="section__header--stats px2 py1">
+        <div v-if="!error" class="section__header--stats px2 py1">
           <performance-score :score="mobileScore" type="Mobile"></performance-score>
           <performance-score :score="desktopScore" type="Desktop"></performance-score>
         </div>

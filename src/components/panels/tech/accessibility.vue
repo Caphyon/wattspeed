@@ -1,6 +1,6 @@
 <template>
     <container>
-      <template slot="header">
+      <template v-if="!error" slot="header">
         <accessibility-status :score="score" :issues="issues" :warnings="warnings" v-if="score != 100"></accessibility-status>
         <h3 v-else class="text--success text--center text--strong mb0">
           No accessibility issues found.
