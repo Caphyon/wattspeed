@@ -6,7 +6,7 @@
           <ul class="list-unstyled">
             <li v-for="(message, index) in getMessages()" :key="index" v-bind:class="[message.class]">
               <p class="mt0">{{message.msg}}</p>
-              <p clss="code">{{message.mark}}</p>
+              <p v-if="message.mark" clss="code">{{message.mark}}</p>
             </li>
           </ul>
         </template>
@@ -92,7 +92,7 @@ export default {
       if (this.loading) return false;
       for (let i in this.htmlData.messages) {
         const message = this.htmlData.messages[i];
-        if (message.type == "warning" || message.type == "error") {
+        if (message.type == "warning" || message.type == "error" || message.type == "info") {
           return false;
         }
       }

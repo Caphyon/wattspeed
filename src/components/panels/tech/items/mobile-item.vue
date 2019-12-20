@@ -14,7 +14,6 @@ export default {
   },
   methods: {
     parseText(msg){
-      debugger
       if (msg.includes('`')){
         msg = msg.replace(/`/g, "");
       }

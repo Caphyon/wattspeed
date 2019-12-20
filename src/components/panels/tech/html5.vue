@@ -9,7 +9,7 @@
             <ul class="list-unstyled">
               <li class="scrollable--issue" v-for="(message, index) in filteredData" :key="index" v-bind:class="[message.class]">
                 <p class="mt0 mb0">{{message.msg}}</p>
-                <p class="code mb0">{{message.mark}}</p>
+                <p v-if="message.mark" class="code mb0">{{message.mark}}</p>
               </li>
             </ul>
           </div>
