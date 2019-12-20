@@ -41,22 +41,26 @@ export default {
   methods: {
     getPerformance(strategy) {
       this.loading = true;
-      const request = new Request(`${Constant.PERFORMANCE_URL}?strategy=${strategy}&category=performance&url=${this.tab.url}`, {
+      const request = new Request(`${Constant.API_URL}?url=${this.tab.url}&action=lighthouse&section=performance&device${strategy}`, {
         method: 'GET',
       });
       this.essentialData = {};
       this.makeRequest(request, this.panelName, strategy, data => {
-        let temp = [];
-        this.dataFinal = data.lighthouseResult;
-        this.$set(this.essentialData, strategy + 'Score', this.dataFinal.categories.performance.score);
-        for(let element in this.dataFinal.audits) {
-          if (this.dataFinal.audits[element].score != null) {
-            temp.push(this.dataFinal.audits[element]);
+        if (data.code == 1) {
+          this.$emit('tooManyRequets');
+        } else {
+          let temp = [];
+          this.dataFinal = JSON.parse(data.body);
+          this.$set(this.essentialData, strategy + 'Score', this.dataFinal.categories.performance.score);
+          for(let element in this.dataFinal.audits) {
+            if (this.dataFinal.audits[element].score != null) {
+              temp.push(this.dataFinal.audits[element]);
+            }
           }
-        }
 
-        this.$set(this.essentialData, strategy, temp);
-        if (this.essentialData.desktop && this.essentialData.mobile) this.loading = false;
+          this.$set(this.essentialData, strategy, temp);
+          if (this.essentialData.desktop && this.essentialData.mobile) this.loading = false;
+        }
       });
     }
   },

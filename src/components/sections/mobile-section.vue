@@ -38,17 +38,22 @@ export default {
   },
   methods: {
     allMobile() {
-      const request = new Request(`${Constant.MOBILE_URL}&url=${this.tab.url}`, {
+      this.loading = true;
+      const request = new Request(`${Constant.API_URL}?url=${this.tab.url}&action=lighthouse&section=mobile`, {
           method: 'GET',
         });
       this.makeRequest(request, this.panelName, this.panelName, data => {
-        this.data = data.lighthouseResult;
-        if (this.data.audits.viewport.score === 0 || this.data.audits.viewport.score === null) {
-          this.not_mobile_friendly = "This page is not mobile friendly!";
+        if (data.code == 1) {
+          this.$emit('tooManyRequets');
         } else {
-          this.mobile_friendly = "Awesome! This page is mobile friendly!"
+          this.data = JSON.parse(data.body);
+          if (this.data.audits.viewport.score === 0 || this.data.audits.viewport.score === null) {
+            this.not_mobile_friendly = "This page is not mobile friendly!";
+          } else {
+            this.mobile_friendly = "Awesome! This page is mobile friendly!"
+          }
+          this.loading = false;
         }
-        this.loading = false;
       });
     }
   },

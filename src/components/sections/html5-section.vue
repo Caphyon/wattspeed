@@ -6,7 +6,7 @@
           <ul class="list-unstyled">
             <li v-for="(message, index) in getMessages()" :key="index" v-bind:class="[message.class]">
               <p class="mt0">{{message.msg}}</p>
-              <p clss="code">{{message.mark}}</p>
+              <p v-if="message.mark" clss="code">{{message.mark}}</p>
             </li>
           </ul>
         </template>
@@ -44,7 +44,6 @@ export default {
   },
   mounted() {
     this.allHtml();
-
     EventBus.$on("refreshData", () => {
       this.allHtml();
     });
@@ -52,14 +51,18 @@ export default {
   methods: {
     allHtml() {
       this.loading = true;
-      const url = encodeURI(`${Constant.W3_API_URL}?doc=${this.tab.url}&out=json`);
+      const url = encodeURI(`${Constant.API_URL}?url=${this.tab.url}&action=validate_html`);
       const request = new Request(url, {
         method: "GET"
       });
 
       this.makeRequest(request, this.panelName, 'mobileAndDesktop', data => {
-        this.htmlData = data;
-        this.loading = false;
+        if (data.code == 1) {
+          this.$emit('tooManyRequets');
+        } else {
+          this.htmlData = JSON.parse(data.body);
+          this.loading = false;
+        }
       });
     },
     /**
@@ -89,7 +92,7 @@ export default {
       if (this.loading) return false;
       for (let i in this.htmlData.messages) {
         const message = this.htmlData.messages[i];
-        if (message.type == "warning" || message.type == "error") {
+        if (message.type == "warning" || message.type == "error" || message.type == "info") {
           return false;
         }
       }

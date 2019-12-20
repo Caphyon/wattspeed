@@ -1,6 +1,6 @@
 <template>
 <container>
-        <template slot="header">
+        <template v-if="!error" slot="header">
             <h3 v-if="isValid" class="text--success text--center text--strong mb0">No errors found.</h3>
             <h3 v-else class="text--danger text--center text--strong mb0">Errors found while checking the page.</h3>
         </template>
@@ -9,7 +9,7 @@
             <ul class="list-unstyled">
               <li class="scrollable--issue" v-for="(message, index) in filteredData" :key="index" v-bind:class="[message.class]">
                 <p class="mt0 mb0">{{message.msg}}</p>
-                <p class="code mb0">{{message.mark}}</p>
+                <p v-if="message.mark" class="code mb0">{{message.mark}}</p>
               </li>
             </ul>
           </div>
