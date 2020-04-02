@@ -1,6 +1,6 @@
 <template>
 <div class="about">
-    <a href="https://awrstudyr.com" target="_blank">
+    <a href="https://wattspeed.com" target="_blank">
       <svg width="300" height="70" class="logo">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#logo"></use>
       </svg>

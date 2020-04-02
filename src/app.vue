@@ -2,7 +2,7 @@
 <div class="container">
   <template v-if="tab != null">
     <nav class="mainNav">
-      <a href="https://awrstudyr.com" target="_blank">
+      <a href="https://wattspeed.com" target="_blank">
         <svg width="130" height="30" class="logo">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#logo"/>
         </svg>
