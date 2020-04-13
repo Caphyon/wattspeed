@@ -2,6 +2,8 @@
 
 Wattspeed is a FREE Chrome extension by [Advanced Web Ranking](https://www.advancedwebranking.com/) that offers powerful web technologies insights each time you open a new web page.
 
+[![Wattspeed](/docs/preview.png)](https://www.wattspeed.com/)
+
 - Mobile-friendly test
 - Google Lighthouse scores
 - HTML5 validation
