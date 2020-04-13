@@ -1,6 +1,6 @@
 <template>
 <div class="about">
-    <a href="https://awrstudyr.com" target="_blank">
+    <a href="https://wattspeed.com" target="_blank">
       <svg width="300" height="70" class="logo">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#logo"></use>
       </svg>
@@ -21,12 +21,6 @@
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#twitter"></use>
         </svg>
         <span>Tweet</span>
-      </a>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fawrstudyr.com%2F" class="btn" target="_blank">
-        <svg width="20" height="20">
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#facebook"></use>
-        </svg>
-        <span>Share on Facebook</span>
       </a>
     </div>
 </div>
