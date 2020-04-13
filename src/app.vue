@@ -30,7 +30,7 @@
     </svg>
   </template>
   <footer class="mainFooter">
-    <p class="mt0 mb0">Made by <a href="https://www.advancedwebranking.com/?utm_source=awrstudyrextension&utm_medium=referral" target="_blank">
+    <p class="mt0 mb0">Made by <a href="https://www.advancedwebranking.com/?utm_source=wattspeedextension&utm_medium=referral" target="_blank">
       Advanced Web Ranking</a>
     </p>
     <ul class="list-unstyled mainNav__panels">
