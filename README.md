@@ -20,7 +20,7 @@ and more...
 - What CSS and JS frameworks are used to build that user interface?
 
 ## Install the browser extension
-- [Chrome extension](https://chrome.google.com/webstore/detail/awrstudyr/mbkehkfjhncahcaggkncdaacfnikmoid)
+- [Chrome extension](https://chrome.google.com/webstore/detail/mbkehkfjhncahcaggkncdaacfnikmoid/)
 
 ## How to run it
 - Install dependencies: `npm install`
