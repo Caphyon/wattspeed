@@ -1,8 +1,6 @@
-## AWRStudyr &bull; [https://www.awrstudyr.com/](https://www.awrstudyr.com/)
+## Wattspeed &bull; [https://wattspeed.com/](https://wattspeed.com/)
 
-AWRStudyr is a browser extension by [Advanced Web Ranking](https://www.advancedwebranking.com/) that offers powerful web technologies insights each time you open a new web page.
-
-[![AWRStudyr](/docs/awrstudyr.jpg)](https://www.awrstudyr.com/)
+Wattspeed is a FREE Chrome extension by [Advanced Web Ranking](https://www.advancedwebranking.com/) that offers powerful web technologies insights each time you open a new web page.
 
 - Mobile-friendly test
 - Google Lighthouse scores
