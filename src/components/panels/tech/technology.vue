@@ -32,7 +32,6 @@ export default {
   mixins: [TechSection],
   data() {
     return {
-      panelName: 'technologies',
       desc:
         "The Technologies section contains a list of frameworks, libraries and other web tools that we found while analyzing the web page."
     };

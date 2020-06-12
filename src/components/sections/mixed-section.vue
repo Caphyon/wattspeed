@@ -18,6 +18,8 @@ import Vue from "vue";
 import BaseSection from "./base-section.vue";
 import SectionContainer from "./section-container.vue";
 
+let Constant = require("../../assets/utils/consts.js");
+
 Vue.component("section-container", SectionContainer);
 
 export default {
@@ -28,7 +30,8 @@ export default {
       panelName: "mixed",
       data: {},
       isHttps: true,
-      icon: "mixed"
+      icon: "mixed",
+      mixedContent: null,
     };
   },
   mounted() {
@@ -42,13 +45,27 @@ export default {
       this.loading = true;
       this.isHttps = this.tab.url.indexOf("https") > -1;
       if (this.isHttps) {
-        chrome.tabs.sendMessage(
-          this.tab.id,
-          { action: "GET_MIXED_DATA" },
-          response => {
-            this.checkContent(response.mixedData);
+        let myHeaders = new Headers();
+        myHeaders.append('Content-Type', 'application/json');
+
+        const request = new Request(Constant.API_URL, {
+          method: 'POST',
+          headers: myHeaders,
+          body: `{"params": {"url": "${this.tab.url}", "action":"get_mixed_content"}}`,
+        });
+
+        this.makeRequest(request, this.panelName,  this.panelName, data => {
+          if (data.code == 1) {
+            this.$emit('tooManyRequets');
+          } else if (data.code == 2) {
+            this.error = "Something went wrong, please try again!";
+            this.loading = false;
+          } else {
+            this.mixedContent = JSON.parse(data.body);
+            this.checkContent(this.mixedContent);
+            this.loading = false;
           }
-        );
+        });
       } else {
         this.loading = false;
       }
@@ -58,7 +75,7 @@ export default {
         status: false,
         results: []
       };
-      for (let type in contents) {
+      Object.keys(contents).forEach(type => {
         const content = contents[type];
         content.forEach(element => {
           if (element)
@@ -72,7 +89,7 @@ export default {
                 result.results.push(element);
               }
         });
-      }
+      });
       this.data = result;
       this.loading = false;
     }
