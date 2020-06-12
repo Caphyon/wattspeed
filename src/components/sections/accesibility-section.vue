@@ -41,12 +41,19 @@ export default {
   methods: {
     allAccessibility() {
       this.loading = true;
-      const request = new Request(`${Constant.API_URL}?url=${this.tab.url}&action=lighthouse&section=accessibility&device=desktop`, {
-          method: 'GET',
+      let myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      const request = new Request(Constant.API_URL, {
+          method: 'POST',
+          headers: myHeaders,
+          body: `{"params": {"url": "${this.tab.url}", "action":"lighthouse", "section":"acccessibility", "device":"desktop"}}`,
         });
       this.makeRequest(request, this.panelName, 'desktop', data => {
         if (data.code == 1) {
           this.$emit('tooManyRequets');
+        } else if (data.code == 2) {
+          this.error = "Something went wrong, please try again!";
+          this.loading = false;
         } else {
           let resData = JSON.parse(data.body)
           let temp = [];
