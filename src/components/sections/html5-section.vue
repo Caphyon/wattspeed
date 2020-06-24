@@ -39,7 +39,8 @@ export default {
       title: "HTML5",
       panelName: "html5",
       htmlData: [],
-      icon: "html5"
+      icon: "html5",
+      noErrorMessage: "This page does not contain HTML5 errors!",
     };
   },
   mounted() {

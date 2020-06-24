@@ -35,7 +35,8 @@ export default {
       panelName: "technology",
       techs: [],
       icon: "technologies",
-      JSON_LD_TYPE: []
+      JSON_LD_TYPE: [],
+      noErrorMessage: "This page does not contain any technologies"
     };
   },
   mounted() {
@@ -71,6 +72,9 @@ export default {
     },
   },
   computed: {
+    isValid() {
+      return this.techs.length === 0;
+    },
     hasData() {
       return this.techs.length > 0;
     }

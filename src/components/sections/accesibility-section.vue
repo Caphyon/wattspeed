@@ -66,7 +66,11 @@ export default {
           });
           let finaldata = this.parse(temp);
           this.issues = temp.length;
-          this.score = (resData.categories.accessibility.score * 100);
+          if (resData.categories.accessibility.score) {
+            this.score = (resData.categories.accessibility.score * 100);
+          } else {
+            this.score = 1;
+          }
           this.data = finaldata.issues;
           this.loading = false;
         }
@@ -102,7 +106,9 @@ export default {
           obj.description = desc;
           obj.link = this.getLink(e.description);
           //change severity path if the version of ligthouse changes (5.2.0 now)
-          obj.severity = e.details.debugData.impact;
+          if (e.details) {
+            obj.severity = e.details.debugData.impact;
+          }
           let snippets = [];
           if (e.details)
               snippets = e.details.items.map(e => e.node.snippet);

@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     screenshot() {
-      if (this.loading || !this.data){
+      if (this.loading || !this.data || !this.data.audits["final-screenshot"].details){
         return "";
       }
       return this.data.audits["final-screenshot"].details.data;
@@ -53,7 +53,7 @@ export default {
         if (key === "viewport" || key === "font-size" || key === "plugins" || key === "content-width") {
           const value = this.data.audits[key];
           items.push({
-            passed: value.score,
+            passed: value.score !== null ? value.score : 0,
             title: value.title
           });
         }
