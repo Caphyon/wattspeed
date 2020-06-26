@@ -50,7 +50,7 @@ export default {
         });
       this.makeRequest(request, this.panelName, 'desktop', data => {
         if (data.code == 1) {
-          this.$emit('tooManyRequets');
+          this.$emit('tooManyRequests');
         } else if (data.code == 2) {
           this.error = "Something went wrong, please try again!";
           this.loading = false;
