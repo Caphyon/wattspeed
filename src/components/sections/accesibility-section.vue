@@ -41,12 +41,19 @@ export default {
   methods: {
     allAccessibility() {
       this.loading = true;
-      const request = new Request(`${Constant.API_URL}?url=${this.tab.url}&action=lighthouse&section=accessibility&device=desktop`, {
-          method: 'GET',
+      let myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      const request = new Request(Constant.API_URL, {
+          method: 'POST',
+          headers: myHeaders,
+          body: `{"params": {"url": "${this.tab.url}", "action":"lighthouse", "section":"acccessibility", "device":"desktop"}}`,
         });
       this.makeRequest(request, this.panelName, 'desktop', data => {
         if (data.code == 1) {
-          this.$emit('tooManyRequets');
+          this.$emit('tooManyRequests');
+        } else if (data.code == 2) {
+          this.error = "Something went wrong, please try again!";
+          this.loading = false;
         } else {
           let resData = JSON.parse(data.body)
           let temp = [];
@@ -59,7 +66,11 @@ export default {
           });
           let finaldata = this.parse(temp);
           this.issues = temp.length;
-          this.score = (resData.categories.accessibility.score * 100);
+          if (resData.categories.accessibility.score) {
+            this.score = (resData.categories.accessibility.score * 100);
+          } else {
+            this.score = 1;
+          }
           this.data = finaldata.issues;
           this.loading = false;
         }
@@ -95,7 +106,9 @@ export default {
           obj.description = desc;
           obj.link = this.getLink(e.description);
           //change severity path if the version of ligthouse changes (5.2.0 now)
-          obj.severity = e.details.debugData.impact;
+          if (e.details) {
+            obj.severity = e.details.debugData.impact;
+          }
           let snippets = [];
           if (e.details)
               snippets = e.details.items.map(e => e.node.snippet);

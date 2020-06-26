@@ -39,12 +39,19 @@ export default {
   methods: {
     allMobile() {
       this.loading = true;
-      const request = new Request(`${Constant.API_URL}?url=${this.tab.url}&action=lighthouse&section=mobile`, {
-          method: 'GET',
+      let myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+      const request = new Request(Constant.API_URL, {
+          method: 'POST',
+          headers: myHeaders,
+          body: `{"params": {"url": "${this.tab.url}", "action":"lighthouse", "section":"mobile"}}`,
         });
       this.makeRequest(request, this.panelName, this.panelName, data => {
         if (data.code == 1) {
-          this.$emit('tooManyRequets');
+          this.$emit('tooManyRequests');
+        } else if (data.code == 2) {
+          this.error = "Something went wrong, please try again!";
+          this.loading = false;
         } else {
           this.data = JSON.parse(data.body);
           if (this.data.audits.viewport.score === 0 || this.data.audits.viewport.score === null) {

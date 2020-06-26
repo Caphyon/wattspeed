@@ -32,7 +32,7 @@
           </template>
           <template v-else-if="isValid">
             <p class="alert--success">
-              This page does not contains HTML5 errors!
+              {{$parent.noErrorMessage}}
             </p>
           </template>
             <template v-else>

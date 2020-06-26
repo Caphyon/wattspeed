@@ -39,7 +39,8 @@ export default {
       title: "HTML5",
       panelName: "html5",
       htmlData: [],
-      icon: "html5"
+      icon: "html5",
+      noErrorMessage: "This page does not contain HTML5 errors!",
     };
   },
   mounted() {
@@ -51,14 +52,21 @@ export default {
   methods: {
     allHtml() {
       this.loading = true;
-      const url = encodeURI(`${Constant.API_URL}?url=${this.tab.url}&action=validate_html`);
-      const request = new Request(url, {
-        method: "GET"
+      let myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/json');
+
+      const request = new Request(Constant.API_URL, {
+        method: "POST",
+        headers: myHeaders,
+        body: `{"params": {"url": "${this.tab.url}", "action":"validate_html"}}`,
       });
 
       this.makeRequest(request, this.panelName, 'mobileAndDesktop', data => {
         if (data.code == 1) {
-          this.$emit('tooManyRequets');
+          this.$emit('tooManyRequests');
+        } else if (data.code == 2) {
+          this.error = "Something went wrong, please try again!";
+          this.loading = false;
         } else {
           this.htmlData = JSON.parse(data.body);
           this.loading = false;

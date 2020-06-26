@@ -30,12 +30,12 @@
       </div>
     </template>
     <div v-else class="sections">
-        <tech-section></tech-section>
-        <html5-section @tooManyRequets="handleTooManyRequests"></html5-section>
-        <performance-section @tooManyRequets="handleTooManyRequests"></performance-section>
-        <mobile-section @tooManyRequets="handleTooManyRequests"></mobile-section>
-        <mixed-section></mixed-section>
-        <accesibility-section @tooManyRequets="handleTooManyRequests"></accesibility-section>
+        <tech-section @tooManyRequests="handleTooManyRequests"></tech-section>
+        <html5-section @tooManyRequests="handleTooManyRequests"></html5-section>
+        <performance-section @tooManyRequests="handleTooManyRequests"></performance-section>
+        <mobile-section @tooManyRequests="handleTooManyRequests"></mobile-section>
+        <mixed-section @tooManyRequests="handleTooManyRequests"></mixed-section>
+        <accesibility-section @tooManyRequests="handleTooManyRequests"></accesibility-section>
     </div>
   </div>
 </template>
