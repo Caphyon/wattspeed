@@ -1,0 +1,524 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DB169C1B2587741C00DA6E3A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB169C1A2587741C00DA6E3A /* AppDelegate.swift */; };
+		DB169C1E2587741C00DA6E3A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DB169C1C2587741C00DA6E3A /* Main.storyboard */; };
+		DB169C202587741C00DA6E3A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB169C1F2587741C00DA6E3A /* ViewController.swift */; };
+		DB169C222587741E00DA6E3A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB169C212587741E00DA6E3A /* Assets.xcassets */; };
+		DB169C292587741E00DA6E3A /* Wattspeed Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = DB169C282587741E00DA6E3A /* Wattspeed Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		DB169C2E2587741E00DA6E3A /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB169C2D2587741E00DA6E3A /* Cocoa.framework */; };
+		DB169C312587741E00DA6E3A /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB169C302587741E00DA6E3A /* SafariWebExtensionHandler.swift */; };
+		DB169C442587741F00DA6E3A /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = DB169C402587741F00DA6E3A /* manifest.json */; };
+		DB169C452587741F00DA6E3A /* assets in Resources */ = {isa = PBXBuildFile; fileRef = DB169C412587741F00DA6E3A /* assets */; };
+		DB53C1E02599B728003ADDFA /* build.js in Resources */ = {isa = PBXBuildFile; fileRef = DB53C1DD2599B728003ADDFA /* build.js */; };
+		DB53C1E22599B728003ADDFA /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = DB53C1DF2599B728003ADDFA /* index.html */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DB169C2A2587741E00DA6E3A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DB169C0E2587741C00DA6E3A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB169C272587741E00DA6E3A;
+			remoteInfo = "Wattspeed Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DB169C392587741E00DA6E3A /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				DB169C292587741E00DA6E3A /* Wattspeed Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		DB169C162587741C00DA6E3A /* Wattspeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wattspeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB169C192587741C00DA6E3A /* Wattspeed.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Wattspeed.entitlements; sourceTree = "<group>"; };
+		DB169C1A2587741C00DA6E3A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DB169C1D2587741C00DA6E3A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DB169C1F2587741C00DA6E3A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		DB169C212587741E00DA6E3A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DB169C232587741E00DA6E3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB169C282587741E00DA6E3A /* Wattspeed Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Wattspeed Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB169C2D2587741E00DA6E3A /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		DB169C302587741E00DA6E3A /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		DB169C322587741E00DA6E3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DB169C332587741E00DA6E3A /* Wattspeed_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Wattspeed_Extension.entitlements; sourceTree = "<group>"; };
+		DB169C402587741F00DA6E3A /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = ../../dist/manifest.json; sourceTree = "<group>"; };
+		DB169C412587741F00DA6E3A /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = ../../dist/assets; sourceTree = "<group>"; };
+		DB53C1DD2599B728003ADDFA /* build.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = build.js; path = ../../dist/build.js; sourceTree = "<group>"; };
+		DB53C1DF2599B728003ADDFA /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = index.html; path = ../../dist/index.html; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DB169C132587741C00DA6E3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB169C252587741E00DA6E3A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB169C2E2587741E00DA6E3A /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DB169C0D2587741C00DA6E3A = {
+			isa = PBXGroup;
+			children = (
+				DB169C182587741C00DA6E3A /* Wattspeed */,
+				DB169C2F2587741E00DA6E3A /* Wattspeed Extension */,
+				DB169C2C2587741E00DA6E3A /* Frameworks */,
+				DB169C172587741C00DA6E3A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DB169C172587741C00DA6E3A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DB169C162587741C00DA6E3A /* Wattspeed.app */,
+				DB169C282587741E00DA6E3A /* Wattspeed Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DB169C182587741C00DA6E3A /* Wattspeed */ = {
+			isa = PBXGroup;
+			children = (
+				DB169C192587741C00DA6E3A /* Wattspeed.entitlements */,
+				DB169C1A2587741C00DA6E3A /* AppDelegate.swift */,
+				DB169C1C2587741C00DA6E3A /* Main.storyboard */,
+				DB169C1F2587741C00DA6E3A /* ViewController.swift */,
+				DB169C212587741E00DA6E3A /* Assets.xcassets */,
+				DB169C232587741E00DA6E3A /* Info.plist */,
+			);
+			path = Wattspeed;
+			sourceTree = "<group>";
+		};
+		DB169C2C2587741E00DA6E3A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DB169C2D2587741E00DA6E3A /* Cocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DB169C2F2587741E00DA6E3A /* Wattspeed Extension */ = {
+			isa = PBXGroup;
+			children = (
+				DB169C3D2587741F00DA6E3A /* Resources */,
+				DB169C302587741E00DA6E3A /* SafariWebExtensionHandler.swift */,
+				DB169C322587741E00DA6E3A /* Info.plist */,
+				DB169C332587741E00DA6E3A /* Wattspeed_Extension.entitlements */,
+			);
+			path = "Wattspeed Extension";
+			sourceTree = "<group>";
+		};
+		DB169C3D2587741F00DA6E3A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DB53C1DD2599B728003ADDFA /* build.js */,
+				DB53C1DF2599B728003ADDFA /* index.html */,
+				DB169C402587741F00DA6E3A /* manifest.json */,
+				DB169C412587741F00DA6E3A /* assets */,
+			);
+			name = Resources;
+			path = "Wattspeed Extension";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DB169C152587741C00DA6E3A /* Wattspeed */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB169C3A2587741E00DA6E3A /* Build configuration list for PBXNativeTarget "Wattspeed" */;
+			buildPhases = (
+				DB169C122587741C00DA6E3A /* Sources */,
+				DB169C132587741C00DA6E3A /* Frameworks */,
+				DB169C142587741C00DA6E3A /* Resources */,
+				DB169C392587741E00DA6E3A /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DB169C2B2587741E00DA6E3A /* PBXTargetDependency */,
+			);
+			name = Wattspeed;
+			productName = Wattspeed;
+			productReference = DB169C162587741C00DA6E3A /* Wattspeed.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DB169C272587741E00DA6E3A /* Wattspeed Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB169C362587741E00DA6E3A /* Build configuration list for PBXNativeTarget "Wattspeed Extension" */;
+			buildPhases = (
+				DB169C242587741E00DA6E3A /* Sources */,
+				DB169C252587741E00DA6E3A /* Frameworks */,
+				DB169C262587741E00DA6E3A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Wattspeed Extension";
+			productName = "Wattspeed Extension";
+			productReference = DB169C282587741E00DA6E3A /* Wattspeed Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DB169C0E2587741C00DA6E3A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1220;
+				LastUpgradeCheck = 1220;
+				TargetAttributes = {
+					DB169C152587741C00DA6E3A = {
+						CreatedOnToolsVersion = 12.2;
+					};
+					DB169C272587741E00DA6E3A = {
+						CreatedOnToolsVersion = 12.2;
+					};
+				};
+			};
+			buildConfigurationList = DB169C112587741C00DA6E3A /* Build configuration list for PBXProject "Wattspeed" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DB169C0D2587741C00DA6E3A;
+			productRefGroup = DB169C172587741C00DA6E3A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DB169C152587741C00DA6E3A /* Wattspeed */,
+				DB169C272587741E00DA6E3A /* Wattspeed Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DB169C142587741C00DA6E3A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB169C222587741E00DA6E3A /* Assets.xcassets in Resources */,
+				DB169C1E2587741C00DA6E3A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB169C262587741E00DA6E3A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB53C1E22599B728003ADDFA /* index.html in Resources */,
+				DB53C1E02599B728003ADDFA /* build.js in Resources */,
+				DB169C452587741F00DA6E3A /* assets in Resources */,
+				DB169C442587741F00DA6E3A /* manifest.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DB169C122587741C00DA6E3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB169C202587741C00DA6E3A /* ViewController.swift in Sources */,
+				DB169C1B2587741C00DA6E3A /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DB169C242587741E00DA6E3A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB169C312587741E00DA6E3A /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DB169C2B2587741E00DA6E3A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DB169C272587741E00DA6E3A /* Wattspeed Extension */;
+			targetProxy = DB169C2A2587741E00DA6E3A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DB169C1C2587741C00DA6E3A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DB169C1D2587741C00DA6E3A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DB169C342587741E00DA6E3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DB169C352587741E00DA6E3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		DB169C372587741E00DA6E3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Wattspeed Extension/Wattspeed_Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
+				INFOPLIST_FILE = "Wattspeed Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.caphyon.wattspeed.extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		DB169C382587741E00DA6E3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "Wattspeed Extension/Wattspeed_Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 5;
+				INFOPLIST_FILE = "Wattspeed Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.caphyon.wattspeed.extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		DB169C3B2587741E00DA6E3A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Wattspeed/Wattspeed.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 5;
+				INFOPLIST_FILE = Wattspeed/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.caphyon.wattspeed;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		DB169C3C2587741E00DA6E3A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Wattspeed/Wattspeed.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 5;
+				INFOPLIST_FILE = Wattspeed/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.caphyon.wattspeed;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DB169C112587741C00DA6E3A /* Build configuration list for PBXProject "Wattspeed" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB169C342587741E00DA6E3A /* Debug */,
+				DB169C352587741E00DA6E3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB169C362587741E00DA6E3A /* Build configuration list for PBXNativeTarget "Wattspeed Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB169C372587741E00DA6E3A /* Debug */,
+				DB169C382587741E00DA6E3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DB169C3A2587741E00DA6E3A /* Build configuration list for PBXNativeTarget "Wattspeed" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB169C3B2587741E00DA6E3A /* Debug */,
+				DB169C3C2587741E00DA6E3A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DB169C0E2587741C00DA6E3A /* Project object */;
+}

@@ -98,6 +98,7 @@ export default {
      */
     isValid() {
       if (this.loading) return false;
+      debugger;
       for (let i in this.htmlData.messages) {
         const message = this.htmlData.messages[i];
         if (message.type == "warning" || message.type == "error" || message.type == "info") {
@@ -108,7 +109,11 @@ export default {
     },
 
     hasData() {
-      return !this.error && !this.loading && this.htmlData.messages.length > 0;
+      try {
+        return !this.error && !this.loading && this.htmlData.messages.length > 0;
+      } catch(e) {
+        this.error = "Something went wrong, please try again!";
+      }
     }
   }
 };
