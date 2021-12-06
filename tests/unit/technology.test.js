@@ -1,53 +1,69 @@
 import Vue from "vue";
-import { shallowMount, config } from "@vue/test-utils";
+import { createLocalVue, shallowMount } from "@vue/test-utils";
 import technology from "../../src/components/panels/tech/technology.vue"; // name of your Vue component
 
-// you can add as many elements with the same structure as you want here
-let techs = [
-  {
-    name: "Google Analytics",
-    url: "http://www.google.com/analytics/"
-  },
-  {
-    name: "SVG",
-    url: "http://www.w3.org/Graphics/SVG/"
-  }
-];
-
 global.EventBus = new Vue();
+const localVue = createLocalVue();
+
+// you can add as many elements with the same structure as you want here
+const data = {
+  techs: [
+    {
+      name: "Google Analytics",
+      url: "http://www.google.com/analytics/",
+    },
+    {
+      name: "SVG",
+      url: "http://www.w3.org/Graphics/SVG/",
+    },
+  ],
+  loading: false,
+};
+
+const noData = {
+  techs: [],
+  loading: false,
+};
+
+const methods = {
+  getTechnologies: jest.fn(),
+};
+
+function createWrapper(data) {
+  return shallowMount(technology, {
+    localVue,
+    methods,
+    data() {
+      return data;
+    },
+  });
+}
 
 describe("technology.vue", () => {
   it("Testing technology component", () => {
-    config.methods["allTechnologies"] = () => {};
-    const wrapper = shallowMount(technology);
-
-    wrapper.setData({
-      techs: techs
-    });
+    const wrapper = createWrapper(data);
 
     // controll if the component is instance
     expect(wrapper.isVueInstance).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
-    // // check if list exists
-    expect(wrapper.find('.scrollable__container').exists()).toBe(true);
-
-    // // check if data exists by passing staticly
-    expect(wrapper.find('.tech').exists()).toBe(true);
-    expect(wrapper.findAll('span').wrappers.length).toBe(wrapper.vm.$data.techs.length);
-    expect(wrapper.findAll('img').wrappers.length).toBe(wrapper.vm.$data.techs.length);
+    // check if the divs are present
+    expect(wrapper.find(".scrollable__container").exists()).toBe(true);
+    expect(wrapper.findAll(".scrollable__container a.tech").length).toBe(2);
+    wrapper.destroy();
   });
 
   it("Testing technology component without data", () => {
-    config.methods["allTechnologies"] = () => {};
-    const wrapper = shallowMount(technology);
-
-    wrapper.setData({
-      techs: []
-    });
+    const wrapper = createWrapper(noData);
 
     // controll if the component is instance
     expect(wrapper.isVueInstance).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
+
+    // check if the divs are present
+    expect(wrapper.find(".scrollable__container").exists()).toBe(true);
+    expect(wrapper.findAll(".scrollable__container a.tech").length).toBe(0);
+    wrapper.destroy();
   });
+
 });

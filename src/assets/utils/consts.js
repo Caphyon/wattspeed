@@ -5,4 +5,5 @@ export const ERRORS = 'Errors';
 export const MOBILE = 'mobile';
 export const DESKTOP = 'desktop';
 
-export const API_URL = 'https://api.wattspeed.com/extlighthouse';
+// export const API_URL = 'https://api.wattspeed.com/extlighthouse';
+export const API_URL = 'http://localhost:8081/extlighthouse';

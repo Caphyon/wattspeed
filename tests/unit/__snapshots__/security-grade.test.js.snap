@@ -1,0 +1,163 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test security grade Render grade A with color green 1`] = `
+<div
+  class="text--center"
+>
+  <h3
+    class="security-grade-letter mt0 mb0 alert--success"
+  >
+    A
+  </h3>
+   
+  <span
+    class="security-grade-section text--uppercase text--small"
+  >
+    Headers
+  </span>
+</div>
+`;
+
+exports[`Test security grade Render grade A+ with color green 1`] = `
+<div
+  class="text--center"
+>
+  <h3
+    class="security-grade-letter mt0 mb0 alert--success"
+  >
+    A+
+  </h3>
+   
+  <span
+    class="security-grade-section text--uppercase text--small"
+  >
+    Headers
+  </span>
+</div>
+`;
+
+exports[`Test security grade Render grade B with color yellow 1`] = `
+<div
+  class="text--center"
+>
+  <h3
+    class="security-grade-letter mt0 mb0 alert--warning"
+  >
+    B
+  </h3>
+   
+  <span
+    class="security-grade-section text--uppercase text--small"
+  >
+    Headers
+  </span>
+</div>
+`;
+
+exports[`Test security grade Render grade C with color yellow 1`] = `
+<div
+  class="text--center"
+>
+  <h3
+    class="security-grade-letter mt0 mb0 alert--warning"
+  >
+    C
+  </h3>
+   
+  <span
+    class="security-grade-section text--uppercase text--small"
+  >
+    Headers
+  </span>
+</div>
+`;
+
+exports[`Test security grade Render grade D with color orange 1`] = `
+<div
+  class="text--center"
+>
+  <h3
+    class="security-grade-letter mt0 mb0 alert--orange"
+  >
+    D
+  </h3>
+   
+  <span
+    class="security-grade-section text--uppercase text--small"
+  >
+    Headers
+  </span>
+</div>
+`;
+
+exports[`Test security grade Render grade E with color orange 1`] = `
+<div
+  class="text--center"
+>
+  <h3
+    class="security-grade-letter mt0 mb0 alert--orange"
+  >
+    E
+  </h3>
+   
+  <span
+    class="security-grade-section text--uppercase text--small"
+  >
+    Headers
+  </span>
+</div>
+`;
+
+exports[`Test security grade Render grade F with color red 1`] = `
+<div
+  class="text--center"
+>
+  <h3
+    class="security-grade-letter mt0 mb0 alert--danger"
+  >
+    F
+  </h3>
+   
+  <span
+    class="security-grade-section text--uppercase text--small"
+  >
+    Headers
+  </span>
+</div>
+`;
+
+exports[`Test security grade Render grade T with color red 1`] = `
+<div
+  class="text--center"
+>
+  <h3
+    class="security-grade-letter mt0 mb0 alert--danger"
+  >
+    T
+  </h3>
+   
+  <span
+    class="security-grade-section text--uppercase text--small"
+  >
+    SSL
+  </span>
+</div>
+`;
+
+exports[`Test security grade Render security-grade with no data 1`] = `
+<div
+  class="text--center"
+>
+  <h3
+    class="security-grade-letter mt0 mb0 alert--secondary"
+  >
+    NA
+  </h3>
+   
+  <span
+    class="security-grade-section text--uppercase text--small"
+  >
+    
+  </span>
+</div>
+`;

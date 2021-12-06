@@ -23,7 +23,7 @@ exports[`Testing html5_section.vue component Should render component with data 1
       <p
         clss="code"
       >
-        
+        &lt;div&gt;&lt;/div&gt;
       </p>
     </li>
   </ul>

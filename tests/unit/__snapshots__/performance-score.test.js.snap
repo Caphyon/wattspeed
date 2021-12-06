@@ -9,7 +9,7 @@ exports[`Testing speed-score comonent Should render the score of the page as dan
   >
     14
   </h3>
-
+   
   <span
     class="text--uppercase text--small"
   >
@@ -27,7 +27,7 @@ exports[`Testing speed-score comonent Should render the score of the page as suc
   >
     99
   </h3>
-
+   
   <span
     class="text--uppercase text--small"
   >
@@ -45,7 +45,7 @@ exports[`Testing speed-score comonent Should render the score of the page as war
   >
     82
   </h3>
-
+   
   <span
     class="text--uppercase text--small"
   >

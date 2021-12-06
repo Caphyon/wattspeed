@@ -13,7 +13,7 @@ exports[`Testing tech.vue component Should render corectly 1`] = `
      
     <performance-section-stub />
      
-    <mobile-section-stub />
+    <security-section-stub />
      
     <mixed-section-stub />
      

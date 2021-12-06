@@ -136,6 +136,18 @@ a {
     color: map-get($state, danger-text);
     padding: .2rem .4rem;
   }
+
+  &--orange {
+    background-color: map-get($state, orange-alpha);
+    color: map-get($state, orange-text);
+    padding: .2rem .4rem;
+  }
+
+  &--secondary {
+    background-color: map-get($state, secondary);
+    color: map-get($state, secondary-text);
+    padding: .2rem .4rem;
+  }
 }
 
 .code {

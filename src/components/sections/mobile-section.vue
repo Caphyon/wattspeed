@@ -23,11 +23,15 @@ export default {
   data() {
     return {
       panelName: "mobile",
-      title: "Mobile",
+      title: "Performance",
+      title2: "Mobile",
       data: {},
-      icon: "mobile",
+      icon: "pagespeed",
+      icon2: "mobile",
       mobile_friendly: "",
-      not_mobile_friendly: ""
+      not_mobile_friendly: "",
+      activeFirst: false,
+      activeSecond: true,
     };
   },
   mounted() {

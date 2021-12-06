@@ -59,15 +59,17 @@ import Technology from "./components/panels/tech/technology";
 import HTML5 from "./components/panels/tech/html5";
 import Performance from "./components/panels/tech/performance";
 import Mobile from "./components/panels/tech/mobile";
+import Security from "./components/panels/tech/security";
 import Mixed from "./components/panels/tech/mixed";
 import Accessibility from "./components/panels/tech/accessibility";
 Vue.component("tech", Tech);
 Vue.component("technology", Technology);
 Vue.component("html5", HTML5);
 Vue.component("performance", Performance);
-Vue.component("mobile", Mobile);
+Vue.component("security", Security);
 Vue.component("mixed", Mixed);
 Vue.component("accessibility", Accessibility);
+Vue.component("mobile", Mobile);
 
 export default {
   data() {

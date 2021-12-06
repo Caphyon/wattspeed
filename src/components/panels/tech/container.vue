@@ -70,6 +70,7 @@ export default {
     getContainerHeight() {
       switch(this.currentPanel){
         case "performance":
+        case "security":
           return 'scrollable--performance';
         case "accessibility":
           return 'scrollable--accessibility';

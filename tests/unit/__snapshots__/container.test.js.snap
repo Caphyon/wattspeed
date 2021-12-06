@@ -8,7 +8,7 @@ exports[`Testing Container component Container with data 1`] = `
     class="section__header"
   >
     <!---->
-
+     
     <a
       aria-label="Close button"
       class="close"
@@ -17,18 +17,16 @@ exports[`Testing Container component Container with data 1`] = `
     >
       ×
     </a>
-
+      
     <p
       class="sections__container--description text--center text--small px2 py1"
     >
       Descriere Test
     </p>
   </div>
-
-  <p
-    class="alert--warning"
-  >
-
-  </p>
+   
+  <!---->
+   
+  <!---->
 </div>
 `;

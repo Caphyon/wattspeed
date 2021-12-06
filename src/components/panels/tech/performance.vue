@@ -1,5 +1,5 @@
 <template>
-    <container>
+    <pair-container>
       <template slot="header">
         <div v-if="!error" class="section__header--stats px2 py1">
           <performance-score :score="mobileScore" type="Mobile"></performance-score>
@@ -21,20 +21,20 @@
                      @onFilter="updateFilteredResults">
         </filter-item>
       </template>
-    </container>
+    </pair-container>
 </template>
 
 <script>
 
 import Vue from "vue";
 import PerformanceSection from "../../sections/performance-section";
-import Container from "./container";
+import PairContainer from "./pair-container";
 import Item from "./items/performance-item";
 import FilterItem from "./items/filter-item";
 
 let Constant = require('./../../../assets/utils/consts.js')
 
-Vue.component("container", Container);
+Vue.component("pair-container", PairContainer);
 Vue.component("performance-item", Item);
 Vue.component("filter-item", FilterItem);
 

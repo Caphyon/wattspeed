@@ -18,7 +18,7 @@ describe("filter-item.vue", () => {
 
     expect(wrapper.isVueInstance).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
-    expect(wrapper.findAll('label').wrappers.length).toBe(3);
+    expect(wrapper.findAll('label').length).toBe(3);
     expect(wrapper.find('.cursor--pointer.filter__checkbox.filter--success').exists()).toBe(true);
     expect(wrapper.find('.cursor--pointer.filter__checkbox.filter--warning').exists()).toBe(true);
     expect(wrapper.find('.cursor--pointer.filter__checkbox.filter--danger').exists()).toBe(true);

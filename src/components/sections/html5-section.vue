@@ -78,7 +78,8 @@ export default {
      * returning an array with formatted messages
      */
     getMessages: function() {
-      if (!this.loading && this.htmlData.messages) {
+      if (!this.loading && this.htmlData.messages.length > 0) {
+        console.lo
         return this.htmlData.messages.map(message => {
           return {
             msg: message.message,
@@ -98,7 +99,7 @@ export default {
      */
     isValid() {
       if (this.loading) return false;
-      debugger;
+      // debugger;
       for (let i in this.htmlData.messages) {
         const message = this.htmlData.messages[i];
         if (message.type == "warning" || message.type == "error" || message.type == "info") {

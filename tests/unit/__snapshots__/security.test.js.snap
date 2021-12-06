@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`security.vue Testing speed component 1`] = `
+<container-stub>
+  <template>
+    <div
+      class="section__header--stats px2 py1"
+    >
+      <security-grade-stub
+        grade="[object Object]"
+        section="Headers"
+      />
+       
+      <security-grade-stub
+        grade="[object Object]"
+        section="SSL"
+      />
+    </div>
+  </template>
+   
+  <div
+    class="scrollable__container"
+  >
+    <div>
+      <h4
+        class="text--center text--muted mt0 mb1"
+      >
+        Headers
+      </h4>
+       
+      <security-headers-item-stub
+        data="[object Object]"
+        title="Strict-Transport-Security"
+      />
+      <security-headers-item-stub
+        data="[object Object]"
+        title="Content-Security-Policy"
+      />
+      <security-headers-item-stub
+        data="[object Object]"
+        title="X-Frame-Options"
+      />
+      <security-headers-item-stub
+        data="[object Object]"
+        title="X-Content-Type-Options"
+      />
+      <security-headers-item-stub
+        data="[object Object]"
+        title="Referrer-Policy"
+      />
+      <security-headers-item-stub
+        data="[object Object]"
+        title="Permissions-Policy"
+      />
+    </div>
+     
+    <div>
+      <h4
+        class="text--center text--muted mt0 mb1"
+      >
+        SSL
+      </h4>
+        
+      <security-ssl-item-stub
+        message="This server supports weak cipher suites"
+        type="warning"
+      />
+      <security-ssl-item-stub
+        message="This server supports weak TLS protocols"
+        type="warning"
+      />
+       
+      <security-ssl-item-stub
+        message="Certificate is trusted"
+        type="success"
+      />
+    </div>
+  </div>
+</container-stub>
+`;

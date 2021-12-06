@@ -17,7 +17,7 @@ describe("accessibility-status.vue", () => {
 
     expect(wrapper.find('.section__header--stats.px2.py1 > .text--center').exists()).toBe(true);
     expect(wrapper.find('.alert--danger.mt0.mb0').exists()).toBe(true);
-    expect(wrapper.findAll('span').wrappers.length).toBe(3);
+    expect(wrapper.findAll('span').length).toBe(3);
     expect(wrapper.findAll('span').wrappers[0].text()).toBe("issues");
     expect(wrapper.findAll('span').wrappers[1].text()).toBe("warnings");
     expect(wrapper.findAll('span').wrappers[2].text()).toBe("score");

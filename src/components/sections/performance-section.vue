@@ -1,10 +1,10 @@
 <template>
-    <section-container>
-      <div class="section__header--stats px2 py1">
-        <performance-score :score="mobileScore" type="Mobile"></performance-score>
-        <performance-score :score="desktopScore" type="Desktop"></performance-score>
-      </div>
-    </section-container>
+  <section-container>
+    <div class="section__header--stats px2 py1">
+      <performance-score :score="mobileScore" type="Mobile"></performance-score>
+      <performance-score :score="desktopScore" type="Desktop"></performance-score>
+    </div>
+  </section-container>
 </template>
 <script>
 
@@ -23,10 +23,14 @@ export default {
   data() {
     return {
       title: "Performance",
+      title2: "Mobile",
       panelName: "performance",
       dataFinal: {},
       icon: "pagespeed",
-      essentialData: null
+      icon2: "mobile",
+      essentialData: null,
+      activeFirst: true,
+      activeSecond: false,
     };
   },
   mounted() {

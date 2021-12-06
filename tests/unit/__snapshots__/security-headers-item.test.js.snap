@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`security-ssl-item.vue Snapshot for component level danger 1`] = `
+<div
+  class="scrollable--issue alert--danger"
+>
+  <h4
+    class="mt0 mb0"
+  >
+    Strict-Transport-Security
+  </h4>
+   
+  <p
+    class="mb0"
+  >
+    <span>
+      HSTS tells the browser that the connection should be made using HTTPS, instead of HTTP. 
+    </span>
+     
+    <a
+      href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security"
+      target="_blank"
+    >
+      Learn more
+    </a>
+  </p>
+   
+  <p
+    class="code mb0"
+  >
+    NA
+  </p>
+</div>
+`;
+
+exports[`security-ssl-item.vue Snapshot for component level success 1`] = `
+<div
+  class="scrollable--issue alert--success"
+>
+  <h4
+    class="mt0 mb0"
+  >
+    Strict-Transport-Security
+  </h4>
+   
+  <p
+    class="mb0"
+  >
+    <span>
+      HSTS tells the browser that the connection should be made using HTTPS, instead of HTTP. 
+    </span>
+     
+    <a
+      href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security"
+      target="_blank"
+    >
+      Learn more
+    </a>
+  </p>
+   
+  <p
+    class="code mb0"
+  >
+    max-age=31536000
+  </p>
+</div>
+`;
+
+exports[`security-ssl-item.vue Snapshot for component level success_noValue 1`] = `
+<div
+  class="scrollable--issue alert--success"
+>
+  <h4
+    class="mt0 mb0"
+  >
+    X-Frame-Options
+  </h4>
+   
+  <p
+    class="mb0"
+  >
+    <span>
+      XFO indicate whether or not the browser should be allowed to render a page in a &lt;frame&gt;, &lt;iframe&gt;, &lt;embed&gt; or &lt;object&gt; to avoid click-jacking attacks ensuring that their content is not embedded into other sites. 
+    </span>
+     
+    <a
+      href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options"
+      target="_blank"
+    >
+      Learn more
+    </a>
+  </p>
+   
+  <p
+    class="code mb0"
+  >
+    NA
+  </p>
+</div>
+`;

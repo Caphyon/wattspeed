@@ -18,8 +18,8 @@ exports[`mixed-section.vue Testing mixed-section.vue component in case no https 
     class="alert--warning"
   >
     
-    Does not apply to non HTTPS pages.
-  
+        Does not apply to non HTTPS pages.
+    
   </p>
 </section-container-stub>
 `;

@@ -12,7 +12,17 @@ exports[`mixed.vue Testing mixed.vue component in case contains mixed content 1`
     </h3>
   </template>
    
-  <!---->
+  <ul
+    class="list-unstyled"
+  >
+    <li
+      class="alert--danger"
+    >
+      
+          http://example.com
+        
+    </li>
+  </ul>
    
   <!---->
 </container-stub>

@@ -5,6 +5,7 @@ export default {
   data() {
     return {
       title: "",
+      title2: "",
       desc: "",
       error: "",
       noDataMsg: "No data found.",

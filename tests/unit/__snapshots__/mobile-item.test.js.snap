@@ -4,7 +4,7 @@ exports[`mobile-item.vue Snapshot for mobile-item component with data  1`] = `
 <p
   class="mt0 alert--success"
 >
-  Has a \`&lt;meta name="viewport"&gt;\` tag with \`width\` or \`initial-scale\`
+  Has a &lt;meta name="viewport"&gt; tag with width or initial-scale
 </p>
 `;
 
@@ -12,6 +12,6 @@ exports[`mobile-item.vue Snapshot for mobile-item component without data 1`] = `
 <p
   class="mt0 alert--danger"
 >
-  Has a \`&lt;meta name="viewport"&gt;\` tag with \`width\` or \`initial-scale\`
+  Has a &lt;meta name="viewport"&gt; tag with width or initial-scale
 </p>
 `;
