@@ -1,37 +1,128 @@
-import Vue from "vue";
-import { shallowMount, config } from "@vue/test-utils";
-import speed_section from "../../src/components/sections/performance-section.vue"; // name of your Vue component
-import speed_score from "../../src/components/panels/tech/items/performance-score.vue";
+import fetchMock from 'jest-fetch-mock';
+fetchMock.enableMocks();
+
+import Vue from 'vue';
+import { createLocalVue, shallowMount } from '@vue/test-utils';
+
+import section_container from '@/components/sections/section-container';
+import speed_section from '@/components/sections/performance-section';
+import speed_score from '@/components/panels/tech/items/performance-score';
 
 global.EventBus = new Vue();
+const localVue = createLocalVue();
 
-describe("performance-section.vue", () => {
+const response = {
+  categories: {
+    performance: {
+      score: 0.89,
+    },
+  },
+  audits: {
+    'first-contentful-paint': {
+      title: 'First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint/).',
+      description: 'First Contentful Paint',
+      score: 0.79,
+    },
+  },
+};
 
-  config.methods["getPerformance"] = () => {};
-  const wrapper = shallowMount(speed_section);
+const responseNoIssue = {
+  categories: {
+    performance: {
+      score: 1,
+    },
+  },
+  audits: {
+    'first-contentful-paint': {
+      title: 'First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint/).',
+      description: 'First Contentful Paint',
+      score: null,
+    },
+  },
+};
 
-  it("Testing performance-section.vue component", () => {
+const data = {
+  essentialData: {
+    mobileScore: 0.89,
+    desktopScore: 0.89,
+    mobile: [],
+    desktop: [],
+  },
+  filteredMobileData: [],
+  filteredDesktopData: [],
+  loading: false,
+};
+
+const dataNoIssue = {
+  essentialData: {
+    mobileScore: 1,
+    desktopScore: 1,
+    mobile: [],
+    desktop: [],
+  },
+  filteredMobileData: [],
+  filteredDesktopData: [],
+  loading: false,
+};
+
+function createWrapper(data) {
+  return shallowMount(speed_section, {
+    localVue,
+    computed: {
+      tab() {
+        return 'https://www.example.com';
+      },
+    },
+    data() {
+      return data;
+    },
+  });
+}
+
+describe("Testing performance-section component", () => {
+  beforeEach(() => {
+    fetchMock.resetMocks();
+  });
+
+  afterEach(() => {
+    localStorage.clear();
+  });
+
+  it("Render performance-section with no issues", () => {
+    fetchMock.mockResponse(JSON.stringify({ body: JSON.stringify(responseNoIssue) }));
+    const wrapper = createWrapper(dataNoIssue);
 
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
+    expect(wrapper.findComponent(section_container).exists()).toBeTruthy();
     expect(wrapper.find('.section__header--stats.px2.py1').exists()).toBe(true);
-    expect(wrapper.contains(speed_score)).toBe(true)
-    wrapper.find(speed_score).vm.$emit('score', 'type = "Mobile"')
-    wrapper.find(speed_score).vm.$emit('score', 'type = "Desktop"')
+    expect(wrapper.findAllComponents(speed_score).length).toBe(2);
+    wrapper.destroy();
+  });
 
+  it("Render performance-section with issues", () => {
+    fetchMock.mockResponse(JSON.stringify({ body: JSON.stringify(response) }));
+    const wrapper = createWrapper(data);
+
+    // controll if the component is instance
+    expect(wrapper.exists()).toBeTruthy();
+    expect(wrapper.element).toMatchSnapshot();
+
+    expect(wrapper.findComponent(section_container).exists()).toBeTruthy();
+    expect(wrapper.find('.section__header--stats.px2.py1').exists()).toBe(true);
+    expect(wrapper.findAllComponents(speed_score).length).toBe(2);
+    wrapper.destroy();
   });
 
   it('should return how many times the method is called inside the event bus', () => {
-    const getPerformanceMock = jest.fn();
-    wrapper.setMethods({ getPerformance: getPerformanceMock })
-
-    expect(wrapper.isVueInstance).toBeTruthy();
+    fetchMock.mockResponse(JSON.stringify({ body: JSON.stringify(response) }));
+    const wrapper = createWrapper(data);
+    const spy = spyOn(wrapper.vm, 'getPerformance');
     global.EventBus.$emit('refreshData');
-
-    // The mock function is called twice
-    expect(getPerformanceMock.mock.calls.length).toBe(2);
+    expect(spy).toHaveBeenCalledTimes(2);
+    wrapper.destroy();
   });
 
 });

@@ -12,7 +12,7 @@ describe("Testing tech.vue component", () => {
     const wrapper = shallowMount(tech);
 
     // controll if the component is instance
-    expect(wrapper.isVueInstance()).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     // check if the divs are presents
@@ -20,12 +20,12 @@ describe("Testing tech.vue component", () => {
     expect(wrapper.find('.sections').exists()).toBe(true);
 
     // check if all the components are imported correctly
-    expect(wrapper.contains(tech_section)).toBe(true);
-    expect(wrapper.contains(html5_section)).toBe(true);
-    expect(wrapper.contains(speed_section)).toBe(true);
-    expect(wrapper.contains(security_section)).toBe(true);
-    expect(wrapper.contains(mixed_section)).toBe(true);
-    expect(wrapper.contains(accessibility_section)).toBe(true);
+    expect(wrapper.findComponent(tech_section)).toBeTruthy();
+    expect(wrapper.findComponent(html5_section)).toBeTruthy();
+    expect(wrapper.findComponent(speed_section)).toBeTruthy();
+    expect(wrapper.findComponent(security_section)).toBeTruthy();
+    expect(wrapper.findComponent(mixed_section)).toBeTruthy();
+    expect(wrapper.findComponent(accessibility_section)).toBeTruthy();
   });
 
 });

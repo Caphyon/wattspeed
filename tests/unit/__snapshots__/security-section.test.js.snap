@@ -1,6 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`security-section.vue Testing security-section.vue component 1`] = `
+exports[`Testing security-section component Render component with data 1`] = `
+<section-container-stub>
+  <div
+    class="section__header--stats px2 py1"
+  >
+    <security-grade-stub
+      grade="[object Object]"
+      section="Headers"
+    />
+     
+    <security-grade-stub
+      grade="[object Object]"
+      section="SSL"
+    />
+  </div>
+</section-container-stub>
+`;
+
+exports[`Testing security-section component Render component with no data 1`] = `
 <section-container-stub>
   <div
     class="section__header--stats px2 py1"

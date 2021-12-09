@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`html5.vue Testing html5 component 1`] = `
+exports[`html5.vue Testing html5 component with issues 1`] = `
 <container-stub>
   <template>
     <h3
-      class="text--danger text--center text--strong mb0"
+      class="html5-status text--danger text--center text--strong mb0"
     >
-      Errors found while checking the page.
+      Html issues found while checking the page.
     </h3>
   </template>
    
@@ -17,16 +17,18 @@ exports[`html5.vue Testing html5 component 1`] = `
       <li
         class="scrollable--issue alert--warning"
       >
-        <p
+        <h4
           class="mt0 mb0"
         >
           Using “windows-1252” instead of the declared encoding “iso-8859-1”.
-        </p>
+        </h4>
          
         <p
           class="code mb0"
         >
-          &lt;div&gt;&lt;/div&gt;
+          <code>
+            &lt;div&gt;an_extract&lt;/div&gt;
+          </code>
         </p>
       </li>
     </ul>
@@ -40,13 +42,13 @@ exports[`html5.vue Testing html5 component 1`] = `
 </container-stub>
 `;
 
-exports[`html5.vue Testing html5 component with no data 1`] = `
+exports[`html5.vue Testing html5 component with no issues 1`] = `
 <container-stub>
   <template>
     <h3
-      class="text--success text--center text--strong mb0"
+      class="html5-status text--success text--center text--strong mb0"
     >
-      No errors found.
+      No html issues found.
     </h3>
   </template>
    

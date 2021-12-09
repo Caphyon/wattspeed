@@ -1,12 +1,39 @@
+import fetchMock from 'jest-fetch-mock';
+fetchMock.enableMocks();
+
+import Vue from "vue";
 import { createLocalVue, shallowMount } from "@vue/test-utils";
+
+import section_container from "../../src/components/sections/section-container";
 import accessibility_section from "../../src/components/sections/accesibility-section";
-import Vue from "vue"; // name of your Vue component
+import accessibility_status from '@/components/panels/tech/items/accessibility-status';
 
 global.EventBus = new Vue();
 const localVue = createLocalVue();
 
-const methods = {
-  allAccessibility: jest.fn(),
+const response = {
+  audits: {
+    'frame-title': {
+      title: '`<frame>` or `<iframe>` elements do not have a title',
+      description: 'Screen reader users rely on frame titles to describe the contents of frames. [Learn more](https://web.dev/frame-title/).',
+      score: 0,
+      id: 'frame-title',
+      details: {
+        debugData: {
+          impact: 'serious',
+        },
+        items: [
+          { node: { snippet: '<iframe src=\"/howto/tryhow_js_slideshow_ifr.htm\" id=\"howto_iframe\">' }},
+        ],
+      },
+    },
+  },
+  categories: {
+    accessibility: {
+      score: 0.63,
+      auditRefs: [{ id: 'frame-title', weight: 3 }],
+    },
+  },
 };
 
 const data = {
@@ -14,12 +41,17 @@ const data = {
   issues: 1,
   warnings: 0,
   loading: false,
+  initialData: [],
 };
 
-function createWrapper() {
+function createWrapper(data) {
   return shallowMount(accessibility_section, {
     localVue,
-    methods,
+    computed: {
+      tab() {
+        return "https://www.example.com";
+      },
+    },
     data() {
       return data;
     },
@@ -27,41 +59,55 @@ function createWrapper() {
 }
 
 describe("Testing Accesibility-Section component", () => {
-  it("Score 100", () => {
-    data.score = 100;
-    const wrapper = createWrapper(data);
+  beforeEach(() => {
+    fetchMock.resetMocks();
+  });
 
+  afterEach(() => {
+    localStorage.clear();
+  });
+
+  it("Score 100", () => {
+    response.audits['frame-title'].score = null;
+    response.categories.accessibility.score = 1;
+    data.score = 100;
+    data.issues = 0;
+    data.initialData = [];
+    fetchMock.mockResponseOnce(JSON.stringify({ body: JSON.stringify(response) }));
+    const wrapper = createWrapper(data);
     // controll if the component is instance
-    expect(wrapper.isVueInstance()).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
+    expect(wrapper.element).toMatchSnapshot();
 
     // check if the divs are presents
+    expect(wrapper.findComponent(section_container).exists()).toBeTruthy();
+    expect(wrapper.findComponent(accessibility_status).exists()).toBeFalsy();
     expect(wrapper.find("p.alert--success").exists()).toBe(true);
-    expect(wrapper.element).toMatchSnapshot();
     wrapper.destroy();
   });
 
   it("Score under 100", () => {
     data.score = 67;
+    fetchMock.mockResponseOnce(JSON.stringify({ body: JSON.stringify(response) }));
     const wrapper = createWrapper(data);
     
     // controll if the component is instance
-    expect(wrapper.isVueInstance()).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
+    expect(wrapper.element).toMatchSnapshot();
 
     // check if the divs are presents
+    expect(wrapper.findComponent(section_container).exists()).toBeTruthy();
+    expect(wrapper.findComponent(accessibility_status).exists()).toBeTruthy();
     expect(wrapper.find("p.alert--success").exists()).toBe(false);
-    expect(wrapper.element).toMatchSnapshot();
     wrapper.destroy();
   });
 
   it('should return how many times the method is called inside the event bus', () => {
-    const allAccessibilityMock = jest.fn();
+    fetchMock.mockResponseOnce(JSON.stringify({ body: JSON.stringify(response) }));
     const wrapper = createWrapper(data);
-    wrapper.setMethods({ allAccessibility : allAccessibilityMock });
-
-    expect(wrapper.isVueInstance).toBeTruthy();
+    const spy = spyOn(wrapper.vm, 'allAccessibility');
     global.EventBus.$emit('refreshData');
-    // The mock function is called onc
-    expect(allAccessibilityMock.mock.calls.length).toBe(1);
+    expect(spy).toHaveBeenCalledTimes(1);
     wrapper.destroy();
   });
 

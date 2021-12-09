@@ -2,7 +2,7 @@
 
 exports[`performance-item.vue Global 1`] = `
 <div
-  class="alert--success scrollable--issue alert--danger"
+  class="scrollable--issue alert--danger"
 >
   <h4
     class="mt0 mb0"
@@ -20,7 +20,7 @@ exports[`performance-item.vue Global 1`] = `
 
 exports[`performance-item.vue Snapshot for speed-item component level danger 1`] = `
 <div
-  class="alert--success scrollable--issue alert--danger"
+  class="scrollable--issue alert--danger"
 >
   <h4
     class="mt0 mb0"
@@ -38,7 +38,7 @@ exports[`performance-item.vue Snapshot for speed-item component level danger 1`]
 
 exports[`performance-item.vue Snapshot for speed-item component level success 1`] = `
 <div
-  class="alert--success scrollable--issue"
+  class="scrollable--issue alert--success"
 >
   <h4
     class="mt0 mb0"
@@ -56,7 +56,7 @@ exports[`performance-item.vue Snapshot for speed-item component level success 1`
 
 exports[`performance-item.vue Snapshot for speed-item component level warning 1`] = `
 <div
-  class="alert--success scrollable--issue alert--warning"
+  class="scrollable--issue alert--warning"
 >
   <h4
     class="mt0 mb0"

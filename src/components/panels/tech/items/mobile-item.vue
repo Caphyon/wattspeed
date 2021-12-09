@@ -1,6 +1,9 @@
 <template>
-    <p class="mt0" v-bind:class="classObject">{{parseText(msg)}}</p>
+  <div class="scrollable--issue" :class="classObject">
+    <p class="mt0 mb0" v-html="msg"></p>
+  </div>
 </template>
+
 <script>
 export default {
   props: ["data"],
@@ -9,15 +12,7 @@ export default {
       return this.data.title;
     },
     classObject() {
-      return [this.data.passed ? "alert--success" : "alert--danger"];
-    }
-  },
-  methods: {
-    parseText(msg){
-      if (msg.includes('`')){
-        msg = msg.replace(/`/g, "");
-      }
-      return msg;
+      return this.data.passed ? 'alert--success' : 'alert--danger';
     },
   },
 };

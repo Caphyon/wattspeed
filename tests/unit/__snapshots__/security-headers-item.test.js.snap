@@ -28,7 +28,9 @@ exports[`security-ssl-item.vue Snapshot for component level danger 1`] = `
   <p
     class="code mb0"
   >
-    NA
+    <code>
+      NA
+    </code>
   </p>
 </div>
 `;
@@ -61,7 +63,9 @@ exports[`security-ssl-item.vue Snapshot for component level success 1`] = `
   <p
     class="code mb0"
   >
-    max-age=31536000
+    <code>
+      max-age=31536000
+    </code>
   </p>
 </div>
 `;
@@ -94,7 +98,9 @@ exports[`security-ssl-item.vue Snapshot for component level success_noValue 1`] 
   <p
     class="code mb0"
   >
-    NA
+    <code>
+      NA
+    </code>
   </p>
 </div>
 `;

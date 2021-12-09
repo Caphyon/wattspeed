@@ -7,7 +7,7 @@
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#logo"/>
         </svg>
       </a>
-      <button @click="refreshData()" title="Refresh data">
+      <button @click="refreshData()" title="Refresh data" class="refreshData">
         <svg width="18" height="18" data-icon>
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#refresh"/>
         </svg>
@@ -62,6 +62,7 @@ import Mobile from "./components/panels/tech/mobile";
 import Security from "./components/panels/tech/security";
 import Mixed from "./components/panels/tech/mixed";
 import Accessibility from "./components/panels/tech/accessibility";
+
 Vue.component("tech", Tech);
 Vue.component("technology", Technology);
 Vue.component("html5", HTML5);
@@ -70,6 +71,8 @@ Vue.component("security", Security);
 Vue.component("mixed", Mixed);
 Vue.component("accessibility", Accessibility);
 Vue.component("mobile", Mobile);
+
+const Constant = require('./assets/utils/consts.js');
 
 export default {
   data() {
@@ -102,9 +105,47 @@ export default {
       this.currentPanel = panel;
     },
     refreshData() {
-      chrome.storage.local.clear();
-      EventBus.$emit("changePanel", "tech");
-      EventBus.$emit("refreshData");
+      const myPromise = new Promise(() => {
+        const panels = [
+          {
+            name: 'accessibility',
+            strategies: [Constant.ANY],
+          },
+          {
+            name: 'performance',
+            strategies: [Constant.MOBILE, Constant.DESKTOP],
+          },
+          {
+            name: 'technology',
+            strategies: [Constant.ANY],
+          },
+          {
+            name: 'mixed',
+            strategies: [Constant.ANY],
+          },
+          {
+            name: 'mobile',
+            strategies: [Constant.ANY],
+          },
+          {
+            name: 'html5',
+            strategies: [Constant.ANY],
+          },
+          {
+            name: 'security',
+            strategies: [Constant.ANY],
+          },
+        ];
+        for (const panel of panels) {
+          for (const strategy of panel.strategies) {
+            const cache_key = Buffer.from(`${panel.name}${strategy}${this.tab.url}`).toString('base64');
+            localStorage.removeItem(cache_key);
+          }
+        }
+      });
+      myPromise.then(EventBus.$emit("changePanel", "tech"));
+      myPromise.then(EventBus.$emit("refreshData"));
+      myPromise.catch(new Error('could not clear local storage'));
     },
     injectScript(tab) {
       // Get all content scripts
@@ -126,7 +167,9 @@ export default {
       };
       chrome.tabs.sendMessage(tab.id, { action: "VERIFY_INJECTED" }, status => {
         if (!status && !tab.url.match("chrome.google.com")) {
-          chrome.storage.local.clear();
+          // new Promise(() => { localStorage.clear() })
+          //   .then(() => {})
+          //   .catch("could not clear local storage");
           injectIntoTab(tab.id);
         } else this.tab = tab;
       });

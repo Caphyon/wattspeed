@@ -1,7 +1,7 @@
 <template>
     <section-container>
       <ul class="list-unstyled">
-          <li v-for="(item, index) in techs" :key="index">
+          <li v-for="(item, index) in tech" :key="index">
             <img v-bind:src=" 'https://www.google.com/s2/favicons?domain=' + item.url " class="text--vcenter"/>
             <span class="text--vcenter">{{ item.name }}</span>
           </li>
@@ -33,7 +33,7 @@ export default {
       noDataMsg: "No technologies found.",
       title: "Technologies",
       panelName: "technology",
-      techs: [],
+      tech: [],
       icon: "technologies",
       JSON_LD_TYPE: [],
       noErrorMessage: "This page does not contain any technologies"
@@ -57,14 +57,14 @@ export default {
         body: `{"params": {"url": "${this.tab.url}", "action":"get_technologies"}}`,
       });
 
-      this.makeRequest(request, this.panelName,  this.panelName, data => {
+      this.makeRequest(request, this.panelName,  Constant.ANY, data => {
         if (data.code == 1) {
           this.$emit('tooManyRequests');
         } else if (data.code == 2) {
           this.error = "Something went wrong, please try again!";
           this.loading = false;
         } else {
-          this.techs = JSON.parse(data.body).tech;
+          this.tech = JSON.parse(data.body).tech;
           this.JSON_LD_TYPE = JSON.parse(data.body).json_ld;
           this.loading = false;
         }
@@ -73,11 +73,14 @@ export default {
   },
   computed: {
     isValid() {
-      return this.techs.length === 0;
+      return this.tech.length === 0;
     },
     hasData() {
-      return this.techs.length > 0;
-    }
+      return this.tech.length > 0;
+    },
+    getPanelName() {
+      return this.panelName;
+    },
   }
 };
 </script>

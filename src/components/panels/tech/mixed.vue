@@ -1,19 +1,19 @@
 <template>
     <container>
         <template slot="header">
-            <h3 v-if="!isHttps" class="text--warning text--center text--strong mb0">
+            <h3 v-if="!isHttps" class="mixed-status text--warning text--center text--strong mb0">
               Does not apply to non HTTPS pages.
             </h3>
-            <h3 v-else-if="hasMixedContent" class="text--danger text--center text--strong mb0">
+            <h3 v-else-if="hasMixedContent" class="mixed-status text--danger text--center text--strong mb0">
               This site contains mixed content.
             </h3>
-            <h3 v-else class="text--success text--center text--strong mb0">
+            <h3 v-else class="mixed-status text--success text--center text--strong mb0">
               This page does not contain mixed content.
             </h3>
         </template>
         <template v-if="isHttps">
           <ul v-if="results.length" class="list-unstyled">
-            <li v-for="(item, index) in results" :key="index" class="alert--danger">
+            <li v-for="(item, index) in results" :key="index" class="scrollable--issue alert--danger">
               {{item}}
             </li>
           </ul>

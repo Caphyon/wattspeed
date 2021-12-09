@@ -1,93 +1,134 @@
+import fetchMock from 'jest-fetch-mock';
+fetchMock.enableMocks();
+
 import Vue from 'vue';
 import { createLocalVue, shallowMount } from '@vue/test-utils';
-import security from '../../src/components/panels/tech/security.vue'; // name of your Vue component
-import security_grade from '../../src/components/panels/tech/items/security-grade.vue';
-import security_headers_item from '../../src/components/panels/tech/items/security-headers-item.vue';
-import security_ssl_item from '../../src/components/panels/tech/items/security-ssl-item.vue';
+
+import Container from '@/components/panels/tech/container';
+import security from '@/components/panels/tech/security';
+import security_grade from '@/components/panels/tech/items/security-grade';
+import security_headers_item from '@/components/panels/tech/items/security-headers-item';
+import security_ssl_item from '@/components/panels/tech/items/security-ssl-item';
 
 global.EventBus = new Vue();
 const localVue = createLocalVue();
 
 const data = {
-  securityData: {},
-  grades: {
-    headersGrade: {
-      grade: 'D',
-      colour: 'orange',
+  body: {
+    grades: {
+      headersGrade: {
+        grade: 'B',
+        colour: 'yellow',
+      },
+      sslGrade: {
+        grade: 'A+',
+        colour: 'green',
+      },
     },
-    sslGrade: {
-      grade: 'B',
-      colour: 'yellow',
+    headersFeedback: {
+      headers: {
+        'Strict-Transport-Security': {
+          value: 'max-age=15552000',
+          set: true,
+        },
+        'Content-Security-Policy': {
+          value: 'upgrade-insecure-requests; frame-ancestors \'self\' https://example.com',
+          set: true,
+        },
+        'X-Frame-Options': {
+          value: 'SAMEORIGIN',
+          set: true,
+        },
+        'X-Content-Type-Options': {
+          value: 'NA',
+          set: false,
+        },
+        'Referrer-Policy': {
+          value: 'NA',
+          set: false,
+        },
+        'Permissions-Policy': {
+          value: 'NA',
+          set: false,
+        },
+      },
     },
+    sslFeedback: {
+      errors: {},
+      warnings: {
+        weakCiphers: 'This server supports weak cipher suites',
+      },
+      success: {
+        chain: 'Certificate is trusted',
+        currentBestProtocols: 'This server supports only the current best protocols',
+      },
+    },
+    usesHttps: true,
   },
-  initialHeadersData: {
-    'Strict-Transport-Security': {
-      'value': 'max-age=31536000; includeSubDomains',
-      'set': true,
-    },
-    'Content-Security-Policy': {
-      'value': 'NA',
-      'set': false,
-    },
-    'X-Frame-Options': {
-      'value': 'SAMEORIGIN',
-      'set': true,
-    },
-    'X-Content-Type-Options': {
-      'value': 'NA',
-      'set': false,
-    },
-    'Referrer-Policy': {
-      'value': 'NA',
-      'set': false,
-    },
-    'Permissions-Policy': {
-      'value': 'NA',
-      'set': false,
-    },
-  },
-  initialSSLData: {
-    'errors': {},
-    'warnings': {
-      'weakCiphers': 'This server supports weak cipher suites',
-      'weakProtocols': 'This server supports weak TLS protocols',
-    },
-    'success': {
-      'chain': 'Certificate is trusted',
-    },
-  },
-  loading: false,
 };
 
-const methods = {
-  getSecurity: jest.fn(),
+const noData = {
+  body: {},
 };
 
-function createWrapper(data) {
+const url = [ 'http://example0.com', 'http://example1.com' ];
+
+function createWrapper(url) {
   return shallowMount(security, {
     localVue,
-    methods,
+    computed: {
+      tab() {
+        return url;
+      },
+    },
     data() {
-      return data;
+      return {
+        loading: false,
+      };
     },
   });
 }
 
-describe('security.vue', () => {
-  it('Testing speed component', () => {
-    const wrapper = createWrapper(data);
+describe('Testing security component', () => {
+  beforeEach(() => {
+    fetchMock.resetMocks();
+  });
 
-    // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+  afterEach(() => {
+    localStorage.clear();
+  });
+
+  it('Render security component with data', async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(data), { ok: 1 });
+    const wrapper = createWrapper(url[0]);
+
+    // Check if the component is instance
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
-    expect(wrapper.find('.section__header--stats.px2.py1').exists()).toBe(true);
-    expect(wrapper.findAll(security_grade).length).toBe(2);
-    expect(wrapper.findAll('.scrollable__container').exists()).toBe(true);
+    expect(wrapper.find('.section__header--stats.px2.py1').exists()).toBeTruthy();
+    expect(wrapper.findAllComponents(security_grade).length).toBe(2);
+    expect(wrapper.findComponent(Container).exists()).toBeTruthy();
+    expect(wrapper.find('.scrollable__container').exists()).toBeTruthy();
 
     expect(wrapper.findAll('.text--center.text--muted.mt0.mb1').length).toBe(2);
-    expect(wrapper.findAll(security_headers_item).length).toBe(6);
-    expect(wrapper.findAll(security_ssl_item).length).toBe(3);
+    wrapper.destroy();
+  });
+
+  it('Render security component with no data', async () => {
+    fetchMock.mockResponseOnce(JSON.stringify(noData), { ok: 1 });
+    const wrapper = createWrapper(url[1]);
+
+    // Check if the component is instance
+    expect(wrapper.exists()).toBeTruthy();
+    expect(wrapper.element).toMatchSnapshot();
+
+    expect(wrapper.find('.section__header--stats.px2.py1').exists()).toBeTruthy();
+    expect(wrapper.findAllComponents(security_grade).length).toBe(2);
+    expect(wrapper.findComponent(Container).exists()).toBeTruthy();
+    expect(wrapper.find('.scrollable__container').exists()).toBeTruthy();
+
+    expect(wrapper.findAll('.text--center.text--muted.mt0.mb1').length).toBe(2);
     wrapper.destroy();
   });
 

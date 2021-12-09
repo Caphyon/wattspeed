@@ -15,7 +15,7 @@ import BaseSection from "./base-section.vue";
 import SectionContainer from "./section-container.vue";
 import SecurityGrade from "../panels/tech/items/security-grade.vue";
 
-let Constant = require("../../assets/utils/consts.js");
+const Constant = require("../../assets/utils/consts.js");
 
 Vue.component('section-container', SectionContainer);
 Vue.component('security-grade', SecurityGrade);
@@ -65,19 +65,22 @@ export default {
         body: JSON.stringify(params),
       });
 
-      this.makeRequest(request, this.panelName, 'any', data => {
+      this.makeRequest(request, this.panelName, Constant.ANY, data => {
         if (data.code == 1) {
           this.$emit('tooManyRequests');
         } else if (data.code == 2) {
           this.error = "Something went wrong, please try again!";
         } else {
           this.securityData = data.body;
-          this.initialHeadersData = this.securityData.headersFeedback.headers;
-          this.initialSSLData = this.securityData.sslFeedback;
           this.grades = this.securityData.grades;
         }
         this.loading = false;
       });
+    },
+  },
+  computed: {
+    getPanelName() {
+      return this.panelName;
     },
   },
 }

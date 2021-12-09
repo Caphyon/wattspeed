@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mixed.vue Testing mixed.vue component in case contains mixed content 1`] = `
+exports[`mixed.vue Testing mixed.vue component in case has mixed content 1`] = `
 <container-stub>
   <template>
     <h3
-      class="text--danger text--center text--strong mb0"
+      class="mixed-status text--danger text--center text--strong mb0"
     >
       
           This site contains mixed content.
@@ -16,7 +16,7 @@ exports[`mixed.vue Testing mixed.vue component in case contains mixed content 1`
     class="list-unstyled"
   >
     <li
-      class="alert--danger"
+      class="scrollable--issue alert--danger"
     >
       
           http://example.com
@@ -32,7 +32,7 @@ exports[`mixed.vue Testing mixed.vue component in case no https 1`] = `
 <container-stub>
   <template>
     <h3
-      class="text--warning text--center text--strong mb0"
+      class="mixed-status text--warning text--center text--strong mb0"
     >
       
           Does not apply to non HTTPS pages.
@@ -50,7 +50,7 @@ exports[`mixed.vue Testing mixed.vue component in case no mixed content 1`] = `
 <container-stub>
   <template>
     <h3
-      class="text--success text--center text--strong mb0"
+      class="mixed-status text--success text--center text--strong mb0"
     >
       
           This page does not contain mixed content.

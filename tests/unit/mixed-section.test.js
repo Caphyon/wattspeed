@@ -1,13 +1,29 @@
+import fetchMock from 'jest-fetch-mock';
+fetchMock.enableMocks();
+
 import Vue from "vue";
 import { createLocalVue, shallowMount } from "@vue/test-utils";
+
+import section_container from '@/components/sections/section-container';
 import mixed_section from "../../src/components/sections/mixed-section.vue"; // name of your Vue component
 
 global.EventBus = new Vue();
 const localVue = createLocalVue();
 
-const usingHttps = {
+const linksData = ['http://example.com', 'https://www.example.com'];
+const response = {
+  links: linksData,
+  srcs: [],
+};
+
+const emptyResponse = {
+  links: [],
+  srcs: [],
+};
+
+const dataWithIssues = {
   mixedContent: {
-    links: ['http://example.com', 'https://www.example.com'],
+    links: linksData,
     srcs: [],
   },
   isHttps: true,
@@ -18,72 +34,91 @@ const usingHttps = {
   loading: false,
 };
 
-const notUsingHttps = {
-  mixedContent: null,
-  isHttps: false,
+const dataNoIssues = {
+  mixedContent: {
+    links: ['https://example.com'],
+    srcs: [],
+  },
+  data: {
+    status: false,
+    results: [],
+  },
+  isHttps: true,
   loading: false,
-};
-
-const methods = {
-  allMixed: jest.fn(),
 };
 
 function createWrapper(data) {
   return shallowMount(mixed_section, {
     localVue,
-    methods,
     data() {
       return data;
+    },
+    computed: {
+      tab() {
+        return "https://example.com";
+      },
+      isUsingHttps() {
+        return data.isHttps;
+      },
     },
   });
 }
 
 describe("mixed-section.vue", () => {
-  it("Testing mixed-section.vue component in case danger", () => {
-    const wrapper = createWrapper(usingHttps);
+  beforeEach(() => {
+    fetchMock.resetMocks();
+  });
+
+  afterEach(() => {
+    localStorage.clear();
+  });
+
+  it("Testing mixed-section component in case has mixed content", () => {
+    fetchMock.mockResponseOnce(JSON.stringify({ body: JSON.stringify(response) }));
+    const wrapper = createWrapper(dataWithIssues);
 
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
-    expect(wrapper.find('.alert--danger').exists()).toBe(true);
+    expect(wrapper.find('.mixed-status.alert--danger').exists()).toBe(true);
+    expect(wrapper.find('.mixed-status.alert--danger').text()).toBe('This site contains mixed content.');
     wrapper.destroy();
   });
 
   it("Testing mixed-section.vue component in case no mixed content", () => {
-    usingHttps.data.status = false;
-    usingHttps.data.results = [];
-    const wrapper = createWrapper(usingHttps);
+    fetchMock.mockResponseOnce(JSON.stringify({ body: JSON.stringify(emptyResponse) }));
+    const wrapper = createWrapper(dataNoIssues);
 
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
-    expect(wrapper.find('.alert--success').exists()).toBe(true);
+    expect(wrapper.find('.mixed-status.alert--success').exists()).toBe(true);
+    expect(wrapper.find('.mixed-status.alert--success').text()).toBe('This page does not contain mixed content.');
     wrapper.destroy();
   });
 
-  it("Testing mixed-section.vue component in case no https pages", () => {
-    const wrapper = createWrapper(notUsingHttps);
+  it("Testing mixed-section.vue component in case not using https", () => {
+    dataWithIssues.isHttps = false;
+    fetchMock.mockResponseOnce(JSON.stringify({ body: JSON.stringify(response) }));
+    const wrapper = createWrapper(dataWithIssues);
 
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
-    expect(wrapper.find('.alert--warning').exists()).toBe(true);
+    expect(wrapper.find('.mixed-status.alert--warning').exists()).toBe(true);
+    expect(wrapper.find('.mixed-status.alert--warning').text()).toBe('Does not apply to non HTTPS pages.');
     wrapper.destroy();
   });
 
   it('should return how many times the method is called inside the event bus', () => {
-    const allMixedMock = jest.fn();
-    const wrapper = createWrapper(usingHttps);
-    wrapper.setMethods({ allMixed: allMixedMock });
-
-    expect(wrapper.isVueInstance).toBeTruthy();
+    fetchMock.mockResponseOnce(JSON.stringify({ body: JSON.stringify(response) }));
+    const wrapper = createWrapper(dataWithIssues);
+    const spy = spyOn(wrapper.vm, 'allMixed');
     global.EventBus.$emit('refreshData');
-
-    // The mock function is called twice
-    expect(allMixedMock.mock.calls.length).toBe(1);
+    expect(spy).toHaveBeenCalledTimes(1);
     wrapper.destroy();
   });
 

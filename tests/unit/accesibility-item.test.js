@@ -31,7 +31,7 @@ describe("accessibility-item.vue", () => {
     });
 
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     expect(wrapper.find('.scrollable--issue').exists()).toBe(true)
@@ -48,7 +48,7 @@ describe("accessibility-item.vue", () => {
       }
     });
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     expect(wrapper.find('.scrollable--issue').exists()).toBe(true)

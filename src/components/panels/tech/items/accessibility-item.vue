@@ -1,13 +1,15 @@
 <template>
-    <div class="scrollable--issue" v-bind:class="classObject">
-        <h3 class="mt0 mb0" v-html="title"></h3>
-        <p v-html="description">
-        </p>
-        <ul class="list-unstyled">
-            <li class="code mb0" v-for="(snippet, index) in snippets" :key="index">{{snippet}}</li>
-        </ul>
-    </div>
+  <div class="scrollable--issue" v-bind:class="classObject">
+    <h3 class="mt0 mb0" v-html="title"></h3>
+    <p v-html="description"></p>
+    <ul class="list-unstyled">
+      <li class="code mb0" v-for="(snippet, index) in snippets" :key="index">
+        <code>{{ snippet }}</code>
+      </li>
+    </ul>
+  </div>
 </template>
+
 <script>
 export default {
   props: ["data"],
@@ -16,18 +18,20 @@ export default {
       return this.data.title;
     },
     description() {
-      return `${this.data.description}<br><a href="${this.data.link}" target="_blank">Learn more</a>`;
+      return this.data.description;
     },
     snippets() {
       return this.data.snippets;
     },
     classObject() {
-      return [
-        this.data.severity == "critical" || this.data.severity == "serious"
-          ? "alert--danger"
-          : "alert--warning"
-      ];
-    }
+      switch (this.data.severity) {
+        case 'critical':
+        case 'serious':
+          return 'alert--danger';
+        default:
+          return 'alert--warning';
+      }
+    },
   }
 };
 </script>

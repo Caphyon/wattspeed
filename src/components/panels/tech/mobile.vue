@@ -24,6 +24,9 @@ import Vue from "vue";
 import MobileSection from "./../../sections/mobile-section";
 import PairContainer from "./pair-container";
 import Item from "./items/mobile-item";
+
+import { marked } from 'marked';
+
 Vue.component("pair-container", PairContainer);
 Vue.component("mobile-item", Item);
 
@@ -37,7 +40,7 @@ export default {
   },
   computed: {
     screenshot() {
-      if (this.loading || !this.data || !this.data.audits["final-screenshot"].details){
+      if (this.loading || !this.data || !this.data.audits["final-screenshot"].details) {
         return "";
       }
       return this.data.audits["final-screenshot"].details.data;
@@ -45,8 +48,8 @@ export default {
     items() {
       const items = [];
 
-      if (this.loading || !this.data.audits){
-        return {}
+      if (this.loading || !this.data.audits) {
+        return {};
       }
 
       for (let key in this.data.audits) {
@@ -54,12 +57,13 @@ export default {
           const value = this.data.audits[key];
           items.push({
             passed: value.score !== null ? value.score : 0,
-            title: value.title
+            title: marked.parseInline(value.title),
           });
         }
       }
+
       return items;
-    }
+    },
   }
 };
 </script>

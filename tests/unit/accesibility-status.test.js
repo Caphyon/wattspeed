@@ -12,7 +12,7 @@ describe("accessibility-status.vue", () => {
     });
 
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     expect(wrapper.find('.section__header--stats.px2.py1 > .text--center').exists()).toBe(true);
@@ -29,7 +29,7 @@ describe("accessibility-status.vue", () => {
   it("Snapshot for accessibility-status component without data", () => {
     const wrapper = shallowMount(accessibility)
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     expect(wrapper.find('.section__header--stats.px2.py1').exists()).toBe(true);

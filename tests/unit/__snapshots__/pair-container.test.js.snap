@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Testing Container component Container with data 1`] = `
+exports[`Testing Pair Container component Pair Container with data 1`] = `
 <div
   class="mainContent"
 >
@@ -24,7 +24,28 @@ exports[`Testing Container component Container with data 1`] = `
       <h4
         class="mt0 mb0 text--strong"
       >
-        SECTION
+        TAB1
+      </h4>
+    </div>
+     
+    <div
+      class="sections__container--title"
+    >
+      <svg
+        class="section--icon"
+        height="20"
+        width="20"
+      >
+        <use
+          xlink:href="assets/icons/symbols.svg#undefined"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+      </svg>
+       
+      <h4
+        class="mt0 mb0 text--strong"
+      >
+        TAB2
       </h4>
     </div>
      
@@ -40,7 +61,7 @@ exports[`Testing Container component Container with data 1`] = `
     <p
       class="sections__container--description text--center text--small px2 py1"
     >
-      Descriere Test
+      Test
     </p>
   </div>
    

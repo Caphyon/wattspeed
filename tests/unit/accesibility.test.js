@@ -1,12 +1,39 @@
+import fetchMock from 'jest-fetch-mock';
+fetchMock.enableMocks();
+
 import Vue from "vue";
 import { createLocalVue, shallowMount } from "@vue/test-utils";
+
+import container from '@/components/panels/tech/container';
 import accessibility from "../../src/components/panels/tech/accessibility"; // name of your Vue component
+import accessibility_status from '@/components/panels/tech/items/accessibility-status';
 
 global.EventBus = new Vue();
 const localVue = createLocalVue();
 
-const methods = {
-  allAccessibility: jest.fn(),
+const response = {
+  audits: {
+    'frame-title': {
+      title: '`<frame>` or `<iframe>` elements do not have a title',
+      description: 'Screen reader users rely on frame titles to describe the contents of frames. [Learn more](https://web.dev/frame-title/).',
+      score: 0,
+      id: 'frame-title',
+      details: {
+        debugData: {
+          impact: 'serious',
+        },
+        items: [
+          { node: { snippet: '<iframe src=\"/howto/tryhow_js_slideshow_ifr.htm\" id=\"howto_iframe\">' }},
+        ],
+      },
+    },
+  },
+  categories: {
+    accessibility: {
+      score: 0.72,
+      auditRefs: [{ id: 'frame-title', weight: 3 }],
+    },
+  },
 };
 
 const data = {
@@ -14,52 +41,33 @@ const data = {
   issues: 1,
   warnings: 0,
   loading: false,
-  data: [
-    {
-      title: 'Links do not have a discernible name',
-      description: 'Link text (and alternate text for images, when used as links) that is discernible...',
-      severity: 'serious',
-      link: 'https://web.dev/link-name/',
-    }
-  ],
   initialData: [
     {
-      title: 'Links do not have a discernible name',
-      description: 'Link text (and alternate text for images, when used as links) that is discernible...',
+      title: '`<frame>` or `<iframe>` elements do not have a title',
+      description: 'Screen reader users rely on frame titles to describe the contents of frames. [Learn more](https://web.dev/frame-title/).',
       severity: 'serious',
-      link: 'https://web.dev/link-name/',
       class: 'alert--danger',
       type: 'Errors',
     },
   ],
-  filteredData: [
-    {
-      title: 'Links do not have a discernible name',
-      description: 'Link text (and alternate text for images, when used as links) that is discernible...',
-      severity: 'serious',
-      link: 'https://web.dev/link-name/',
-      class: 'alert--danger',
-      type: 'Errors',
-    },
-  ],
-  initialFilterTypes: ['Errors'],
 };
 
 const noData = {
   score: 0,
   issues: 0,
   warnings: 0,
-  data: [],
   initialData: [],
-  filteredData: [],
-  initialFilterTypes: [],
   loading: false,
 };
 
-function createWrapper() {
+function createWrapper(data) {
   return shallowMount(accessibility, {
     localVue,
-    methods,
+    computed: {
+      tab() {
+        return "https://example.com";
+      },
+    },
     data() {
       return data;
     },
@@ -67,40 +75,61 @@ function createWrapper() {
 }
 
 describe("Testing Accesibility component", () => {
+  beforeEach(() => {
+    fetchMock.resetMocks();
+  });
+
+  afterEach(() => {
+    localStorage.clear();
+  });
+
   it("Global", () => {
+    fetchMock.mockResponseOnce(JSON.stringify({ body: JSON.stringify({}) }));
     const wrapper = createWrapper(noData);
 
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
-    expect(wrapper.find('div.state').exists()).toBe(false);
-    expect(wrapper.find('accessibility-status-stub').exists()).toBe(true);
+    expect(wrapper.findComponent(container).exists()).toBeTruthy();
+    expect(wrapper.findComponent(accessibility_status).exists()).toBeTruthy();
+    expect(wrapper.find('div.state .state--success').exists()).toBe(false);
+    expect(wrapper.find('h3.text--success').exists()).toBe(false);
     wrapper.destroy();
   });
 
   it("With data, score under 100", () => {
     data.score = 72;
+    fetchMock.mockResponseOnce(JSON.stringify({ body: JSON.stringify(response) }));
     const wrapper = createWrapper(data);
 
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
-    expect(wrapper.find('div.state').exists()).toBe(false);
-    expect(wrapper.find('accessibility-status-stub').exists()).toBe(true);
+    expect(wrapper.findComponent(container).exists()).toBeTruthy();
+    expect(wrapper.findComponent(accessibility_status).exists()).toBeTruthy();
+    expect(wrapper.find('div.state .state--success').exists()).toBe(false);
+    expect(wrapper.find('h3.text--success').exists()).toBe(false);
     wrapper.destroy();
   });
 
   it("With data, score 100", () => {
+    response.audits['frame-title'].score = null;
+    response.categories.accessibility.score = 1;
     data.score = 100;
+    data.issues = 0;
+    data.initialData = [];
+    fetchMock.mockResponseOnce(JSON.stringify({ body: JSON.stringify(response) }));
     const wrapper = createWrapper(data);
 
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
-    expect(wrapper.find('div.state').exists()).toBe(false);
+    expect(wrapper.findComponent(container).exists()).toBeTruthy();
+    expect(wrapper.findComponent(accessibility_status).exists()).toBeFalsy();
+    expect(wrapper.find('div.state .state--success').exists()).toBe(true);
     expect(wrapper.find('h3.text--success').exists()).toBe(true);
     wrapper.destroy();
   });

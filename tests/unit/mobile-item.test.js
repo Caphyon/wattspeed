@@ -17,7 +17,7 @@ describe("mobile-item.vue", () => {
       }
     });
 
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     expect(wrapper.find('.alert--success').exists()).toBe(true);
@@ -31,7 +31,7 @@ describe("mobile-item.vue", () => {
       }
     });
 
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     expect(wrapper.find('.alert--danger').exists()).toBe(true);

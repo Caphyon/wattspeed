@@ -17,7 +17,20 @@ exports[`Testing Mobile component Container with data 1`] = `
   <div
     class="scrollable__container"
   >
-    <div />
+    <div>
+      <mobile-item-stub
+        data="[object Object]"
+      />
+      <mobile-item-stub
+        data="[object Object]"
+      />
+      <mobile-item-stub
+        data="[object Object]"
+      />
+      <mobile-item-stub
+        data="[object Object]"
+      />
+    </div>
      
     <div
       class="mobile"

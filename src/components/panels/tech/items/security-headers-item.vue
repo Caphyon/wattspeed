@@ -7,7 +7,9 @@
         <span>{{ this.headerProperties[title].title }}</span>
         <a :href="this.headerProperties[title].link" target="_blank">Learn more</a>
       </p>
-      <p class="code mb0">{{ data.value }}</p>
+      <p class="code mb0">
+        <code>{{ data.value }}</code>
+      </p>
   </div>
 </template>
 

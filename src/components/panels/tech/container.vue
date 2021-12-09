@@ -64,7 +64,7 @@ export default {
     },
     isValid() {
       return this.$parent.isValid;
-    }
+    },
   },
   methods: {
     getContainerHeight() {

@@ -10,7 +10,7 @@ describe("security-ssl-item.vue", () => {
       },
     });
 
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     expect(wrapper.find('div.scrollable--issue.alert--danger').exists()).toBe(false);
@@ -28,7 +28,7 @@ describe("security-ssl-item.vue", () => {
       },
     });
 
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     expect(wrapper.find('div.scrollable--issue.alert--danger').exists()).toBe(true);
@@ -46,7 +46,7 @@ describe("security-ssl-item.vue", () => {
       },
     });
 
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     expect(wrapper.find('div.scrollable--issue.alert--danger').exists()).toBe(false);
@@ -64,7 +64,7 @@ describe("security-ssl-item.vue", () => {
       },
     });
 
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     expect(wrapper.find('div.scrollable--issue.alert--danger').exists()).toBe(false);
