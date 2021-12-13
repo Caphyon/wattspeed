@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Wattspeed",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "description": "Wattspeed is a browser extension that offers powerful web technologies insights each time you open a new web page.",
   "icons": {
     "16": "assets/icons/icon-16.png",

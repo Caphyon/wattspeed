@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mixed-section.vue Testing mixed-section.vue component in case danger 1`] = `
+exports[`mixed-section.vue Testing mixed-section component in case has mixed content 1`] = `
 <section-container-stub>
   <p
-    class="alert--danger"
+    class="mixed-status alert--danger"
   >
     
         This site contains mixed content.
@@ -12,26 +12,26 @@ exports[`mixed-section.vue Testing mixed-section.vue component in case danger 1`
 </section-container-stub>
 `;
 
-exports[`mixed-section.vue Testing mixed-section.vue component in case no https pages 1`] = `
-<section-container-stub>
-  <p
-    class="alert--warning"
-  >
-    
-    Does not apply to non HTTPS pages.
-  
-  </p>
-</section-container-stub>
-`;
-
 exports[`mixed-section.vue Testing mixed-section.vue component in case no mixed content 1`] = `
 <section-container-stub>
   <p
-    class="alert--success"
+    class="mixed-status alert--success"
   >
     
         This page does not contain mixed content.
       
+  </p>
+</section-container-stub>
+`;
+
+exports[`mixed-section.vue Testing mixed-section.vue component in case not using https 1`] = `
+<section-container-stub>
+  <p
+    class="mixed-status alert--warning"
+  >
+    
+        Does not apply to non HTTPS pages.
+    
   </p>
 </section-container-stub>
 `;

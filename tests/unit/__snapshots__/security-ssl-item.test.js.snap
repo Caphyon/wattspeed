@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`security-ssl-item.vue Snapshot for component level danger 1`] = `
+<div
+  class="scrollable--issue alert--danger"
+>
+  <p
+    class="mb0 mt0"
+  >
+    The connection to the server is not secure
+  </p>
+</div>
+`;
+
+exports[`security-ssl-item.vue Snapshot for component level success 1`] = `
+<div
+  class="scrollable--issue alert--success"
+>
+  <p
+    class="mb0 mt0"
+  >
+    Certificate is trusted
+  </p>
+</div>
+`;
+
+exports[`security-ssl-item.vue Snapshot for component level warning 1`] = `
+<div
+  class="scrollable--issue alert--warning"
+>
+  <p
+    class="mb0 mt0"
+  >
+    This server is using weak cipher suites
+  </p>
+</div>
+`;
+
+exports[`security-ssl-item.vue Snapshot for no data 1`] = `
+<div
+  class="scrollable--issue alert--secondary"
+>
+  <p
+    class="mb0 mt0"
+  >
+    
+  </p>
+</div>
+`;

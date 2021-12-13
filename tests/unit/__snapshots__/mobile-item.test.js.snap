@@ -1,17 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`mobile-item.vue Snapshot for mobile-item component with data  1`] = `
-<p
-  class="mt0 alert--success"
+<div
+  class="scrollable--issue alert--success"
 >
-  Has a \`&lt;meta name="viewport"&gt;\` tag with \`width\` or \`initial-scale\`
-</p>
+  <p
+    class="mt0 mb0"
+  >
+    Has a \`
+    <meta
+      name="viewport"
+    />
+    \` tag with \`width\` or \`initial-scale\`
+  </p>
+</div>
 `;
 
 exports[`mobile-item.vue Snapshot for mobile-item component without data 1`] = `
-<p
-  class="mt0 alert--danger"
+<div
+  class="scrollable--issue alert--danger"
 >
-  Has a \`&lt;meta name="viewport"&gt;\` tag with \`width\` or \`initial-scale\`
-</p>
+  <p
+    class="mt0 mb0"
+  >
+    Has a \`
+    <meta
+      name="viewport"
+    />
+    \` tag with \`width\` or \`initial-scale\`
+  </p>
+</div>
 `;

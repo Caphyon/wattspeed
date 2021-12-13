@@ -7,8 +7,27 @@ exports[`Testing Container component Container with data 1`] = `
   <div
     class="section__header"
   >
-    <!---->
-
+    <div
+      class="sections__container--title"
+    >
+      <svg
+        class="section--icon"
+        height="20"
+        width="20"
+      >
+        <use
+          xlink:href="assets/icons/symbols.svg#undefined"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        />
+      </svg>
+       
+      <h4
+        class="mt0 mb0 text--strong"
+      >
+        SECTION
+      </h4>
+    </div>
+     
     <a
       aria-label="Close button"
       class="close"
@@ -17,18 +36,16 @@ exports[`Testing Container component Container with data 1`] = `
     >
       ×
     </a>
-
+      
     <p
       class="sections__container--description text--center text--small px2 py1"
     >
       Descriere Test
     </p>
   </div>
-
-  <p
-    class="alert--warning"
-  >
-
-  </p>
+   
+  <!---->
+   
+  <!---->
 </div>
 `;

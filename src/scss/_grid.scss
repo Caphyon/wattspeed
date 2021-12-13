@@ -38,16 +38,56 @@
       background-color: rgba(0,0,0,.6);
       padding: .5rem;
       text-transform: uppercase;
+      cursor: pointer;
 
-      &::after {
+      &:hover {
+        background-color: #000000;
+      }
+
+      &.active {
+        background-color: #000000;
+      }
+
+      &:after {
         content: "";
         position: absolute;
         top: 0;
         right: -1rem;
         border-style: solid;
-        border-width: 0 0 2.35rem 1rem;
+        border-width: 0 0 2.3rem 1rem;
         border-left-color: rgba(0,0,0,.6);
         border-bottom-color: transparent;
+      }
+
+      &:hover:after {
+        border-left-color: #000000;
+      }
+
+      &.active:after {
+        border-left-color: #000000;
+      }
+
+      &:not(:first-child) {
+        margin-left: 0.8rem;
+
+        &:before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: -1rem;
+          border-style: solid;
+          border-width: 2.3rem 1rem 0 0;
+          border-right-color: rgba(0,0,0,.6);
+          border-top-color: transparent;
+        }
+
+        &:hover:before {
+          border-right-color: #000000;
+        }
+
+        &.active:before {
+          border-right-color: #000000;
+        }
       }
     }
 

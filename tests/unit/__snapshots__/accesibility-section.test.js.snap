@@ -15,9 +15,9 @@ exports[`Testing Accesibility-Section component Score 100 1`] = `
 exports[`Testing Accesibility-Section component Score under 100 1`] = `
 <section-container-stub>
   <accessibility-status-stub
-    issues="2"
+    issues="1"
     score="67"
-    warnings="1"
+    warnings="0"
   />
 </section-container-stub>
 `;

@@ -1,5 +1,5 @@
 <template>
-    <container>
+    <pair-container>
         <template v-if="!error" slot="header">
           <h3 v-if="mobile_friendly" class="text--success text--center text--strong mb0">
             {{mobile_friendly}}
@@ -17,14 +17,17 @@
             <img class="mobile--frame" src="/assets/icons/mobile-frame.svg" height="305"/>
           </div>
         </div>
-    </container>
+    </pair-container>
 </template>
 <script>
 import Vue from "vue";
 import MobileSection from "./../../sections/mobile-section";
-import Container from "./container";
+import PairContainer from "./pair-container";
 import Item from "./items/mobile-item";
-Vue.component("container", Container);
+
+import { marked } from 'marked';
+
+Vue.component("pair-container", PairContainer);
 Vue.component("mobile-item", Item);
 
 export default {
@@ -37,7 +40,7 @@ export default {
   },
   computed: {
     screenshot() {
-      if (this.loading || !this.data || !this.data.audits["final-screenshot"].details){
+      if (this.loading || !this.data || !this.data.audits["final-screenshot"].details) {
         return "";
       }
       return this.data.audits["final-screenshot"].details.data;
@@ -45,8 +48,8 @@ export default {
     items() {
       const items = [];
 
-      if (this.loading || !this.data.audits){
-        return {}
+      if (this.loading || !this.data.audits) {
+        return {};
       }
 
       for (let key in this.data.audits) {
@@ -54,12 +57,13 @@ export default {
           const value = this.data.audits[key];
           items.push({
             passed: value.score !== null ? value.score : 0,
-            title: value.title
+            title: marked.parseInline(value.title),
           });
         }
       }
+
       return items;
-    }
+    },
   }
 };
 </script>
@@ -88,11 +92,12 @@ export default {
 
   &--screen {
     position: absolute;
-    top: 50%;
+    top: calc(50% - 2.5px);
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
     width: 90%;
     z-index: 1;
+    border-radius: 18px;
   }
 }
 </style>

@@ -1,26 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Testing Mobile component Container with data 1`] = `
-<container-stub>
+<pair-container-stub>
   <template>
     <h3
       class="text--success text--center text--strong mb0"
     >
       
-        
+        This page is mobile friendly!
       
     </h3>
+     
+    <!---->
   </template>
    
   <div
     class="scrollable__container"
   >
-    <div />
+    <div>
+      <mobile-item-stub
+        data="[object Object]"
+      />
+      <mobile-item-stub
+        data="[object Object]"
+      />
+      <mobile-item-stub
+        data="[object Object]"
+      />
+      <mobile-item-stub
+        data="[object Object]"
+      />
+    </div>
      
     <div
       class="mobile"
     >
-      <!---->
+      <img
+        class="mobile--screen"
+        src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQA"
+      />
        
       <img
         class="mobile--frame"
@@ -29,5 +47,5 @@ exports[`Testing Mobile component Container with data 1`] = `
       />
     </div>
   </div>
-</container-stub>
+</pair-container-stub>
 `;

@@ -1,4 +1,4 @@
-import { shallowMount, config } from "@vue/test-utils";
+import { shallowMount } from "@vue/test-utils";
 import speed_item from "../../src/components/panels/tech/items/performance-item"; // name of your Vue component
 
 describe("performance-item.vue", () => {
@@ -13,12 +13,13 @@ describe("performance-item.vue", () => {
       }
     });
 
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
-    expect(wrapper.find('div.alert--success.scrollable--issue').exists()).toBe(true);
+    expect(wrapper.find('div.scrollable--issue').exists()).toBe(true);
     expect(wrapper.find('h4').exists()).toBe(true);
     expect(wrapper.find('p').exists()).toBe(true);
+    wrapper.destroy();
   });
 
   it("Snapshot for speed-item component level danger", () => {
@@ -32,10 +33,11 @@ describe("performance-item.vue", () => {
       }
     });
 
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
-    expect(wrapper.find('div.alert--success.scrollable--issue.alert--danger').exists()).toBe(true);
+    expect(wrapper.find('div.scrollable--issue.alert--danger').exists()).toBe(true);
+    wrapper.destroy();
   });
 
   it("Snapshot for speed-item component level warning", () => {
@@ -49,10 +51,11 @@ describe("performance-item.vue", () => {
       }
     });
 
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
-    expect(wrapper.find('div.alert--success.scrollable--issue.alert--warning').exists()).toBe(true);
+    expect(wrapper.find('div.scrollable--issue.alert--warning').exists()).toBe(true);
+    wrapper.destroy();
   });
 
   it("Snapshot for speed-item component level success", () => {
@@ -66,11 +69,12 @@ describe("performance-item.vue", () => {
       }
     });
 
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
-    expect(wrapper.find('div.alert--success.scrollable--issue.alert--warning').exists()).toBe(false);
-    expect(wrapper.find('div.alert--success.scrollable--issue.alert--danger').exists()).toBe(false);
-
+    expect(wrapper.find('div.scrollable--issue.alert--warning').exists()).toBe(false);
+    expect(wrapper.find('div.scrollable--issue.alert--danger').exists()).toBe(false);
+    wrapper.destroy();
   });
+
 });

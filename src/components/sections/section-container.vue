@@ -50,8 +50,14 @@ export default {
     icon() {
       return `assets/icons/symbols.svg#${this.$parent.icon}`;
     },
+    icon2() {
+      return `assets/icons/symbols.svg#${this.$parent.icon2}`;
+    },
     title() {
       return this.$parent.title;
+    },
+    title2() {
+      return this.$parent.title2;
     },
     loading() {
       return this.$parent.loading;
@@ -70,13 +76,19 @@ export default {
     },
     currentPanel() {
         return this.$parent.panelName;
-    }
+    },
+    isActiveFirst() {
+      return this.$parent.activeFirst;
+    },
+    isActiveSecond() {
+      return this.$parent.activeSecond;
+    },
   },
   methods: {
     select() {
       if (!this.$parent.panelName || this.loading) return;
       EventBus.$emit("changePanel", this.$parent.panelName);
-    }
-  }
+    },
+  },
 };
 </script>

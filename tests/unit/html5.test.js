@@ -1,65 +1,118 @@
-import Vue from 'vue';
-import { shallowMount, config } from '@vue/test-utils'
-import html5 from '../../src/components/panels/tech/html5.vue'; // name of your Vue component
+import fetchMock from 'jest-fetch-mock';
+fetchMock.enableMocks();
 
+import Vue from 'vue';
+import { createLocalVue, shallowMount } from '@vue/test-utils';
+
+import container from '@/components/panels/tech/container';
+import html5 from '@/components/panels/tech/html5'; // name of your Vue component
+import filter_item from '@/components/panels/tech/items/filter-item';
+
+global.EventBus = new Vue();
+const localVue = createLocalVue();
 
 // you can add as many elements with the same structure as you want here
-let htmlDataMock = {
-  language: "ro",
+const messagesData = {
   messages: [
     {
-      message: "Using “windows-1252” instead of the declared encoding “iso-8859-1”.",
-      subType: "warning",
-      type: "warning",
-      url: "https://www.caphyon.ro/",
+      message: 'Using “windows-1252” instead of the declared encoding “iso-8859-1”.',
+      subType: 'warning',
+      type: 'info',
+      extract: '<div>an_extract</div>',
     },
   ],
-  url: "https://www.caphyon.ro/"
+};
+
+const computedData = [
+  {
+    msg: 'Using “windows-1252” instead of the declared encoding “iso-8859-1”.',
+    class: 'alert--warning',
+    type: 'Warnings',
+    mark: '<div>an_extract</div>',
+  },
+];
+
+const response = messagesData;
+const emptyResponse = {
+  messages: [],
+};
+
+const data = {
+  htmlData: messagesData,
+  initialData: computedData,
+  filteredData: computedData,
+  initialFilterTypes: ['Warnings'],
+  loading: false,
+};
+
+const noData = {
+  htmlData: {
+    messages: [],
+  },
+  initialData: [],
+  filteredData: [],
+  initialFilterTypes: [],
+  loading: false,
+};
+
+function createWrapper(data) {
+  return shallowMount(html5, {
+    localVue,
+    computed: {
+      tab() {
+        return "https://example.com";
+      },
+    },
+    data() {
+      return data;
+    },
+  });
 }
 
 describe('html5.vue', () => {
-
-  global.EventBus = new Vue();
-  config.methods['allHtml'] = () => { };
-  const wrapper = shallowMount(html5)
-
-  it('Testing html5 component', () => {
-    const myMockFn = jest.fn(allHtml => allHtml());
-    myMockFn(() => {
-      wrapper.setData({
-        htmlData: htmlDataMock,
-        loading: false
-      });
-    });
-
-    expect(wrapper.isVueInstance).toBeTruthy();
-    expect(wrapper.element).toMatchSnapshot()
-
-    expect(wrapper.find('.text--danger.text--center.text--strong.mb0').exists()).toBe(true);
-    expect(wrapper.find('.text--danger.text--center.text--strong.mb0').text()).toBe("Errors found while checking the page.");
-
-    expect(wrapper.find('.list-unstyled').exists()).toBe(true);
-    expect(wrapper.findAll('li').wrappers.length).toBe(1);
-    expect(wrapper.findAll('li > p').wrappers.length).toBe(2);
-
-  })
-
-  it('Testing html5 component with no data', () => {
-    const wrapper = shallowMount(html5, {
-      computed: {
-        isValid(){
-          return true
-        }
-      }
-    })
-
-    expect(wrapper.isVueInstance).toBeTruthy();
-    expect(wrapper.element).toMatchSnapshot()
-
-    expect(wrapper.find('.text--success.text--center.text--strong.mb0').exists()).toBe(true);
-    expect(wrapper.find('.text--success.text--center.text--strong.mb0').text()).toBe("No errors found.");
-    expect(wrapper.find('svg').exists()).toBe(true);
-
-
+  beforeEach(() => {
+    fetchMock.resetMocks();
   });
-})
+
+  afterEach(() => {
+    localStorage.clear();
+  });
+
+  it('Testing html5 component with issues', () => {
+    fetchMock.mockResponseOnce(JSON.stringify({ body: JSON.stringify(response) }));
+    const wrapper = createWrapper(data);
+
+    expect(wrapper.exists()).toBeTruthy();
+    expect(wrapper.element).toMatchSnapshot();
+
+    expect(wrapper.findComponent(container).exists()).toBeTruthy();
+    expect(wrapper.find('.html5-status.text--danger').exists()).toBeTruthy();
+    expect(wrapper.find('.html5-status.text--danger').text()).toBe("Html issues found while checking the page.");
+
+    expect(wrapper.find('.list-unstyled').exists()).toBeTruthy();
+    expect(wrapper.findAll('li').length).toBe(1);
+    expect(wrapper.findAll('li > p').length).toBe(1);
+
+    expect(wrapper.find('div.state .state--success').exists()).toBeFalsy();
+    expect(wrapper.findComponent(filter_item).exists()).toBeTruthy();
+    wrapper.destroy();
+  });
+
+  it('Testing html5 component with no issues', () => {
+    fetchMock.mockResponseOnce(JSON.stringify({ body: JSON.stringify(emptyResponse) }));
+    const wrapper = createWrapper(noData);
+
+    expect(wrapper.exists()).toBeTruthy();
+    expect(wrapper.element).toMatchSnapshot();
+
+    expect(wrapper.findComponent(container).exists()).toBeTruthy();
+    expect(wrapper.find('.html5-status.text--success').exists()).toBeTruthy();
+    expect(wrapper.find('.html5-status.text--success').text()).toBe("No html issues found.");
+    expect(wrapper.find('.html5-status.text--danger').exists()).toBeFalsy();
+
+    expect(wrapper.find('div.state .state--success').exists()).toBeTruthy();
+    // expect(wrapper.findComponent(filter_item).exists()).toBeFalsy();
+    wrapper.destroy();
+  });
+
+});

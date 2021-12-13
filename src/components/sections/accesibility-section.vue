@@ -12,8 +12,8 @@ import Vue from "vue";
 import BaseSection from "./base-section.vue";
 import SectionContainer from "./section-container.vue";
 import Status from "./../panels/tech/items/accessibility-status.vue";
-import marked from 'marked'
 
+import { marked } from 'marked';
 let Constant = require("../../assets/utils/consts.js");
 
 Vue.component("section-container", SectionContainer);
@@ -46,78 +46,78 @@ export default {
       const request = new Request(Constant.API_URL, {
           method: 'POST',
           headers: myHeaders,
-          body: `{"params": {"url": "${this.tab.url}", "action":"lighthouse", "section":"acccessibility", "device":"desktop"}}`,
+          body: JSON.stringify({ params: { url: this.tab.url, action: "lighthouse", section: "accessibility", device: "desktop" }}),
         });
-      this.makeRequest(request, this.panelName, 'desktop', data => {
+      this.makeRequest(request, this.panelName, Constant.ANY, data => {
         if (data.code == 1) {
           this.$emit('tooManyRequests');
         } else if (data.code == 2) {
           this.error = "Something went wrong, please try again!";
           this.loading = false;
         } else {
-          let resData = JSON.parse(data.body)
+          let resData = JSON.parse(data.body);
+          if (resData == null || Object.keys(resData).length === 0)
+            throw new Error("Response body for accessibility is empty or null");
+
           let temp = [];
           resData.categories.accessibility.auditRefs.forEach(element => {
-            if (element.weight > 0){
-              if(resData.audits[element.id].score !== 1){
-                temp.push(resData.audits[element.id])
+            if (element.weight > 0) {
+              if (resData.audits[element.id].score !== 1) {
+                temp.push(resData.audits[element.id]);
               }
             }
           });
-          let finaldata = this.parse(temp);
           this.issues = temp.length;
           if (resData.categories.accessibility.score) {
             this.score = (resData.categories.accessibility.score * 100);
           } else {
             this.score = 1;
           }
-          this.data = finaldata.issues;
+          this.data = this.parse(temp);
           this.loading = false;
         }
       });
     },
-    /* UTILS */
-    getLink(description){
-      description = description.toString();
-      let i = description.indexOf("[Learn more]");
-      if (i === -1) return "";
-      description = description.substr(i);
-      i = description.indexOf("(");
-      if (i === -1) return "";
-      const end = description.indexOf(")");
-      return description.slice(i+1, end);
-    },
-    removeLink(description){
-      let i = description.indexOf("[Learn more]");
-      if (i === -1) return description;
-      return description.substr(0, i);
-    },
-    parse(data){
-      let result = {};
-      let issues = [];
-      for (let e in data){
-        let obj = {};
-          e = data[e];
-          obj.title = marked(e.title);
-          // Use marked on description too, just in case
-          let desc = marked(this.removeLink(e.description));
-          // Remove enclosing <p></p>
-          desc = desc.substr(desc.indexOf('<p>')+3, desc.length-8);
-          obj.description = desc;
-          obj.link = this.getLink(e.description);
-          //change severity path if the version of ligthouse changes (5.2.0 now)
-          if (e.details) {
-            obj.severity = e.details.debugData.impact;
-          }
-          let snippets = [];
-          if (e.details)
-              snippets = e.details.items.map(e => e.node.snippet);
-          obj.snippets = snippets;
-          issues.push(obj);
-          result['issues'] = issues
+    parse(data) {
+      const renderer = new marked.Renderer();
+      renderer.link = function(href, title, text) {
+        let link = marked.Renderer.prototype.link.call(this, href, title, text);
+        return link.replace('<a','<a target="_blank" ');
       };
-      return result;
+      marked.setOptions({
+        renderer: renderer,
+      });
+
+      let issues = [];
+      for (const audit of data) {
+        let obj = {
+          title: '',
+          description: '',
+          severity: '',
+          snippets: [],
+        };
+
+        obj.title = marked.parseInline(audit.title);
+        // Use marked on description too, just in case
+        obj.description = marked.parseInline(audit.description);
+        // Change severity path if the version of ligthouse changes (5.2.0 now)
+        if (audit.details) {
+          obj.severity = audit.details.debugData.impact;
+        }
+        let snippets = [];
+        if (audit.details)
+          snippets = audit.details.items.map(item => item.node.snippet);
+        obj.snippets = snippets;
+        issues.push(obj);
+      };
+
+      return issues;
+    },
   },
-  }
+  computed: {
+    getPanelName() {
+      return this.panelName;
+    },
+  },
 };
 </script>

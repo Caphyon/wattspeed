@@ -1,9 +1,9 @@
 <template>
   <container>
     <div class="scrollable__container">
-      <a class="tech" v-for="(tech, index) in techs" :key="index" :href="tech.url" target="_blank">
-        <img v-bind:src=" 'https://www.google.com/s2/favicons?domain=' + tech.url " width="16" height="16" class="text--vcenter"/>
-        <span class="text--vcenter">{{tech.name}}</span>
+      <a class="tech" v-for="(item, index) in tech" :key="index" :href="item.url" target="_blank">
+        <img v-bind:src=" 'https://www.google.com/s2/favicons?domain=' + item.url " width="16" height="16" class="text--vcenter"/>
+        <span class="text--vcenter">{{item.name}}</span>
       </a>
       <template v-if="JSON_LD_TYPE.length > 0">
         <a href="https://json-ld.org" target="_blank" class="tech">

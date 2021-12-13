@@ -1,86 +1,112 @@
+import fetchMock from 'jest-fetch-mock';
+fetchMock.enableMocks();
+
 import Vue from 'vue';
-import { shallowMount, config, } from '@vue/test-utils'
+import { createLocalVue, shallowMount } from '@vue/test-utils';
+
+import section_container from '@/components/sections/section-container';
 import html5_section from '../../src/components/sections/html5-section.vue'; // name of your Vue component
 
+global.EventBus = new Vue();
+const localVue = createLocalVue();
 
 // you can add as many elements with the same structure as you want here
-const htmlDataMock = {
-  language: "ro",
+const messagesData = {
   messages: [
     {
-      message:
-        "Using “windows-1252” instead of the declared encoding “iso-8859-1”.",
-      subType: "warning",
-      type: "warning",
-      url: "https://www.caphyon.ro/"
-    }
+      message: 'Using “windows-1252” instead of the declared encoding “iso-8859-1”.',
+      subType: 'warning',
+      type: 'info',
+      extract: '<div>an_extract</div>',
+    },
   ],
-  url: "https://www.caphyon.ro/"
+};
+
+const computedData = [
+  {
+    msg: 'Using “windows-1252” instead of the declared encoding “iso-8859-1”.',
+    class: 'alert--warning',
+    type: 'Warnings',
+    mark: '<div>an_extract</div>',
+  },
+];
+
+const response = messagesData;
+
+const data = {
+  htmlData: messagesData,
+  initialData: computedData,
+  filteredData: computedData,
+  initialFilterTypes: ['Warnings'],
+  loading: false,
+};
+
+const noData = {
+  htmlData: {
+    messages: [],
+  },
+  initialData: [],
+  filteredData: [],
+  initialFilterTypes: [],
+  loading: false,
+};
+
+function createWrapper(data) {
+  return shallowMount(html5_section, {
+    localVue,
+    data() {
+      return data;
+    },
+    computed: {
+      tab() {
+        return "https://example.com";
+      },
+    },
+  });
 }
 
-// const EventBus = new Vue();
-
-// const GlobalPlugins = {
-//   install(v) {
-//     // Event bus
-//     v.prototype.$bus = EventBus;
-//   }
-// };
-
-// create a local instance of the global bus
-// const localVue = createLocalVue();
-// localVue.use(GlobalPlugins);
-
-describe('Testing html5_section.vue component', () => {
-  let wrapper;
-  global.EventBus = new Vue();
-
+describe('Testing html5_section component', () => {
   beforeEach(() => {
-    config.methods['allHtml'] = () => { };
-    wrapper = shallowMount(html5_section);
+    fetchMock.resetMocks();
   });
 
+  afterEach(() => {
+    localStorage.clear();
+  });
 
-  it('Should render component with data', () => {
-    const myMockFn = jest.fn(allHtml => allHtml());
-    myMockFn(() => {
-      wrapper.setData({
-        htmlData: htmlDataMock,
-        loading: false
-      });
-    });
-
-    expect(wrapper.isVueInstance).toBeTruthy();
+  it('Should render component with issues', () => {
+    fetchMock.mockResponseOnce(JSON.stringify({ body: JSON.stringify(response) }));
+    const wrapper = createWrapper(data);
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
-    expect(wrapper.find('p').text()).toBe("Errors found while checking the page.");
+    expect(wrapper.find('p').text()).toBe("Html issues found while checking the page.");
+    expect(wrapper.findComponent(section_container).exists()).toBeTruthy();
     expect(wrapper.find('.list-unstyled').exists()).toBe(true);
-    expect(wrapper.findAll('li').wrappers.length).toBe(1);
-    expect(wrapper.findAll('li > p').wrappers.length).toBe(2);
-
-
+    expect(wrapper.findAll('li').length).toBe(1);
+    wrapper.destroy();
   });
 
-  it('Should render component with no data', () => {
-    wrapper.setData({
-      htmlData: {},
-      loading: false
-    });
+  it('Should render component with no issues', () => {
+    response.messages = [];
+    fetchMock.mockResponseOnce(JSON.stringify({ body: JSON.stringify(response) }));
+    const wrapper = createWrapper(noData);
 
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
-    expect(wrapper.find('p').text()).toBe("No errors found.");
+    expect(wrapper.find('p').text()).toBe("No html issues found.");
+    expect(wrapper.findComponent(section_container).exists()).toBeTruthy();
+    wrapper.destroy();
   });
 
   it('should return how many times the method is called inside the event bus', () => {
-    const allHtmlMock = jest.fn();
-    wrapper.setMethods({ allHtml: allHtmlMock })
-
-    expect(wrapper.isVueInstance).toBeTruthy();
+    fetchMock.mockResponseOnce(JSON.stringify({ body: JSON.stringify(response) }));
+    const wrapper = createWrapper(data);
+    const spy = spyOn(wrapper.vm, 'allHtml');
     global.EventBus.$emit('refreshData');
-    // The mock function is called onc
-    expect(allHtmlMock.mock.calls.length).toBe(1);
-
+    expect(spy).toHaveBeenCalledTimes(1);
+    wrapper.destroy();
   });
-})
+
+});

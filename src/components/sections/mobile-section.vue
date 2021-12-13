@@ -23,11 +23,15 @@ export default {
   data() {
     return {
       panelName: "mobile",
-      title: "Mobile",
+      title: "Performance",
+      title2: "Mobile",
       data: {},
-      icon: "mobile",
+      icon: "pagespeed",
+      icon2: "mobile",
       mobile_friendly: "",
-      not_mobile_friendly: ""
+      not_mobile_friendly: "",
+      activeFirst: false,
+      activeSecond: true,
     };
   },
   mounted() {
@@ -46,7 +50,7 @@ export default {
           headers: myHeaders,
           body: `{"params": {"url": "${this.tab.url}", "action":"lighthouse", "section":"mobile"}}`,
         });
-      this.makeRequest(request, this.panelName, this.panelName, data => {
+      this.makeRequest(request, this.panelName, Constant.ANY, data => {
         if (data.code == 1) {
           this.$emit('tooManyRequests');
         } else if (data.code == 2) {
@@ -70,7 +74,10 @@ export default {
     },
     isMobileFriendly() {
       return !this.loading && this.data.ruleGroups && this.data.ruleGroups.USABILITY.pass;
-    }
+    },
+    getPanelName() {
+      return this.panelName;
+    },
   }
 };
 </script>

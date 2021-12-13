@@ -16,13 +16,6 @@ exports[`accessibility-item.vue Snapshot for accessibility-item component with d
    
   <p>
     Low-contrast text is difficult or impossible for many users to read. 
-    <br />
-    <a
-      href="https://dequeuniversity.com/rules/axe/2.2/color-contrast?application=lighthouse"
-      target="_blank"
-    >
-      Learn more
-    </a>
   </p>
    
   <ul
@@ -31,37 +24,49 @@ exports[`accessibility-item.vue Snapshot for accessibility-item component with d
     <li
       class="code mb0"
     >
-      &lt;li&gt;
+      <code>
+        &lt;li&gt;
+      </code>
     </li>
     <li
       class="code mb0"
     >
-      &lt;li&gt;** Apple&nbsp;Arcade and Apple&nbsp;TV+ require a subscription.&lt;/li&gt;
+      <code>
+        &lt;li&gt;** Apple&nbsp;Arcade and Apple&nbsp;TV+ require a subscription.&lt;/li&gt;
+      </code>
     </li>
     <li
       class="code mb0"
     >
-      &lt;li&gt;Case and band combinations can be made within collections (Apple&nbsp;Watch, Apple&nbsp;Watch&nbsp;Nike, and Apple&nbsp;Watch&nbsp;Hermès) only.&lt;/li&gt;
+      <code>
+        &lt;li&gt;Case and band combinations can be made within collections (Apple&nbsp;Watch, Apple&nbsp;Watch&nbsp;Nike, and Apple&nbsp;Watch&nbsp;Hermès) only.&lt;/li&gt;
+      </code>
     </li>
     <li
       class="code mb0"
     >
-      &lt;div class="ac-gf-footer-shop" x-ms-format-detection="none"&gt;
+      <code>
+        &lt;div class="ac-gf-footer-shop" x-ms-format-detection="none"&gt;
 		More ways to shop: &lt;a href="/retail/"&gt;Find an Apple Store&lt;/a&gt; or &lt;a href="https://locate.apple.com/"&gt;other retailer&lt;/a&gt; near you. &lt;span class="nowrap"&gt;Or call 1-800-MY-APPLE.&lt;/span&gt;
 	&lt;/div&gt;
+      </code>
     </li>
     <li
       class="code mb0"
     >
-      &lt;span class="nowrap"&gt;Or call 1-800-MY-APPLE.&lt;/span&gt;
+      <code>
+        &lt;span class="nowrap"&gt;Or call 1-800-MY-APPLE.&lt;/span&gt;
+      </code>
     </li>
     <li
       class="code mb0"
     >
-      &lt;div class="ac-gf-footer-legal-copyright"&gt;Copyright ©
+      <code>
+        &lt;div class="ac-gf-footer-legal-copyright"&gt;Copyright ©
 			
 			2019
 			Apple Inc. All rights reserved.&lt;/div&gt;
+      </code>
     </li>
   </ul>
 </div>
@@ -75,16 +80,7 @@ exports[`accessibility-item.vue Snapshot for accessibility-item component withou
     class="mt0 mb0"
   />
    
-  <p>
-    undefined
-    <br />
-    <a
-      href="undefined"
-      target="_blank"
-    >
-      Learn more
-    </a>
-  </p>
+  <p />
    
   <ul
     class="list-unstyled"

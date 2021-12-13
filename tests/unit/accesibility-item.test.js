@@ -31,14 +31,14 @@ describe("accessibility-item.vue", () => {
     });
 
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     expect(wrapper.find('.scrollable--issue').exists()).toBe(true)
     expect(wrapper.find('.mt0.mb0').exists()).toBe(true)
     expect(wrapper.find('p').exists()).toBe(true)
     expect(wrapper.find('.list-unstyled').exists()).toBe(true)
-    expect(wrapper.findAll('li').wrappers.length).toBe(6)
+    expect(wrapper.findAll('li').length).toBe(6)
   });
 
   it("Snapshot for accessibility-item component without data", () => {
@@ -48,7 +48,7 @@ describe("accessibility-item.vue", () => {
       }
     });
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     expect(wrapper.find('.scrollable--issue').exists()).toBe(true)

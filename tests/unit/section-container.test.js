@@ -23,7 +23,7 @@ describe("Testing Section-Container component", () => {
       }
     });
     // controll if the component is instance
-    expect(wrapper.isVueInstance()).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
 
     // check if the divs are presents
     expect(wrapper.find(".sections__container").exists()).toBe(true);

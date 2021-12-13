@@ -1,23 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`performance.vue Testing speed component 1`] = `
-<container-stub>
+exports[`Testing performance component Rendering speed component with issues 1`] = `
+<pair-container-stub>
   <template>
     <div
       class="section__header--stats px2 py1"
     >
       <performance-score-stub
-        score="0"
+        score="0.89"
         type="Mobile"
       />
-
+       
       <performance-score-stub
-        score="0"
+        score="0.89"
         type="Desktop"
       />
     </div>
   </template>
-
+   
   <div
     class="scrollable__container"
   >
@@ -27,29 +27,83 @@ exports[`performance.vue Testing speed component 1`] = `
       >
         Mobile
       </h4>
-
-      <performance-item-stub
-        data="[object Object]"
-      />
+       
       <performance-item-stub
         data="[object Object]"
       />
     </div>
-
+     
     <div>
       <h4
         class="text--center text--muted mt0 mb1"
       >
         Desktop
       </h4>
-
+       
+      <performance-item-stub
+        data="[object Object]"
+      />
     </div>
   </div>
-
+   
   <template>
     <filter-item-stub
       filtercategories=""
     />
   </template>
-</container-stub>
+</pair-container-stub>
+`;
+
+exports[`Testing performance component Renering speed component with no issues 1`] = `
+<pair-container-stub>
+  <template>
+    <div
+      class="section__header--stats px2 py1"
+    >
+      <performance-score-stub
+        score="1"
+        type="Mobile"
+      />
+       
+      <performance-score-stub
+        score="1"
+        type="Desktop"
+      />
+    </div>
+  </template>
+   
+  <div
+    class="scrollable__container"
+  >
+    <div>
+      <h4
+        class="text--center text--muted mt0 mb1"
+      >
+        Mobile
+      </h4>
+       
+      <performance-item-stub
+        data="[object Object]"
+      />
+    </div>
+     
+    <div>
+      <h4
+        class="text--center text--muted mt0 mb1"
+      >
+        Desktop
+      </h4>
+       
+      <performance-item-stub
+        data="[object Object]"
+      />
+    </div>
+  </div>
+   
+  <template>
+    <filter-item-stub
+      filtercategories=""
+    />
+  </template>
+</pair-container-stub>
 `;

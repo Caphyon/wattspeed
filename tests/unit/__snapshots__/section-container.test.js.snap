@@ -129,8 +129,8 @@ exports[`Testing Section-Container component Loading false, error true 1`] = `
       class="alert--danger"
     >
       
-              ERROR: Error Test
-            
+            ERROR: Error Test
+          
     </p>
   </div>
 </div>

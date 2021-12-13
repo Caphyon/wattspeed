@@ -14,7 +14,7 @@ describe("Testing speed-score comonent", () => {
       },
     });
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     expect(wrapper.find('.text--center').exists()).toBe(true);
@@ -32,7 +32,7 @@ describe("Testing speed-score comonent", () => {
       },
     });
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     expect(wrapper.find('.text--center').exists()).toBe(true);
@@ -50,7 +50,7 @@ describe("Testing speed-score comonent", () => {
       },
     });
     // controll if the component is instance
-    expect(wrapper.isVueInstance).toBeTruthy();
+    expect(wrapper.exists()).toBeTruthy();
     expect(wrapper.element).toMatchSnapshot();
 
     expect(wrapper.find('.text--center').exists()).toBe(true);

@@ -10,7 +10,11 @@ $state: (
   warning: rgba(242,153,74, .1),
   warning-text: #FFBB80,
   danger: rgba(255,82,82, .1),
-  danger-text: #FF8282
+  danger-text: #FF8282,
+  orange-alpha: rgba(255,140,59, .1),
+  orange-text: #ff8c3b,
+  secondary: rgba(108,117,125, .1),
+  secondary-text: #6c757d
 );
 
 $space: 1rem !default;
