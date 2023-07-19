@@ -34,7 +34,7 @@
         <html5-section @tooManyRequests="handleTooManyRequests"></html5-section>
         <performance-section @tooManyRequests="handleTooManyRequests"></performance-section>
         <security-section @tooManyRequests="handleTooManyRequests"></security-section>
-        <mixed-section @tooManyRequests="handleTooManyRequests"></mixed-section>
+        <crux-section init-title="CrUX" @tooManyRequests="handleTooManyRequests"></crux-section>
         <accesibility-section @tooManyRequests="handleTooManyRequests"></accesibility-section>
     </div>
   </div>
@@ -47,7 +47,7 @@ import Tech from "./../sections/tech-section.vue";
 import Html5 from "./../sections/html5-section.vue";
 import Performance from "./../sections/performance-section.vue";
 import Security from "./../sections/security-section.vue";
-import Mixed from "./../sections/mixed-section.vue";
+import CrUX from "../sections/crux-section.vue";
 import Accesibility from "./../sections/accesibility-section.vue";
 
 Vue.component("base-section", BaseSection);
@@ -55,7 +55,7 @@ Vue.component("tech-section", Tech);
 Vue.component("html5-section", Html5);
 Vue.component("performance-section", Performance);
 Vue.component("security-section", Security);
-Vue.component("mixed-section", Mixed);
+Vue.component("crux-section", CrUX);
 Vue.component("accesibility-section", Accesibility);
 
 export default {

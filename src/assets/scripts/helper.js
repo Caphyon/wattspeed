@@ -344,66 +344,72 @@
    * Here we are creating the listener and returning the data on extension
    * request depending on $data.action argument
    */
-  chrome.runtime.onMessage.addListener(function ($data, $sender, $response) {
-    switch ($data.action) {
-      case 'GET_SERP_DATA':
-        {
-          $response({
-            action: 'SERP_DATA',
-            serpData: HELPER.getSerpData()
-          });
-        }
-        break;
+  try {
+    chrome.runtime.onMessage.addListener(function ($data, $sender, $response) {
+      switch ($data.action) {
+        case 'GET_SERP_DATA':
+          {
+            $response({
+              action: 'SERP_DATA',
+              serpData: HELPER.getSerpData()
+            });
+          }
+          break;
 
-      case 'GET_TECH_DATA':
-        {
-          $response({
-            action: 'TECH_DATA',
-            techData: HELPER.getTechData()
-          });
-        }
-        break;
+        case 'GET_TECH_DATA':
+          {
+            $response({
+              action: 'TECH_DATA',
+              techData: HELPER.getTechData()
+            });
+          }
+          break;
 
-      case 'GET_MIXED_DATA':
-        {
-          $response({
-            action: 'MIXED_DATA',
-            mixedData: HELPER.getMixedData()
-          });
-        }
-        break;
+        case 'GET_MIXED_DATA':
+          {
+            $response({
+              action: 'MIXED_DATA',
+              mixedData: HELPER.getMixedData()
+            });
+          }
+          break;
 
-      case 'GET_DOM_LANG':
-        {
-          $response({
-            action: 'DOM_LANG',
-            domLang: HELPER.getDOMLang()
-          });
-        }
-        break;
+        case 'GET_DOM_LANG':
+          {
+            $response({
+              action: 'DOM_LANG',
+              domLang: HELPER.getDOMLang()
+            });
+          }
+          break;
 
-      case 'VERIFY_INJECTED':
-        {
-          $response({
-            action: 'INJECTED',
-            status: true
-          });
-        }
-        break;
+        case 'VERIFY_INJECTED':
+          {
+            $response({
+              action: 'INJECTED',
+              status: true
+            });
+          }
+          break;
 
-      case 'STORE_DATA':
-        {
-          CONTAINER.setContainerData($data.data);
-        }
-        break;
+        case 'STORE_DATA':
+          {
+            CONTAINER.setContainerData($data.data);
+          }
+          break;
 
-      case 'GET_DATA':
-        {
-          $response({
-            data: CONTAINER.getContainerData($data.data)
-          });
-        }
-        break;
-    }
-  });
+        case 'GET_DATA':
+          {
+            $response({
+              data: CONTAINER.getContainerData($data.data)
+            });
+          }
+          break;
+        default:
+          break;
+      }
+    });
+  } catch (e) {
+    console.log(e);
+  }
 })();

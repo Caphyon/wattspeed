@@ -30,10 +30,24 @@
     </svg>
   </template>
   <footer class="mainFooter">
-    <p class="mt0 mb0">Made by <a href="https://www.advancedwebranking.com/?utm_source=wattspeedextension&utm_medium=referral" target="_blank">
-      Advanced Web Ranking</a>
-    </p>
+    <div class="mt1 mb1" style="padding-right: 1rem;">
+      <p class="mt0 mb0">
+        Like what you see? Create a
+        <a href="https://app.wattspeed.com/signup?utm_source=wattspeedextension&utm_medium=referral"
+           target="_blank">
+          FREE account
+        </a>
+        so you can check your website automatically!
+      </p>
+    </div>
     <ul class="list-unstyled mainNav__panels">
+      <li class="mainNav__panels--item">
+        <a href="https://www.advancedwebranking.com/?utm_source=wattspeedextension&utm_medium=referral" target="_blank" title="Made by Advanced Web Ranking">
+          <svg width="18" height="18" data-icon>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/icons/symbols.svg#awr"/>
+          </svg>
+        </a>
+      </li>
       <li class="mainNav__panels--item">
         <a href="https://twitter.com/wattspeed" target="_blank" title="Find us on Twitter">
           <svg width="18" height="18" data-icon>
@@ -60,7 +74,8 @@ import HTML5 from "./components/panels/tech/html5";
 import Performance from "./components/panels/tech/performance";
 import Mobile from "./components/panels/tech/mobile";
 import Security from "./components/panels/tech/security";
-import Mixed from "./components/panels/tech/mixed";
+import CrUXURL from "./components/panels/tech/crux-url.vue";
+import CrUXOrigin from "./components/panels/tech/crux-origin.vue";
 import Accessibility from "./components/panels/tech/accessibility";
 
 Vue.component("tech", Tech);
@@ -68,7 +83,8 @@ Vue.component("technology", Technology);
 Vue.component("html5", HTML5);
 Vue.component("performance", Performance);
 Vue.component("security", Security);
-Vue.component("mixed", Mixed);
+Vue.component("crux-url", CrUXURL);
+Vue.component("crux-origin", CrUXOrigin);
 Vue.component("accessibility", Accessibility);
 Vue.component("mobile", Mobile);
 
@@ -120,7 +136,7 @@ export default {
             strategies: [Constant.ANY],
           },
           {
-            name: 'mixed',
+            name: 'crux',
             strategies: [Constant.ANY],
           },
           {
@@ -136,12 +152,12 @@ export default {
             strategies: [Constant.ANY],
           },
         ];
-        for (const panel of panels) {
-          for (const strategy of panel.strategies) {
+        panels.forEach((panel) => {
+          panel.strategies.forEach((strategy) => {
             const cache_key = Buffer.from(`${panel.name}${strategy}${this.tab.url}`).toString('base64');
             localStorage.removeItem(cache_key);
-          }
-        }
+          });
+        });
       });
       myPromise.then(EventBus.$emit("changePanel", "tech"));
       myPromise.then(EventBus.$emit("refreshData"));
@@ -152,17 +168,11 @@ export default {
       chrome.manifest = chrome.runtime.getManifest();
       const injectIntoTab = tabID => {
         const scripts = chrome.manifest.content_scripts[0].js;
-        scripts.forEach(script => {
-          chrome.tabs.executeScript(
-            tabID,
-            {
-              file: script,
-              runAt: "document_end"
-            },
-            () => {
-              this.tab = tab;
-            }
-          );
+        chrome.scripting.executeScript({
+          target: { tabId: tabID },
+          files: scripts
+        }, () => {
+          this.tab = tab
         });
       };
       chrome.tabs.sendMessage(tab.id, { action: "VERIFY_INJECTED" }, status => {

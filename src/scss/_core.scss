@@ -31,7 +31,7 @@ svg {
 
 .section--icon {
   fill: none;
-  stroke: #fff;
+  stroke: currentColor;
   margin-right: .3rem;
 }
 
@@ -107,8 +107,9 @@ a {
   display: flex;
   align-items: center;
   height: 2.8rem;
+  line-height: 2.8rem;
   color: rgba(255,255,255,.6);
-  background-color: map-get($color, secondaryGray);
+  background: linear-gradient(350deg, rgb(26, 31, 38) 50%, rgb(62, 19, 109) 100%);
   font-size: 90%;
   padding: 0 1rem;
 

@@ -22,6 +22,10 @@ export default {
     },
     makeRequest(request, StorageName, strategy, callback) {
       const url = request.url || request;
+      // CrUX URL and CrUX Origin are found in the same request
+      if (StorageName === 'crux-url' || StorageName === 'crux-origin') {
+        StorageName = 'crux';
+      }
       const cache_key = Buffer.from(`${StorageName}${strategy}${this.tab.url}`).toString('base64');
       const data = localStorage.getItem(cache_key);
 

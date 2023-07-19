@@ -14,7 +14,7 @@
     border-radius: 2px;
     background: rgba(0,0,0,.3);
     cursor: pointer;
-    color: #fff;
+    color: #c7c7c7;
 
     &:hover {
       transform: scale(1.03);
@@ -73,7 +73,7 @@
         &:before {
           content: "";
           position: absolute;
-          top: 0;
+          top: 1px;
           left: -1rem;
           border-style: solid;
           border-width: 2.3rem 1rem 0 0;

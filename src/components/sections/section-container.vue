@@ -1,12 +1,12 @@
 <template>
-    <div class="sections__container" :class="loading ? '__nodata' : ''" @click="select()">
-      <div class="sections__container--title">
+    <div class="sections__container" @click="select()">
+      <div class="sections__container--title active">
         <svg width="20" height="20" class="section--icon">
           <use xmlns:xlink="http://www.w3.org/1999/xlink" v-bind:xlink:href="icon"></use>
         </svg>
         <h4 class="mt0 mb0 text--strong">{{title}}</h4>
       </div>
-      <div class="sections__container--content">
+      <div class="sections__container--content" :class="{ 'centered-loading' : loading }">
         <template v-if="loading">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
             <path opacity=".2" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946 s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634 c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
@@ -86,9 +86,18 @@ export default {
   },
   methods: {
     select() {
-      if (!this.$parent.panelName || this.loading) return;
+      if (!this.$parent.panelName || this.$parent.loading) return;
       EventBus.$emit("changePanel", this.$parent.panelName);
     },
   },
 };
 </script>
+<style scoped>
+.centered-loading {
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  margin-top: -37px;
+}
+</style>
