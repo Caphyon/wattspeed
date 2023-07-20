@@ -1,7 +1,7 @@
 <template>
   <div class="mainContent">
     <div class="section__header">
-      <div class="sections__container--title" v-if="title">
+      <div class="sections__container--title active" v-if="title">
         <svg width="20" height="20" class="section--icon">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" v-bind:xlink:href="icon"></use>
         </svg>
@@ -94,12 +94,13 @@ export default {
   &__header {
     position: relative;
     background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,.3));
-    color: #fff;
+    color: #c7c7c7;
     margin: -1rem -1rem 0 -1rem;
     padding-bottom: 1rem;
 
     &--title {
       display: flex;
+      user-select: none;
       justify-content: center;
       align-items: center;
       margin-bottom: 2rem;
@@ -109,6 +110,10 @@ export default {
 
 .sections__container--title {
   padding-left: 1.2rem;
+  &h4 {
+    color: #c7c7c7;
+    user-select: none;
+  }
 }
 
 ._word--break {

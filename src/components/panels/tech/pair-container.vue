@@ -10,7 +10,7 @@
       </div>
       <div class="sections__container--title" v-if="title2" @click="changeTab(title2)"
            :class="{ 'active' : isActiveSecond }">
-        <svg width="20" height="20" class="section--icon">
+        <svg v-if="icon2" width="20" height="20" class="section--icon">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" v-bind:xlink:href="icon2"></use>
         </svg>
         <h4 class="mt0 mb0 text--strong">{{title2}}</h4>
@@ -40,7 +40,7 @@
         </div>
         <slot name="filters"></slot>
       </template>
-      <template v-if="isValid && !error">
+      <template v-else-if="isValid && !error">
         <div class="scrollable _word--break" :class="getContainerHeight()">
           <div class="state">
             <svg viewBox="0 0 386.9 345.3" xmlns="http://www.w3.org/2000/svg" width="250">
@@ -92,7 +92,7 @@ export default {
       EventBus.$emit("changePanel", "tech");
     },
     changeTab(section) {
-      EventBus.$emit("changePanel", section.toLowerCase());
+      EventBus.$emit("changePanel", section.toLowerCase().replaceAll(' ', '-'));
     },
   }
 };
@@ -105,7 +105,7 @@ export default {
   &__header {
     position: relative;
     background-image: linear-gradient(to bottom, transparent, rgba(0,0,0,.3));
-    color: #fff;
+    color: #c7c7c7;
     margin: -1rem -1rem 0 -1rem;
     padding-bottom: 1rem;
 
@@ -115,11 +115,19 @@ export default {
       align-items: center;
       margin-bottom: 2rem;
     }
+
+    & .active {
+      color: #e8e8e8;
+    }
   }
 }
 
 .sections__container--title {
   padding-left: 1.2rem;
+  &h4 {
+    color: #c7c7c7;
+    user-select: none;
+  }
 }
 
 ._word--break {
