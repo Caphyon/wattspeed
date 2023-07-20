@@ -20,9 +20,11 @@
 import Vue from "vue";
 import BaseSection from "./base-section.vue";
 import SectionContainer from "./section-container.vue";
-import passSVG from "../../assets/cwv-pass.svg";
-import failSVG from "../../assets/cwv-fail.svg";
-import noDataSVG from "../../assets/cwv-no-data.svg";
+import passSVG from "../../assets/icons/cwv-pass.svg";
+import failSVG from "../../assets/icons/cwv-fail.svg";
+import noDataSVG from "../../assets/icons/cwv-no-data.svg";
+
+console.log(passSVG);
 
 let Constant = require("../../assets/utils/consts.js");
 
