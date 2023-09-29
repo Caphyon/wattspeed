@@ -2,7 +2,7 @@
   <div>
     <div class="preview-card in-view">
       <div>
-        <Title name="HTML" icon="html5" />
+        <Title name="HTML5" icon="html5" />
         <button class="absolute right-4 z-10 text-xl"
                 @click="goTo(true, 'home')"
                 aria-label="Close button"

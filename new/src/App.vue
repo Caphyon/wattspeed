@@ -120,6 +120,7 @@ export default {
           score: null
         }
       },
+      performanceMobile: null,
       security: null,
       crux: null,
       a11y: {
@@ -132,6 +133,7 @@ export default {
         technologies: true,
         html: true,
         performance: true,
+        performanceMobile: true,
         security: true,
         crux: true,
         a11y: true
@@ -140,6 +142,7 @@ export default {
         technologies: null,
         html: null,
         performance: null,
+        performanceMobile: null,
         security: null,
         crux: null,
         a11y: null
@@ -153,6 +156,7 @@ export default {
       technologies: computed(() => this.technologies),
       html: computed(() => this.html),
       performance: computed(() => this.performance),
+      performanceMobile: computed(() => this.performanceMobile),
       security: computed(() => this.security),
       crux: computed(() => this.crux),
       a11y: computed(() => this.a11y)
@@ -281,7 +285,7 @@ export default {
             strategies: [ANY]
           },
           {
-            name: "mobile",
+            name: "performanceMobile",
             strategies: [ANY]
           },
           {
@@ -309,6 +313,7 @@ export default {
       await this.getCrUX();
       await this.getPerformance(MOBILE);
       await this.getPerformance(DESKTOP);
+      await this.getPerformanceMobile();
       await this.getSecurity();
       await this.getHtmlValidation();
       await this.getA11y();
@@ -373,7 +378,7 @@ export default {
         body: JSON.stringify(params)
       });
 
-      this.requestWrapper(request, 'performance', ANY, (data) => {
+      this.requestWrapper(request, 'performance', device, (data) => {
         this.performance[device].lighthouse = JSON.parse(data.body);
         if (this.performance[device].lighthouse == null || Object.keys(this.performance[device].lighthouse).length === 0) {
           throw new Error("Response body for performance " + device + " is empty or null");
@@ -478,6 +483,27 @@ export default {
         this.a11y.audits = this.parseA11yAudits(audits);
 
         this.loading.a11y = false;
+      });
+    },
+    getPerformanceMobile() {
+      const params = {
+        params: {
+          url: this.tab.url,
+          action: 'lighthouse',
+          section: 'mobile',
+        }
+      };
+
+      const request = new Request(API_URL, {
+        method: "POST",
+        headers,
+        body: JSON.stringify(params)
+      });
+
+      this.requestWrapper(request, 'performanceMobile', MOBILE, (data) => {
+        this.performanceMobile = JSON.parse(data.body);
+
+        this.loading.performanceMobile = false;
       });
     },
     parseA11yAudits(audits) {

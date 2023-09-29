@@ -30,6 +30,21 @@ const getRouter = () => {
         component: () => import('./views/HTML.vue'),
       },
       {
+        path: '/mobile',
+        name: 'mobile',
+        component: () => import('./views/Mobile.vue'),
+      },
+      {
+        path: '/crux-url',
+        name: 'crux-url',
+        component: () => import('./views/CrUX.vue'),
+      },
+      {
+        path: '/crux-origin',
+        name: 'crux-origin',
+        component: () => import('./views/CrUX.vue'),
+      },
+      {
         path: '/:pathMatch(.*)',
         redirect: '/',
       },

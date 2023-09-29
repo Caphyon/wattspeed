@@ -2,7 +2,14 @@
   <div>
     <div class="preview-card in-view">
       <div>
-        <Title name="Security" icon="shield" />
+        <Title name="Performance"
+               icon="pagespeed"
+               @click="goTo(true, 'performance')"
+               :class="{ 'inactive' : $route.name === 'mobile' }" />
+        <Title name="Mobile"
+               icon="mobile"
+               @click="goTo(true, 'mobile')"
+               :class="{ 'inactive' : $route.name === 'performance' }" />
         <button class="absolute right-4 z-10 text-xl"
                 @click="goTo(true, 'home')"
                 aria-label="Close button"
@@ -65,24 +72,16 @@ export default {
     }
   },
   watch: {
-    "performance.mobile.lighthouse": {
+    "[performance.mobile.lighthouse, performance.desktop.lighthouse]": {
       handler() {
-        if (this.performance[MOBILE].lighthouse) {
+        if (this.performance[MOBILE].lighthouse && this.performance[DESKTOP].lighthouse) {
           this.initialMobileData = this.filteredMobileData = this.computeInitialData(this.performance[MOBILE].lighthouse);
-          this.initialFilterTypes = this.computeFilterCategories(this.initialMobileData, this.initialDesktopData);
-        }
-      },
-      immediate: true,
-    },
-    "performance.desktop.lighthouse": {
-      handler() {
-        if (this.performance[DESKTOP].lighthouse) {
           this.initialDesktopData = this.filteredDesktopData = this.computeInitialData(this.performance[DESKTOP].lighthouse);
           this.initialFilterTypes = this.computeFilterCategories(this.initialMobileData, this.initialDesktopData);
         }
       },
       immediate: true,
-    }
+    },
   },
   data() {
     return {

@@ -2,15 +2,15 @@
   <div class="preview-card-metrics">
     <div>
       <h3 class="badge font-semibold"
-          :class="getCWVStatusText(passesCoreVitals('url'))">
-        {{ getCWVStatusText(passesCoreVitals("url"), true) }}
+          :class="getCWVStatusTextPreview(passesCoreVitalsPreview('url'))">
+        {{ getCWVStatusTextPreview(passesCoreVitalsPreview("url"), true) }}
       </h3>
       <span class="uppercase">URL</span>
     </div>
     <div>
       <h3 class="badge font-semibold"
-          :class="getCWVStatusText(passesCoreVitals('origin'))">
-        {{ getCWVStatusText(passesCoreVitals("origin"), true) }}
+          :class="getCWVStatusTextPreview(passesCoreVitalsPreview('origin'))">
+        {{ getCWVStatusTextPreview(passesCoreVitalsPreview("origin"), true) }}
       </h3>
       <span class="uppercase">Origin</span>
     </div>
@@ -26,7 +26,7 @@ export default {
     }
   },
   methods: {
-    passesCoreVitals(groupId) {
+    passesCoreVitalsPreview(groupId) {
       const LCP = "largest_contentful_paint";
       const FID = "first_input_delay";
       const CLS = "cumulative_layout_shift";
@@ -74,7 +74,7 @@ export default {
 
       return passesAll ? 1 : 0;
     },
-    getCWVStatusText(status, getText) {
+    getCWVStatusTextPreview(status, getText) {
       if (getText) {
         if (status === 0) return "Failed";
         if (status === 1) return "Passed";

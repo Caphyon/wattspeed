@@ -1,6 +1,6 @@
 <template>
   <main class="grid grid-cols-2 gap-4 p-4">
-    <div class="preview-card" @click="goTo(!loading.crux, 'crux')"
+    <div class="preview-card" @click="goTo(!loading.crux, 'crux-url')"
          :class="{ 'loading' : loading.crux }">
       <Title name="CrUX" icon="crux" />
       <div class="content">
