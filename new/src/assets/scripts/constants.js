@@ -1,6 +1,6 @@
-export const SUCCESS = 'Success';
-export const WARNINGS = 'Warnings';
-export const ERRORS = 'Errors';
+export const SUCCESS = 'success';
+export const WARNING = 'warning';
+export const ERROR = 'error';
 
 export const MOBILE = 'mobile';
 export const DESKTOP = 'desktop';

@@ -20,6 +20,15 @@
   border-radius: 10px;
 }
 
+a,
+.clickable {
+  @apply text-zinc-400;
+
+  &:hover {
+    @apply text-white;
+  }
+}
+
 body {
   @apply text-base;
 }
@@ -39,7 +48,7 @@ nav {
 }
 
 .title {
-  @apply relative z-10 inline-flex items-center p-2 pr-10 uppercase bg-zinc-950/80 font-semibold gap-2 text-base;
+  @apply relative z-10 inline-flex items-center p-2 uppercase bg-zinc-950/80 font-semibold gap-2 text-base;
   border-radius: 2px;
 
   &.inactive {
@@ -130,7 +139,7 @@ nav {
   &-metrics {
     @apply flex items-center divide-x divide-gray-700 h-full;
 
-    & div {
+    & div:not(.ignore-metrics) {
       @apply flex flex-col items-center w-full;
     }
   }
@@ -234,8 +243,14 @@ a {
   }
 }
 
+div:has(.filters-wrapper) .in-view-content {
+  @apply min-h-[320px] max-h-[320px];
+}
+
 .in-view-content {
-  @apply overflow-y-auto w-full min-h-[344px] max-h-[344px] p-4;
+  @apply overflow-y-auto w-full p-4;
+  min-height: 344px;
+  max-height: 344px;
 
   & .sticky-area {
     @apply sticky -top-4 bg-[#0f172a] py-1;
@@ -291,3 +306,10 @@ a {
   }
 }
 
+.filter-item {
+  @apply w-4 h-2 rounded-sm opacity-60 cursor-pointer;
+
+  &.active {
+    @apply opacity-100;
+  }
+}

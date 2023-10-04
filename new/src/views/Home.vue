@@ -1,5 +1,14 @@
 <template>
   <main class="grid grid-cols-2 gap-4 p-4">
+    <div class="preview-card" @click="goTo(!loading.score, 'score')"
+         :class="{ 'loading' : loading.score }">
+      <Title name="Score" icon="pagespeed" />
+      <div class="content">
+        <LoadingWrapper :loading="loading.score">
+          <ScorePreview />
+        </LoadingWrapper>
+      </div>
+    </div>
     <div class="preview-card" @click="goTo(!loading.crux, 'crux-url')"
          :class="{ 'loading' : loading.crux }">
       <Title name="CrUX" icon="crux" />
@@ -15,15 +24,6 @@
       <div class="content">
         <LoadingWrapper :loading="loading.performance">
           <PerformancePreview />
-        </LoadingWrapper>
-      </div>
-    </div>
-    <div class="preview-card" @click="goTo(!loading.technologies, 'technologies')"
-         :class="{ 'loading' : loading.technologies }">
-      <Title name="Technologies" icon="technologies" />
-      <div class="content">
-        <LoadingWrapper :loading="loading.technologies">
-          <TechnologiesPreview />
         </LoadingWrapper>
       </div>
     </div>
@@ -64,11 +64,13 @@ import LoadingWrapper from "../components/LoadingWrapper.vue";
 import SecurityPreview from "../components/previews/SecurityPreview.vue";
 import HTMLPreview from "../components/previews/HTMLPreview.vue";
 import A11yPreview from "../components/previews/A11yPreview.vue";
+import ScorePreview from "../components/previews/ScorePreview.vue";
 import Title from "../components/Title.vue";
 
 export default {
   name: "Home",
   components: {
+    ScorePreview,
     Title,
     SecurityPreview,
     TechnologiesPreview,

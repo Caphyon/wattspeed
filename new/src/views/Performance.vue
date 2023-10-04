@@ -2,19 +2,16 @@
   <div>
     <div class="preview-card in-view">
       <div>
-        <Title name="Performance"
-               icon="pagespeed"
-               @click="goTo(true, 'performance')"
-               :class="{ 'inactive' : $route.name === 'mobile' }" />
-        <Title name="Mobile"
-               icon="mobile"
-               @click="goTo(true, 'mobile')"
-               :class="{ 'inactive' : $route.name === 'performance' }" />
-        <button class="absolute right-4 z-10 text-xl"
-                @click="goTo(true, 'home')"
-                aria-label="Close button"
-                title="Close">×
-        </button>
+        <Breadcrumb>
+          <Title name="Performance"
+                 icon="pagespeed"
+                 @click="goTo(true, 'performance')"
+                 :class="{ 'inactive' : $route.name === 'mobile' }" />
+          <Title name="Mobile"
+                 icon="mobile"
+                 @click="goTo(true, 'mobile')"
+                 :class="{ 'inactive' : $route.name === 'performance' }" />
+        </Breadcrumb>
       </div>
       <div class="content in-view">
         <LoadingWrapper :loading="loading.performance" class="h-16 mt-2">
@@ -48,20 +45,24 @@
         </div>
       </LoadingWrapper>
     </div>
+    <Filters v-if="!loading.performance" :filters="filters" @emitFilter="onFilterChange"/>
   </div>
 </template>
 
 <script>
 import Title from "../components/Title.vue";
 import LoadingWrapper from "../components/LoadingWrapper.vue";
-import { ERRORS, WARNINGS, SUCCESS, DESKTOP, MOBILE } from "../../../src/assets/utils/consts.js";
+import { ERROR, WARNING, SUCCESS, DESKTOP, MOBILE } from "../assets/scripts/constants.js";
 import PerformancePreview from "../components/previews/PerformancePreview.vue";
 import PerformanceItem from "../components/items/PerformanceItem.vue";
 import { marked } from "marked";
+import Breadcrumb from "../components/Breadcrumb.vue";
+import Filters from "../components/Filters.vue";
+import { sortObjectsArrayData } from "../assets/scripts/helper.js";
 
 export default {
   name: "Performance",
-  components: { PerformanceItem, PerformancePreview, LoadingWrapper, Title },
+  components: {Filters, Breadcrumb, PerformanceItem, PerformancePreview, LoadingWrapper, Title },
   inject: {
     performance: {
       default: () => {
@@ -75,24 +76,50 @@ export default {
     "[performance.mobile.lighthouse, performance.desktop.lighthouse]": {
       handler() {
         if (this.performance[MOBILE].lighthouse && this.performance[DESKTOP].lighthouse) {
-          this.initialMobileData = this.filteredMobileData = this.computeInitialData(this.performance[MOBILE].lighthouse);
-          this.initialDesktopData = this.filteredDesktopData = this.computeInitialData(this.performance[DESKTOP].lighthouse);
-          this.initialFilterTypes = this.computeFilterCategories(this.initialMobileData, this.initialDesktopData);
+          this.filteredMobileData = this.initialMobileData = this.filterData(this.sortData(this.computeInitialData(this.performance[MOBILE].lighthouse)));
+          this.filteredDesktopData = this.initialDesktopData = this.filterData(this.sortData(this.computeInitialData(this.performance[DESKTOP].lighthouse)));
         }
       },
       immediate: true,
     },
   },
   data() {
+    const filters = {
+      'bg-rose-500': [ERROR],
+      'bg-amber-500': [WARNING],
+      'bg-emerald-500': [SUCCESS],
+    };
+
     return {
-      initialDesktopData: [],
+      filters: filters,
+      activeFilters: Object.keys(filters).map((key) => filters[key]).flat(),
       initialMobileData: [],
-      initialFilterTypes: [],
+      initialDesktopData: [],
       filteredMobileData: [],
       filteredDesktopData: []
     };
   },
   methods: {
+    sortData(arr) {
+      const orderArray = [ERROR, WARNING, SUCCESS];
+      return sortObjectsArrayData(arr, orderArray, 'type');
+    },
+    filterData(arr) {
+      const filteredArr = [];
+
+      arr.forEach((object) => {
+        if (this.activeFilters.indexOf(object.type) >= 0) {
+          filteredArr.push(object);
+        }
+      });
+
+      return filteredArr;
+    },
+    onFilterChange(payload) {
+      this.activeFilters = payload;
+      this.filteredMobileData = this.filterData(this.initialMobileData);
+      this.filteredDesktopData = this.filterData(this.initialDesktopData);
+    },
     computeFilterCategories(initialData) {
       return [...new Set(initialData.map(item => item.type))];
     },
@@ -115,9 +142,9 @@ export default {
         if (audit.score >= 0.9) {
           newItem.type = SUCCESS;
         } else if (audit.score >= 0.65) {
-          newItem.type = WARNINGS;
+          newItem.type = WARNING;
         } else  {
-          newItem.type = ERRORS;
+          newItem.type = ERROR;
         }
 
         return newItem;

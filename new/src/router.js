@@ -10,6 +10,11 @@ const getRouter = () => {
         component: () => import('./views/Home.vue'),
       },
       {
+        path: '/score',
+        name: 'score',
+        component: () => import('./views/Score.vue'),
+      },
+      {
         path: '/a11y',
         name: 'a11y',
         component: () => import('./views/A11y.vue'),

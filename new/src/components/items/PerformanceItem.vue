@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import { ERROR, WARNING } from "../../assets/scripts/constants.js";
+
 export default {
   name: "PerformanceItem",
   props: {
@@ -16,8 +18,8 @@ export default {
   },
   computed: {
     getScoreClass() {
-      if (this.audit.level < 0.5) return "badge badge-danger";
-      if (this.audit.level < 0.9) return "badge badge-warning";
+      if (this.audit.type === ERROR) return "badge badge-danger";
+      if (this.audit.type === WARNING) return "badge badge-warning";
       return "badge badge-success";
     }
   }

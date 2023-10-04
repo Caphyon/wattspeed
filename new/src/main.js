@@ -13,13 +13,24 @@ const initVue = () => {
   window.wattspeedRouter = getRouter();
   window.wattspeedApp.use(window.wattspeedRouter);
 
+
   const plugins = {
     install(app) {
       app.config.globalProperties.$emitter = emitter;
       app.config.globalProperties.Buffer = window.Buffer || Buffer;
+      app.config.globalProperties.intervalNormalization = (value, inMin, inMax, outMin, outMax, reverse) => {
+        if (value === null || value === 0) return outMin || 0;
+
+        const normalizedValue = ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
+        return reverse ? (outMax - normalizedValue) : normalizedValue;
+      };
       app.config.globalProperties.goTo = (permissionGranted, routeName) => {
         if (permissionGranted) {
-          window.wattspeedRouter.push(routeName);
+          const hrefURL = new URL(window.location.href);
+          const keepQuery = ['home', 'score'].indexOf(routeName) === -1 && hrefURL.searchParams.has('from') && hrefURL.searchParams.get('from') === 'score';
+          const queryParams = keepQuery ? { from: 'score' } : {};
+
+          window.wattspeedRouter.push({ name: routeName, query: queryParams });
         }
       };
     },

@@ -2,12 +2,9 @@
   <div>
     <div class="preview-card in-view">
       <div>
-        <Title name="Security" icon="shield" />
-        <button class="absolute right-4 z-10 text-xl"
-                @click="goTo(true, 'home')"
-                aria-label="Close button"
-                title="Close">×
-        </button>
+        <Breadcrumb>
+          <Title name="Security" icon="shield" />
+        </Breadcrumb>
       </div>
       <div class="content in-view">
         <LoadingWrapper :loading="loading.security" class="h-16 mt-2">
@@ -25,32 +22,39 @@
           <div class="flex-1">
             <h3 class="sticky-area">Headers</h3>
             <div class="space-y-3 h-full">
-              <SecurityHeadersItem v-for="(header, key) in security.headersFeedback.headers"
+              <SecurityHeadersItem v-for="(header, key) in Object.keys(filteredHeaders)"
                                    :key="key"
-                                   :title="key"
-                                   :header="header" />
+                                   :title="header"
+                                   :header="filteredHeaders[header]" />
             </div>
           </div>
           <div class="flex-1">
             <h3 class="sticky-area">SSL</h3>
             <div class="space-y-3 h-full">
-              <SecuritySSLItem v-for="(message, key) in security.sslFeedback.errors"
-                               :key="key"
-                               :message="message"
-                               type="error" />
-              <SecuritySSLItem v-for="(message, key) in security.sslFeedback.warnings"
-                               :key="key"
-                               :message="message"
-                               type="warning" />
-              <SecuritySSLItem v-for="(message, key) in security.sslFeedback.success"
-                               :key="key"
-                               :message="message"
-                               type="success" />
+              <template v-if="sslErrorsFilterActive">
+                <SecuritySSLItem v-for="(message, key) in security.sslFeedback.errors"
+                                 :key="key"
+                                 :message="message"
+                                 type="error" />
+              </template>
+              <template v-if="sslWarningsFilterActive">
+                <SecuritySSLItem v-for="(message, key) in security.sslFeedback.warnings"
+                                 :key="key"
+                                 :message="message"
+                                 type="warning" />
+              </template>
+              <template v-if="sslSuccessFilterActive">
+                <SecuritySSLItem v-for="(message, key) in security.sslFeedback.success"
+                                 :key="key"
+                                 :message="message"
+                                 type="success" />
+              </template>
             </div>
           </div>
         </div>
       </LoadingWrapper>
     </div>
+    <Filters v-if="!loading.security" :filters="filters" @emitFilter="onFilterChange"/>
   </div>
 </template>
 
@@ -60,10 +64,15 @@ import SecurityPreview from "../components/previews/SecurityPreview.vue";
 import LoadingWrapper from "../components/LoadingWrapper.vue";
 import SecurityHeadersItem from "../components/items/SecurityHeadersItem.vue";
 import SecuritySSLItem from "../components/items/SecuritySSLItem.vue";
+import Breadcrumb from "../components/Breadcrumb.vue";
+import Filters from "../components/Filters.vue";
+import {sortObjectsData} from "../assets/scripts/helper.js";
 
 export default {
   name: "Security",
-  components: { SecuritySSLItem, SecurityHeadersItem, LoadingWrapper, SecurityPreview, Title },
+  components: {
+    Filters,
+    Breadcrumb, SecuritySSLItem, SecurityHeadersItem, LoadingWrapper, SecurityPreview, Title },
   inject: {
     security: {
       default: () => {
@@ -73,16 +82,72 @@ export default {
       default: () => false
     }
   },
+  data() {
+    const filters = {
+          'bg-rose-500': ['danger', 'red'],
+          'bg-amber-500': ['warning', 'yellow', 'orange'],
+          'bg-emerald-500': ['success', 'green'],
+        };
+
+    return {
+      filters: filters,
+      activeFilters: Object.keys(filters).map((key) => filters[key]).flat(),
+    };
+  },
   methods: {
-    getIssueClass(severity) {
-      switch (severity) {
-        case "critical":
-        case "serious":
-          return "badge badge-danger";
-        default:
-          return "badge badge-warning";
+    onFilterChange(payload) {
+      this.activeFilters = payload;
+    },
+  },
+  computed: {
+    headersKeys() {
+      return Object.keys(this.security.headersFeedback.headers);
+    },
+    filteredHeaders() {
+      const headers = {};
+      if (this.headersKeys) {
+        this.headersKeys.forEach((header) => {
+          if (this.activeFilters.indexOf(this.security.headersFeedback.headers[header].color) >= 0) {
+            headers[header] = this.security.headersFeedback.headers[header];
+          }
+        });
       }
+
+      return sortObjectsData(headers, ['red', 'orange', 'yellow', 'green'], 'color');
+    },
+    sslErrorsFilterActive() {
+      let show = false;
+
+      this.filters["bg-rose-500"].forEach((key) => {
+        if (this.activeFilters.includes(key)) {
+          show = true;
+        }
+      });
+
+      return show;
+    },
+    sslWarningsFilterActive() {
+      let show = false;
+
+      this.filters["bg-amber-500"].forEach((key) => {
+        if (this.activeFilters.includes(key)) {
+          show = true;
+        }
+      });
+
+      return show;
+    },
+    sslSuccessFilterActive() {
+      let show = false;
+
+      this.filters["bg-emerald-500"].forEach((key) => {
+        if (this.activeFilters.includes(key)) {
+          show = true;
+        }
+      });
+
+      return show;
     }
-  }
+  },
 };
 </script>

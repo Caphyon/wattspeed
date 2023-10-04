@@ -2,21 +2,21 @@
   <div class="lh-vars">
     <div class="preview-card in-view">
       <div>
-        <Title name="CrUX URL"
-               icon="crux"
-               @click="goTo(true, 'crux-url')"
-               :class="{ 'inactive' : $route.name === 'crux-origin' }" />
-        <Title name="CrUX Origin"
-               icon="crux"
-               @click="goTo(true, 'crux-origin')"
-               :class="{ 'inactive' : $route.name === 'crux-url' }" />
-        <button class="absolute right-4 z-10 text-xl"
-                @click="goTo(true, 'home')"
-                aria-label="Close button"
-                title="Close">×
-        </button>
+        <Breadcrumb>
+          <Title name="CrUX URL"
+                 icon="crux"
+                 @click="goTo(true, 'crux-url')"
+                 :class="{ 'inactive' : $route.name === 'crux-origin' }" />
+          <Title name="CrUX Origin"
+                 icon="crux"
+                 @click="goTo(true, 'crux-origin')"
+                 :class="{ 'inactive' : $route.name === 'crux-url' }" />
+        </Breadcrumb>
       </div>
-      <div class="content in-view">
+      <div class="content in-view mt-4">
+        <LoadingWrapper :loading="loading.crux" class="h-16 mt-2">
+          <CrUXPreview />
+        </LoadingWrapper>
         <div class="description">
           Core Web Vitals are a set of standardized metrics from Google that help developers understand how users experience a web page.
         </div>
@@ -127,10 +127,13 @@
 <script>
 import Title from "../components/Title.vue";
 import LoadingWrapper from "../components/LoadingWrapper.vue";
+import HTMLPreview from "../components/previews/HTMLPreview.vue";
+import CrUXPreview from "../components/previews/CrUXPreview.vue";
+import Breadcrumb from "../components/Breadcrumb.vue";
 
 export default {
   name: "CrUXURL",
-  components: { LoadingWrapper, Title },
+  components: {Breadcrumb, CrUXPreview, HTMLPreview, LoadingWrapper, Title },
   inject: {
     crux: {
       default: () => {
