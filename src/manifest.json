@@ -11,14 +11,8 @@
   "content_scripts": [
     {
       "all_frames": false,
-      "js": [
-        "assets/scripts/constants.js",
-        "assets/scripts/helper.js"
-      ],
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
+      "js": ["assets/scripts/constants.js", "assets/scripts/helper.js"],
+      "matches": ["http://*/*", "https://*/*"],
       "run_at": "document_end"
     }
   ],
@@ -27,15 +21,6 @@
     "default_popup": "index.html",
     "default_title": "Wattspeed"
   },
-  "permissions": [
-    "tabs",
-    "scripting",
-    "activeTab",
-    "storage",
-    "unlimitedStorage"
-  ],
-  "host_permissions": [
-    "http://*/*",
-    "https://*/*"
-  ]
+  "permissions": ["tabs", "scripting", "activeTab", "storage", "unlimitedStorage"],
+  "host_permissions": ["http://*/*", "https://*/*"]
 }

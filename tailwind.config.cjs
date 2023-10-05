@@ -1,11 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   important: true,
-  content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-    "./src/style.css",
-  ],
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}', './src/style.css'],
   safelist: [
     {
       pattern: /bg-(lime|cyan|emerald|rose|orange)-[50-950]/,
@@ -18,5 +14,4 @@ export default {
     extend: {},
   },
   plugins: [],
-}
-
+};

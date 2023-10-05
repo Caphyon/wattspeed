@@ -1,18 +1,19 @@
 <template>
   <div class="preview-card-metrics">
-    <ScoreChart :id="`${$route.name}-score-preview-chart`"
-                class="w-1/2 mx-auto"
-                :class="chartClass"
-                :size="chartSize"
-                :circle-radius="46"
-                :strokes="getScoreDistributionStrokes()"/>
+    <ScoreChart
+      :id="`${$route.name}-score-preview-chart`"
+      class="mx-auto w-1/2"
+      :class="chartClass"
+      :size="chartSize"
+      :circle-radius="46"
+      :strokes="getScoreDistributionStrokes()" />
   </div>
 </template>
 
 <script>
-import ScoreChart from "../ScoreChart.vue";
+import ScoreChart from '../ScoreChart.vue';
 export default {
-  name: "ScorePreview",
+  name: 'ScorePreview',
   components: {
     ScoreChart,
   },
@@ -28,14 +29,14 @@ export default {
   },
   inject: {
     loading: {
-      default: () => ({})
+      default: () => ({}),
     },
     score: {
-      default: () => ({})
+      default: () => ({}),
     },
     METRICS: {
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   methods: {
     normalizedFillWeight(value, inMax) {
@@ -43,20 +44,26 @@ export default {
     },
     getScoreDistributionStrokes() {
       const strokes = {};
-      const cruxScore = this.score["crux-url"] + this.score["crux-origin"];
-      const cruxWeight = this.METRICS["crux-url"].weight + this.METRICS["crux-origin"].weight;
+      const cruxScore = this.score['crux-url'] + this.score['crux-origin'];
+      const cruxWeight = this.METRICS['crux-url'].weight + this.METRICS['crux-origin'].weight;
 
-      const performanceScore = this.score["performance-mobile"] + this.score["performance-desktop"] + this.score["performance-mobile-subsection"];
-      const performanceWeight = this.METRICS["performance-mobile"].weight + this.METRICS["performance-desktop"].weight + this.METRICS["performance-mobile-subsection"].weight;
+      const performanceScore =
+        this.score['performance-mobile'] +
+        this.score['performance-desktop'] +
+        this.score['performance-mobile-subsection'];
+      const performanceWeight =
+        this.METRICS['performance-mobile'].weight +
+        this.METRICS['performance-desktop'].weight +
+        this.METRICS['performance-mobile-subsection'].weight;
 
-      const securityScore = this.score["security-headers"] + this.score["security-ssl"];
-      const securityWeight = this.METRICS["security-headers"].weight + this.METRICS["security-ssl"].weight;
+      const securityScore = this.score['security-headers'] + this.score['security-ssl'];
+      const securityWeight = this.METRICS['security-headers'].weight + this.METRICS['security-ssl'].weight;
 
-      const htmlScore = this.score["html-errors"] + this.score["html-warnings"];
-      const htmlWeight = this.METRICS["html-errors"].weight + this.METRICS["html-warnings"].weight;
+      const htmlScore = this.score['html-errors'] + this.score['html-warnings'];
+      const htmlWeight = this.METRICS['html-errors'].weight + this.METRICS['html-warnings'].weight;
 
-      const a11yScore = this.score["a11y-score"];
-      const a11yWeight = this.METRICS["a11y-score"].weight;
+      const a11yScore = this.score['a11y-score'];
+      const a11yWeight = this.METRICS['a11y-score'].weight;
 
       const normalizations = {
         crux: +Number(this.normalizedFillWeight(cruxScore, cruxWeight)),
@@ -66,7 +73,10 @@ export default {
         a11y: +Number(this.normalizedFillWeight(a11yScore, a11yWeight)),
       };
 
-      strokes['test'] = [
+      console.log(htmlScore);
+      console.log(htmlWeight);
+      console.log(normalizations.html);
+      strokes['first'] = [
         {
           id: 1,
           name: 'CrUX',
@@ -111,6 +121,6 @@ export default {
 
       return strokes;
     },
-  }
+  },
 };
 </script>

@@ -3,18 +3,22 @@
     <div class="preview-card in-view">
       <div>
         <Breadcrumb>
-          <Title name="Performance"
-                 icon="pagespeed"
-                 @click="goTo('performance')"
-                 :class="{ 'inactive' : $route.name === 'mobile' }" />
-          <Title name="Mobile"
-                 icon="mobile"
-                 @click="goTo('mobile')"
-                 :class="{ 'inactive' : $route.name === 'performance' }" />
+          <Title
+            name="Performance"
+            icon="pagespeed"
+            :class="{ inactive: $route.name === 'mobile' }"
+            @click="goTo('performance')" />
+          <Title
+            name="Mobile"
+            icon="mobile"
+            :class="{ inactive: $route.name === 'performance' }"
+            @click="goTo('mobile')" />
         </Breadcrumb>
       </div>
       <div class="content in-view">
-        <LoadingWrapper :loading="loading.performance" class="h-16 mt-2">
+        <LoadingWrapper
+          :loading="loading.performance"
+          class="mt-2 h-16">
           <PerformancePreview class="mt-2" />
         </LoadingWrapper>
         <div class="description">
@@ -23,64 +27,66 @@
         </div>
       </div>
     </div>
-    <div class="in-view-content" :class="{ 'loading' : loading.performance }">
+    <div
+      class="in-view-content"
+      :class="{ loading: loading.performance }">
       <LoadingWrapper :loading="loading.performance">
         <div class="flex justify-center gap-4">
           <div class="flex-1">
             <h3 class="sticky-area">Mobile</h3>
-            <div class="space-y-3 h-full">
-              <PerformanceItem v-for="(audit, index) in filteredMobileData"
-                               :audit="audit"
-                               :key="index" />
+            <div class="h-full space-y-3">
+              <PerformanceItem
+                v-for="(audit, index) in filteredMobileData"
+                :key="index"
+                :audit="audit" />
             </div>
           </div>
           <div class="flex-1">
             <h3 class="sticky-area">Desktop</h3>
-            <div class="space-y-3 h-full">
-              <PerformanceItem v-for="(audit, index) in filteredDesktopData"
-                               :audit="audit"
-                               :key="index" />
+            <div class="h-full space-y-3">
+              <PerformanceItem
+                v-for="(audit, index) in filteredDesktopData"
+                :key="index"
+                :audit="audit" />
             </div>
           </div>
         </div>
       </LoadingWrapper>
     </div>
-    <Filters v-if="!loading.performance" :filters="filters" @emitFilter="onFilterChange"/>
+    <Filters
+      v-if="!loading.performance"
+      :filters="filters"
+      @emitFilter="onFilterChange" />
   </div>
 </template>
 
 <script>
-import Title from "../components/Title.vue";
-import LoadingWrapper from "../components/LoadingWrapper.vue";
-import { ERROR, WARNING, SUCCESS, DESKTOP, MOBILE } from "../assets/scripts/constants.js";
-import PerformancePreview from "../components/previews/PerformancePreview.vue";
-import PerformanceItem from "../components/items/PerformanceItem.vue";
-import { marked } from "marked";
-import Breadcrumb from "../components/Breadcrumb.vue";
-import Filters from "../components/Filters.vue";
-import { sortObjectsArrayData } from "../assets/scripts/helper.js";
+import { marked } from 'marked';
+import Title from '../components/Title.vue';
+import LoadingWrapper from '../components/LoadingWrapper.vue';
+import { ERROR, WARNING, SUCCESS, DESKTOP, MOBILE } from '../assets/scripts/constants.js';
+import PerformancePreview from '../components/previews/PerformancePreview.vue';
+import PerformanceItem from '../components/items/PerformanceItem.vue';
+import Breadcrumb from '../components/Breadcrumb.vue';
+import Filters from '../components/Filters.vue';
+import { sortObjectsArrayData } from '../assets/scripts/helper.js';
 
 export default {
-  name: "Performance",
-  components: {Filters, Breadcrumb, PerformanceItem, PerformancePreview, LoadingWrapper, Title },
+  name: 'Performance',
+  components: {
+    Filters,
+    Breadcrumb,
+    PerformanceItem,
+    PerformancePreview,
+    LoadingWrapper,
+    Title,
+  },
   inject: {
     performance: {
-      default: () => {
-      }
+      default: () => {},
     },
     loading: {
-      default: () => false
-    }
-  },
-  watch: {
-    "[performance.mobile.lighthouse, performance.desktop.lighthouse]": {
-      handler() {
-        if (this.performance[MOBILE].lighthouse && this.performance[DESKTOP].lighthouse) {
-          this.filteredMobileData = this.initialMobileData = this.filterData(this.sortData(this.computeInitialData(this.performance[MOBILE].lighthouse)));
-          this.filteredDesktopData = this.initialDesktopData = this.filterData(this.sortData(this.computeInitialData(this.performance[DESKTOP].lighthouse)));
-        }
-      },
-      immediate: true,
+      default: () => false,
     },
   },
   data() {
@@ -91,13 +97,30 @@ export default {
     };
 
     return {
-      filters: filters,
-      activeFilters: Object.keys(filters).map((key) => filters[key]).flat(),
+      filters,
+      activeFilters: Object.keys(filters)
+        .map((key) => filters[key])
+        .flat(),
       initialMobileData: [],
       initialDesktopData: [],
       filteredMobileData: [],
-      filteredDesktopData: []
+      filteredDesktopData: [],
     };
+  },
+  watch: {
+    '[performance.mobile.lighthouse, performance.desktop.lighthouse]': {
+      handler() {
+        if (this.performance[MOBILE].lighthouse && this.performance[DESKTOP].lighthouse) {
+          this.filteredMobileData = this.initialMobileData = this.filterData(
+            this.sortData(this.computeInitialData(this.performance[MOBILE].lighthouse))
+          );
+          this.filteredDesktopData = this.initialDesktopData = this.filterData(
+            this.sortData(this.computeInitialData(this.performance[DESKTOP].lighthouse))
+          );
+        }
+      },
+      immediate: true,
+    },
   },
   methods: {
     sortData(arr) {
@@ -121,20 +144,20 @@ export default {
       this.filteredDesktopData = this.filterData(this.initialDesktopData);
     },
     computeFilterCategories(initialData) {
-      return [...new Set(initialData.map(item => item.type))];
+      return [...new Set(initialData.map((item) => item.type))];
     },
     computeInitialData(audits) {
       const renderer = new marked.Renderer();
-      renderer.link = function(href, title, text) {
-        let link = marked.Renderer.prototype.link.call(this, href, title, text);
-        return link.replace('<a','<a target="_blank" ');
+      renderer.link = function (href, title, text) {
+        const link = marked.Renderer.prototype.link.call(this, href, title, text);
+        return link.replace('<a', '<a target="_blank" ');
       };
       marked.setOptions({
-        renderer: renderer
+        renderer,
       });
 
       return audits.map((audit) => {
-        let newItem = {};
+        const newItem = {};
         newItem.title = marked.parseInline(audit.title);
         newItem.level = audit.score;
         newItem.description = marked.parseInline(audit.description);
@@ -143,13 +166,13 @@ export default {
           newItem.type = SUCCESS;
         } else if (audit.score >= 0.65) {
           newItem.type = WARNING;
-        } else  {
+        } else {
           newItem.type = ERROR;
         }
 
         return newItem;
       });
     },
-  }
+  },
 };
 </script>

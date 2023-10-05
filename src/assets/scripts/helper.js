@@ -17,7 +17,7 @@ export const sortObjectsArrayData = (arr, orderArray, sortingKey) => {
     }
     return acc;
   }, []);
-}
+};
 
 export const sortObjectsData = (object, orderArray, sortingKey) => {
   const colorToKeys = Object.keys(object).reduce((acc, key) => {
@@ -38,4 +38,4 @@ export const sortObjectsData = (object, orderArray, sortingKey) => {
     }
     return acc;
   }, {});
-}
+};

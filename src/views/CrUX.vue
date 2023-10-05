@@ -3,95 +3,114 @@
     <div class="preview-card in-view">
       <div>
         <Breadcrumb>
-          <Title name="CrUX URL"
-                 icon="crux"
-                 @click="goTo('crux-url')"
-                 :class="{ 'inactive' : $route.name === 'crux-origin' }" />
-          <Title name="CrUX Origin"
-                 icon="crux"
-                 @click="goTo('crux-origin')"
-                 :class="{ 'inactive' : $route.name === 'crux-url' }" />
+          <Title
+            name="CrUX URL"
+            icon="crux"
+            @click="goTo('crux-url')"
+            :class="{ inactive: $route.name === 'crux-origin' }" />
+          <Title
+            name="CrUX Origin"
+            icon="crux"
+            @click="goTo('crux-origin')"
+            :class="{ inactive: $route.name === 'crux-url' }" />
         </Breadcrumb>
       </div>
       <div class="content in-view mt-4">
-        <LoadingWrapper :loading="loading.crux" class="h-16 mt-2">
+        <LoadingWrapper
+          :loading="loading.crux"
+          class="mt-2 h-16">
           <CrUXPreview />
         </LoadingWrapper>
         <div class="description">
-          Core Web Vitals are a set of standardized metrics from Google that help developers understand how users experience a web page.
+          Core Web Vitals are a set of standardized metrics from Google that help developers understand how users
+          experience a web page.
         </div>
       </div>
     </div>
-    <div class="in-view-content" :class="{ 'loading' : loading.crux }">
+    <div
+      class="in-view-content"
+      :class="{ loading: loading.crux }">
       <LoadingWrapper :loading="loading.crux">
-        <div class="lh-audit-group--metrics"
-             :class="crux[getCrUXGroup] ? 'lh-audit-group' : ''">
+        <div
+          class="lh-audit-group--metrics"
+          :class="crux[getCrUXGroup] ? 'lh-audit-group' : ''">
           <div>
             <div class="flex items-center pt-2">
               <svg height="60">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                     :xlink:href="`#${getCWVStatusSvg()}`" />
+                <use
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  :xlink:href="`#${getCWVStatusSvg()}`" />
               </svg>
-              <p v-if="crux[getCrUXGroup]" class="my-auto">
-                <span v-html="getGroupText()"/>
+              <p
+                v-if="crux[getCrUXGroup]"
+                class="my-auto">
+                <span v-html="getGroupText()" />
               </p>
-              <p v-else class="my-auto">
+              <p
+                v-else
+                class="my-auto">
                 <span class="lh-audit-group__title">Field Data</span>
-                <span v-html="getNoDataText()"/>
+                <span v-html="getNoDataText()" />
               </p>
             </div>
           </div>
           <div class="lh-metrics-container">
             <template v-for="metricId in Object.keys(sections)">
               <div
-                  v-if="crux[getCrUXGroup]
-                && crux[getCrUXGroup].record
-                && crux[getCrUXGroup].record.metrics[sections[metricId].id]"
-                  class="lh-metric lh-metric--numeric border-0"
-                  :class="`lh-metric--${getStatusClass(sections[metricId].id)}`">
-                  <div class="lh-metric__innerwrap_old gap-y-1">
-                    <div class="lh-metric__title">
-                      {{ sections[metricId].title }}
-                      <span v-if="sections[metricId].coreVitals" title="Core Web Vitals"> 📈 </span>
+                v-if="
+                  crux[getCrUXGroup] &&
+                  crux[getCrUXGroup].record &&
+                  crux[getCrUXGroup].record.metrics[sections[metricId].id]
+                "
+                class="lh-metric lh-metric--numeric border-0"
+                :class="`lh-metric--${getStatusClass(sections[metricId].id)}`">
+                <div class="lh-metric__innerwrap_old gap-y-1">
+                  <div class="lh-metric__title">
+                    {{ sections[metricId].title }}
+                    <span
+                      v-if="sections[metricId].coreVitals"
+                      title="Core Web Vitals">
+                      📈
+                    </span>
+                  </div>
+                  <div class="lh-metric__value_old">
+                    {{ getPercentile(sections[metricId].id) }}
+                  </div>
+                  <div class="progress crux_progress col-span-2 col-start-2 h-auto">
+                    <div
+                      class="progress-bar crux_progress--fast rounded-lg font-bold"
+                      :class="{ '-mr-3 pr-4': fastHasNext(sections[metricId].id) }"
+                      role="progressbar"
+                      v-if="getData(sections[metricId].id, 0, true)"
+                      :style="'flex-grow:' + getData(sections[metricId].id, 0)"
+                      :aria-valuenow="getData(sections[metricId].id, 0)"
+                      aria-valuemin="0"
+                      aria-valuemax="100">
+                      {{ getData(sections[metricId].id, 0, true) }}%
                     </div>
-                    <div class="lh-metric__value_old">
-                      {{ getPercentile(sections[metricId].id) }}
+                    <div
+                      class="progress-bar crux_progress--avg rounded-lg font-bold"
+                      :class="{ '-mr-3 pr-4': avgHasNext(sections[metricId].id) }"
+                      role="progressbar"
+                      v-if="getData(sections[metricId].id, 1, true)"
+                      :style="'flex-grow:' + getData(sections[metricId].id, 1)"
+                      :aria-valuenow="getData(sections[metricId].id, 1)"
+                      aria-valuemin="0"
+                      aria-valuemax="100">
+                      {{ getData(sections[metricId].id, 1, true) }}%
                     </div>
-                    <div class="progress crux_progress col-span-2 col-start-2 h-auto">
-                      <div
-                        class="progress-bar crux_progress--fast font-bold rounded-lg"
-                        :class="{ '-mr-3 pr-4' : fastHasNext(sections[metricId].id) }"
-                        role="progressbar"
-                        v-if="getData(sections[metricId].id, 0, true)"
-                        :style="'flex-grow:' + getData(sections[metricId].id, 0)"
-                        :aria-valuenow="getData(sections[metricId].id, 0)"
-                        aria-valuemin="0"
-                        aria-valuemax="100">
-                        {{ getData(sections[metricId].id, 0, true) }}%
-                      </div>
-                      <div
-                        class="progress-bar crux_progress--avg font-bold rounded-lg"
-                        :class="{ '-mr-3 pr-4' : avgHasNext(sections[metricId].id) }"
-                        role="progressbar"
-                        v-if="getData(sections[metricId].id, 1, true)"
-                        :style="'flex-grow:' + getData(sections[metricId].id, 1)"
-                        :aria-valuenow="getData(sections[metricId].id, 1)"
-                        aria-valuemin="0"
-                        aria-valuemax="100">
-                        {{ getData(sections[metricId].id, 1, true) }}%
-                      </div>
-                      <div
-                        class="progress-bar crux_progress--slow rounded-lg font-bold"
-                        role="progressbar"
-                        v-if="getData(sections[metricId].id, 2, true)"
-                        :style="'flex-grow:' + getData(sections[metricId].id, 2)"
-                        :aria-valuenow="getData(sections[metricId].id, 2)"
-                        aria-valuemin="0"
-                        aria-valuemax="100">
-                        {{ getData(sections[metricId].id, 2, true) }}%
-                      </div>
+                    <div
+                      class="progress-bar crux_progress--slow rounded-lg font-bold"
+                      role="progressbar"
+                      v-if="getData(sections[metricId].id, 2, true)"
+                      :style="'flex-grow:' + getData(sections[metricId].id, 2)"
+                      :aria-valuenow="getData(sections[metricId].id, 2)"
+                      aria-valuemin="0"
+                      aria-valuemax="100">
+                      {{ getData(sections[metricId].id, 2, true) }}%
                     </div>
                   </div>
+                </div>
               </div>
               <div
                 v-else
@@ -100,7 +119,11 @@
                 <div class="lh-metric__innerwrap_old gap-y-1">
                   <div class="lh-metric__title">
                     {{ sections[metricId].title }}
-                    <span v-if="sections[metricId].coreVitals" title="Core Web Vitals"> 📈 </span>
+                    <span
+                      v-if="sections[metricId].coreVitals"
+                      title="Core Web Vitals">
+                      📈
+                    </span>
                   </div>
                   <div class="lh-metric__value_old">N/A</div>
                   <div class="progress crux_progress col-span-2 col-start-2 h-auto">
@@ -125,23 +148,22 @@
 </template>
 
 <script>
-import Title from "../components/Title.vue";
-import LoadingWrapper from "../components/LoadingWrapper.vue";
-import HTMLPreview from "../components/previews/HTMLPreview.vue";
-import CrUXPreview from "../components/previews/CrUXPreview.vue";
-import Breadcrumb from "../components/Breadcrumb.vue";
+import Title from '../components/Title.vue';
+import LoadingWrapper from '../components/LoadingWrapper.vue';
+import HTMLPreview from '../components/previews/HTMLPreview.vue';
+import CrUXPreview from '../components/previews/CrUXPreview.vue';
+import Breadcrumb from '../components/Breadcrumb.vue';
 
 export default {
-  name: "CrUXURL",
-  components: {Breadcrumb, CrUXPreview, HTMLPreview, LoadingWrapper, Title },
+  name: 'CrUXURL',
+  components: { Breadcrumb, CrUXPreview, HTMLPreview, LoadingWrapper, Title },
   inject: {
     crux: {
-      default: () => {
-      }
+      default: () => {},
     },
     loading: {
-      default: () => false
-    }
+      default: () => false,
+    },
   },
   data() {
     return {
@@ -179,8 +201,7 @@ export default {
   },
   methods: {
     getData(section, metricIndex, round) {
-      const value = this.crux[this.getCrUXGroup].record.metrics[section].histogram[metricIndex].density
-        * 100;
+      const value = this.crux[this.getCrUXGroup].record.metrics[section].histogram[metricIndex].density * 100;
       if (!round) {
         return value;
       }
@@ -219,15 +240,19 @@ export default {
         return 2;
       }
 
-      if (this.crux[this.getCrUXGroup] && this.crux[this.getCrUXGroup].record && this.crux[this.getCrUXGroup].record.metrics) {
+      if (
+        this.crux[this.getCrUXGroup] &&
+        this.crux[this.getCrUXGroup].record &&
+        this.crux[this.getCrUXGroup].record.metrics
+      ) {
         metrics = Object.keys(this.crux[this.getCrUXGroup].record.metrics);
       }
       metrics.forEach((item) => {
         if (cwvMetrics.includes(item)) {
           const percentile = this.crux[this.getCrUXGroup].record.metrics[item].percentiles.p75;
           for (let i = 0; i <= 2; i++) {
-            const {start} = this.crux[this.getCrUXGroup].record.metrics[item].histogram[i];
-            const {end} = this.crux[this.getCrUXGroup].record.metrics[item].histogram[i];
+            const { start } = this.crux[this.getCrUXGroup].record.metrics[item].histogram[i];
+            const { end } = this.crux[this.getCrUXGroup].record.metrics[item].histogram[i];
 
             switch (i) {
               case 1:
@@ -303,23 +328,23 @@ export default {
 
       if (cwvAssesment === 2) {
         return (
-          'The <a href="https://web.dev/vitals/" target="_blank" rel="noopener nofollow">'
-          + `📈Core Web Vitals</a> assessment ${status}`
+          'The <a href="https://web.dev/vitals/" target="_blank" rel="noopener nofollow">' +
+          `📈Core Web Vitals</a> assessment ${status}`
         );
       }
 
       if (this.getCrUXGroup === 'origin') {
         return (
-          `The aggregate experience of all pages served from this origin ${status} the `
-          + '<a href="https://web.dev/vitals/" target="_blank" rel="noopener nofollow">'
-          + '📈Core Web Vitals</a> assessment over the previous <strong>28-day</strong> period.'
+          `The aggregate experience of all pages served from this origin ${status} the ` +
+          '<a href="https://web.dev/vitals/" target="_blank" rel="noopener nofollow">' +
+          '📈Core Web Vitals</a> assessment over the previous <strong>28-day</strong> period.'
         );
       }
 
       return (
-        `This page ${status} the <a href="https://web.dev/vitals/" target="_blank" `
-        + 'rel="noopener nofollow">📈Core Web Vitals</a> assessment over the previous '
-        + '<strong>28-day</strong> period.'
+        `This page ${status} the <a href="https://web.dev/vitals/" target="_blank" ` +
+        'rel="noopener nofollow">📈Core Web Vitals</a> assessment over the previous ' +
+        '<strong>28-day</strong> period.'
       );
     },
     getNoDataText() {
@@ -328,15 +353,15 @@ export default {
         page = 'origin';
       }
       return (
-        ' - The <strong>Chrome User Experience Report</strong> does not have sufficient '
-        + `real-world speed data for this ${page}.`
+        ' - The <strong>Chrome User Experience Report</strong> does not have sufficient ' +
+        `real-world speed data for this ${page}.`
       );
     },
     getStatusClass(sectionId) {
       const percentile = this.crux[this.getCrUXGroup].record.metrics[sectionId].percentiles.p75;
       for (let i = 0; i <= 2; i++) {
-        const {start} = this.crux[this.getCrUXGroup].record.metrics[sectionId].histogram[i];
-        const {end} = this.crux[this.getCrUXGroup].record.metrics[sectionId].histogram[i];
+        const { start } = this.crux[this.getCrUXGroup].record.metrics[sectionId].histogram[i];
+        const { end } = this.crux[this.getCrUXGroup].record.metrics[sectionId].histogram[i];
 
         switch (i) {
           case 0:
@@ -389,10 +414,7 @@ export default {
       return Math.round(value * 10) / 10 + suffix;
     },
     getPercentile(section) {
-      return this.getPercentileText(
-        section,
-        this.crux[this.getCrUXGroup].record.metrics[section].percentiles.p75,
-      );
+      return this.getPercentileText(section, this.crux[this.getCrUXGroup].record.metrics[section].percentiles.p75);
     },
   },
   computed: {
@@ -403,7 +425,7 @@ export default {
         return 'origin';
       }
       return '';
-    }
+    },
   },
 };
 </script>
@@ -420,9 +442,11 @@ export default {
   --score-icon-margin-left: 6px;
   --score-icon-margin-right: 14px;
   --score-icon-margin: 0 var(--score-icon-margin-right) 0 var(--score-icon-margin-left);
-  --audit-description-padding-left: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right));
-  --color-gray-100: #F5F5F5;
-  --color-gray-200: #E0E0E0;
+  --audit-description-padding-left: calc(
+    var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right)
+  );
+  --color-gray-100: #f5f5f5;
+  --color-gray-200: #e0e0e0;
   --color-gray-600: #757575;
   --color-gray-700: #616161;
   --color-gray-800: #424242;
@@ -509,7 +533,7 @@ ul {
   background-color: var(--color-bg-container);
 
   &-bar {
-    height: 17px!important;
+    height: 17px !important;
     font-size: 0.75rem;
     display: flex;
     flex-direction: column;
@@ -524,7 +548,7 @@ ul {
 .lh-metric .lh-metric__innerwrap:before,
 .lh-metric .lh-metric__innerwrap_old:before,
 .lh-scorescale-range:before {
-  content: "";
+  content: '';
   width: var(--score-icon-size);
   height: var(--score-icon-size);
   display: inline-block;
@@ -544,7 +568,7 @@ ul {
 }
 
 .lh-metric--average .lh-metric__innerwrap::before,
-.lh-metric--average .lh-metric__innerwrap_old::before{
+.lh-metric--average .lh-metric__innerwrap_old::before {
   background: var(--color-orange);
 }
 

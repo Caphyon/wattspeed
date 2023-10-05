@@ -1,5 +1,7 @@
 <template>
-  <div class="py-2" :class="getItemColourClass">
+  <div
+    class="py-2"
+    :class="getItemColourClass">
     <p>{{ message }}</p>
   </div>
 </template>
@@ -14,11 +16,11 @@ export default {
     message: {
       type: Object,
       required: true,
-    }
+    },
   },
   computed: {
     getItemColourClass() {
-      switch(this.type) {
+      switch (this.type) {
         case 'success':
           return 'badge badge-success';
         case 'warning':
@@ -30,5 +32,5 @@ export default {
       }
     },
   },
-}
+};
 </script>

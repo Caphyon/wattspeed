@@ -1,16 +1,27 @@
 <template>
-  <div class="flex flex-col md:flex-row items-center justify-center gap-6 pr-2">
-    <div class="flex-1 score-chart-wrapper">
-      <div :style="`height: ${size}px`"
-           class="score-chart-svg-wrapper select-none">
-        <svg :style="gaugeStyle" viewBox="0 0 120 120">
-          <circle class="opacity-40"
-                  :r="circleRadius" cx="60" cy="60" stroke-width="5" />
-          <template v-for="(label, indexLabel) in strokeLabels" :key="indexLabel">
-            <template v-for="(stroke, index) in strokes[label]" :key="index">
+  <div class="flex flex-col items-center justify-center gap-6 pr-2 md:flex-row">
+    <div class="score-chart-wrapper flex-1">
+      <div
+        :style="`height: ${size}px`"
+        class="score-chart-svg-wrapper select-none">
+        <svg
+          :style="gaugeStyle"
+          viewBox="0 0 120 120">
+          <circle
+            class="opacity-40"
+            :r="circleRadius"
+            cx="60"
+            cy="60"
+            stroke-width="5" />
+          <template
+            v-for="(label, indexLabel) in strokeLabels"
+            :key="indexLabel">
+            <template
+              v-for="(stroke, index) in strokes[label]"
+              :key="index">
               <circle
                 v-if="displayScore !== '?'"
-                class="circle-stroke opacity-20 z-10"
+                class="circle-stroke z-10 opacity-20"
                 :class="`stroke-${stroke.color}`"
                 r="56"
                 cx="60"
@@ -20,8 +31,8 @@
 stroke-dasharray:${strokesMath[label][index].length}, 352`" />
               <circle
                 v-if="displayScore !== '?'"
-                class="circle-stroke opacity-70 z-10"
-                :class="[`stroke-${stroke.color}`, { 'hidden' : stroke.fillWeight === 0 }]"
+                class="circle-stroke z-10 opacity-70"
+                :class="[`stroke-${stroke.color}`, { hidden: stroke.fillWeight === 0 }]"
                 r="56"
                 cx="60"
                 cy="60"
@@ -32,26 +43,28 @@ stroke-dasharray:${strokesMath[label][index].fillLength}, 352`" />
           </template>
         </svg>
       </div>
-      <div :style="scoreStyle"
-           class="score-title select-none"
-           v-html="displayScore"/>
+      <div
+        :style="scoreStyle"
+        class="score-title select-none"
+        v-html="displayScore" />
       <div v-if="title">{{ title }}</div>
     </div>
     <div v-if="showLegend">
-      <ul class="w-full -mt-2 pr-2">
-        <li v-for="(stroke, index) in strokes[strokeLabels[0]]" :key="index"
-            class="flex items-center gap-2">
-          <div class="min-w-[.5rem] min-h-[.5rem] w-2 h-2 rounded"
-               :class="`bg-${stroke.color}`"></div>
-          <div class="flex flex-row items-center justify-between w-full gap-x-4 ignore-metrics text-sm">
+      <ul class="-mt-2 w-full pr-2">
+        <li
+          v-for="(stroke, index) in strokes[strokeLabels[0]]"
+          :key="index"
+          class="flex items-center gap-2">
+          <div
+            class="h-2 min-h-[.5rem] w-2 min-w-[.5rem] rounded"
+            :class="`bg-${stroke.color}`"></div>
+          <div class="ignore-metrics flex w-full flex-row items-center justify-between gap-x-4 text-sm">
             <span>
               {{ stroke.name }}
             </span>
-            <div class="flex items-center ignore-metrics">
-              <span class="font-semibold">{{handleNA(+stroke?.normalized?.toFixed(1))}}</span>
-              <span class="text-gray-400 text-sm">
-                /100
-              </span>
+            <div class="ignore-metrics flex items-center">
+              <span class="font-semibold">{{ handleNA(+stroke?.normalized?.toFixed(1)) }}</span>
+              <span class="text-sm text-gray-400"> /100 </span>
             </div>
           </div>
         </li>
@@ -123,10 +136,10 @@ export default {
     displayScore() {
       try {
         return +Number(
-            this.strokes[this.strokeLabels[0]]
-                .map((obj) => obj.fillWeight)
-                .reduce((prevVal, currValue) => prevVal + currValue, 0)
-                .toFixed(2)
+          this.strokes[this.strokeLabels[0]]
+            .map((obj) => obj.fillWeight)
+            .reduce((prevVal, currValue) => prevVal + currValue, 0)
+            .toFixed(2)
         );
       } catch (e) {
         return '?';
@@ -155,16 +168,16 @@ export default {
   },
   methods: {
     handleNA(number) {
-      if (number === 0) {
-        return 'N/A';
+      if (number >= 0) {
+        return number;
       }
-      return number;
+      return 'N/A';
     },
     sumStrokeRatio(label) {
       return this.strokes[label].reduce((acc, stroke) => acc + stroke.weight, 0);
     },
     maxStrokeLength(label) {
-      return 352 - (16 * this.strokes[label].length);
+      return 352 - 16 * this.strokes[label].length;
     },
     computeStrokes() {
       this.strokesMath = {};
@@ -194,8 +207,8 @@ export default {
             this.strokesMath[label][index].length = this.normalize(stroke.weight, label);
             this.strokesMath[label][index].fillLength = this.normalizeFill(stroke.fillWeight, label);
             if (index > 0) {
-              this.strokesMath[label][index].sumLength = this.strokesMath[label][index].length
-                + this.strokesMath[label][index - 1].sumLength;
+              this.strokesMath[label][index].sumLength =
+                this.strokesMath[label][index].length + this.strokesMath[label][index - 1].sumLength;
             } else {
               this.strokesMath[label][index].sumLength = this.strokesMath[label][index].length;
             }
@@ -206,8 +219,9 @@ export default {
 
           this.strokes[label].forEach((stroke, index) => {
             if (index > 0) {
-              this.strokesMath[label][index].rotation = this.strokesMath[label][index - 1].sumLength
-                + (((352 - this.magicNumberMap[strokesLength]) / strokesLength) * index);
+              this.strokesMath[label][index].rotation =
+                this.strokesMath[label][index - 1].sumLength +
+                ((352 - this.magicNumberMap[strokesLength]) / strokesLength) * index;
             }
             if (index === 1) {
               this.strokesMath[label][index].rotation += this.magicGapMap[strokesLength];
@@ -218,13 +232,7 @@ export default {
       }
     },
     normalize(value, label) {
-      return this.intervalNormalization(
-        value,
-        0,
-        this.sumStrokeRatio(label),
-        0,
-        this.maxStrokeLength(label),
-      );
+      return this.intervalNormalization(value, 0, this.sumStrokeRatio(label), 0, this.maxStrokeLength(label));
     },
     normalizeFill(value, label) {
       const outMax = this.maxStrokeLength(label);
@@ -235,13 +243,7 @@ export default {
       }
       const threshold = (outMax / 100) * 30;
 
-      return this.intervalNormalization(
-        value,
-        0,
-        inMax,
-        0,
-        outMax - threshold,
-      );
+      return this.intervalNormalization(value, 0, inMax, 0, outMax - threshold);
     },
   },
 };
@@ -254,7 +256,9 @@ export default {
 }
 
 @keyframes strokes-animation {
-  from { stroke-dasharray: 0 352; }
+  from {
+    stroke-dasharray: 0 352;
+  }
 }
 
 .circle-stroke {
@@ -266,7 +270,6 @@ export default {
 }
 
 .score-title {
-  @apply absolute w-full h-20 font-mono text-center leading-[0];
+  @apply absolute h-20 w-full text-center font-mono leading-[0];
 }
-
 </style>

@@ -1,16 +1,18 @@
 <template>
   <div class="preview-card-metrics">
     <div>
-      <h3 class="badge font-semibold"
-          :class="getCWVStatusTextPreview(passesCoreVitalsPreview('url'))">
-        {{ getCWVStatusTextPreview(passesCoreVitalsPreview("url"), true) }}
+      <h3
+        class="badge font-semibold"
+        :class="getCWVStatusTextPreview(passesCoreVitalsPreview('url'))">
+        {{ getCWVStatusTextPreview(passesCoreVitalsPreview('url'), true) }}
       </h3>
       <span class="uppercase">URL</span>
     </div>
     <div>
-      <h3 class="badge font-semibold"
-          :class="getCWVStatusTextPreview(passesCoreVitalsPreview('origin'))">
-        {{ getCWVStatusTextPreview(passesCoreVitalsPreview("origin"), true) }}
+      <h3
+        class="badge font-semibold"
+        :class="getCWVStatusTextPreview(passesCoreVitalsPreview('origin'))">
+        {{ getCWVStatusTextPreview(passesCoreVitalsPreview('origin'), true) }}
       </h3>
       <span class="uppercase">Origin</span>
     </div>
@@ -19,17 +21,17 @@
 
 <script>
 export default {
-  name: "CrUXPreview",
+  name: 'CrUXPreview',
   inject: {
     crux: {
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   methods: {
     passesCoreVitalsPreview(groupId) {
-      const LCP = "largest_contentful_paint";
-      const FID = "first_input_delay";
-      const CLS = "cumulative_layout_shift";
+      const LCP = 'largest_contentful_paint';
+      const FID = 'first_input_delay';
+      const CLS = 'cumulative_layout_shift';
 
       const cwvMetrics = [LCP, FID, CLS];
       let metrics = [];
@@ -76,16 +78,16 @@ export default {
     },
     getCWVStatusTextPreview(status, getText) {
       if (getText) {
-        if (status === 0) return "Failed";
-        if (status === 1) return "Passed";
+        if (status === 0) return 'Failed';
+        if (status === 1) return 'Passed';
 
-        return "Not Available";
+        return 'Not Available';
       }
-      if (status === 0) return "badge-danger";
-      if (status === 1) return "badge-success";
+      if (status === 0) return 'badge-danger';
+      if (status === 1) return 'badge-success';
 
-      return "badge-secondary";
-    }
-  }
+      return 'badge-secondary';
+    },
+  },
 };
 </script>

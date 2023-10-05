@@ -4,7 +4,6 @@
   "version": "1.0.0",
   "author": "https://github.com/Caphyon",
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build && npm run build:copy",
@@ -16,7 +15,7 @@
   },
   "dependencies": {
     "buffer": "^6.0.3",
-    "marked": "^9.0.3",
+    "marked": "^9.1.0",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },
@@ -25,11 +24,10 @@
     "@vitejs/plugin-vue": "^4.2.3",
     "autoprefixer": "^10.4.16",
     "concurrently": "^8.2.1",
-    "eslint": "^7.32.0",
     "postcss": "^8.4.30",
     "postcss-nested-ancestors": "^3.0.0",
-    "prettier": "^2.7.1",
-    "prettier-plugin-tailwindcss": "^0.1.13",
+    "prettier": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.5",
     "sass": "^1.68.0",
     "tailwindcss": "^3.3.3",
     "vite": "^4.4.5"

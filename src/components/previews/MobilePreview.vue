@@ -1,27 +1,27 @@
 <template>
   <div class="text-center">
-    <span v-if="!loading.performanceMobile"
-          class="badge"
-          :class="passed ? 'badge-danger' : 'badge-success'">
+    <span
+      v-if="!loading.performanceMobile"
+      class="badge"
+      :class="passed ? 'badge-danger' : 'badge-success'">
       {{ message }}
     </span>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: "MobilePreview",
+  name: 'MobilePreview',
   inject: {
     performanceMobile: {
-      default: () => ({})
+      default: () => ({}),
     },
     loading: {
-      default: () => ({})
+      default: () => ({}),
     },
     errors: {
-      default: () => ({})
-    }
+      default: () => ({}),
+    },
   },
   data() {
     return {
@@ -30,9 +30,9 @@ export default {
   },
   mounted() {
     if (this.passed) {
-      this.message = "This page is not mobile friendly!";
+      this.message = 'This page is not mobile friendly!';
     } else {
-      this.message = "Awesome! This page is mobile friendly!";
+      this.message = 'Awesome! This page is mobile friendly!';
     }
   },
   computed: {
@@ -40,6 +40,6 @@ export default {
       const { viewport } = this.performanceMobile?.audits;
       return viewport.score === 0 || viewport.score === null;
     },
-  }
+  },
 };
 </script>

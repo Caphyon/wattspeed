@@ -1,10 +1,13 @@
 <template>
-  <div class="flex items-center justify-end gap-1 py-2 pr-6 filters-wrapper">
-    <template v-for="key in filtersKeys" :key="key">
-      <label class="filter-item"
-             :class="getFilterClass(key)"
-             @click="toggleFilter(key)"
-             title="Toggle success checks">
+  <div class="filters-wrapper flex items-center justify-end gap-1 py-2 pr-6">
+    <template
+      v-for="key in filtersKeys"
+      :key="key">
+      <label
+        class="filter-item"
+        :class="getFilterClass(key)"
+        @click="toggleFilter(key)"
+        title="Toggle success checks">
       </label>
     </template>
   </div>
@@ -12,12 +15,12 @@
 
 <script>
 export default {
-  name: "Filters",
+  name: 'Filters',
   props: {
     filters: {
       type: Object,
       default: () => [],
-    }
+    },
   },
   data() {
     return {
@@ -26,10 +29,13 @@ export default {
   },
   methods: {
     emitFilters() {
-      this.$emit('emitFilter', Object.keys(this.filters)
+      this.$emit(
+        'emitFilter',
+        Object.keys(this.filters)
           .filter((key) => this.activeFilters.includes(key))
           .map((key) => this.filters[key])
-          .flat());
+          .flat()
+      );
     },
     toggleFilter(key) {
       const filterIndex = this.activeFilters.indexOf(key);
@@ -56,7 +62,7 @@ export default {
   computed: {
     filtersKeys() {
       return Object.keys(this.filters);
-    }
+    },
   },
-}
+};
 </script>
