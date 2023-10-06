@@ -2,11 +2,11 @@
   <div
     v-if="hasData"
     class="flex flex-col gap-2">
-    <p
+    <span
       v-if="isValid"
       class="badge badge-success">
       No html issues found.
-    </p>
+    </span>
     <template v-else>
       <p class="badge badge-danger">Html issues found while checking the page.</p>
       <ul
@@ -23,12 +23,18 @@
     </template>
   </div>
   <template v-else>
-    <template v-if="isValid">
-      <p class="badge badge-success">This page does not contain HTML5 issues.</p>
-    </template>
-    <template v-else>
-      <p class="badge badge-warning">No data found</p>
-    </template>
+    <div class="text-center">
+      <span
+        v-if="isValid"
+        class="badge badge-success"
+        >This page does not contain HTML5 issues.</span
+      >
+      <span
+        v-else
+        class="badge badge-warning"
+        >No data found</span
+      >
+    </div>
   </template>
 </template>
 

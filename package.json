@@ -6,12 +6,10 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && npm run build:copy",
+    "build": "npm run clean-build && vite build && npm run build:copy",
     "build:copy": "@powershell copy './src/manifest.json' './dist' && @powershell copy './src/assets/icons' './dist/assets'  -Recurse && @powershell copy './src/assets/scripts' './dist/assets' -Recurse",
     "preview": "vite preview",
-    "start": "concurrently \"npm run start:css\" \"npm run dev\"",
-    "start:css": "npx tailwindcss -o ./src/minify.css --minify --watch",
-    "css": "npx tailwindcss -o ./src/minify.css"
+    "clean-build": "@powershell If (Test-Path dist) {Remove-Item –path dist -Recurse -Force}"
   },
   "dependencies": {
     "buffer": "^6.0.3",
@@ -23,7 +21,6 @@
     "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
     "@vitejs/plugin-vue": "^4.2.3",
     "autoprefixer": "^10.4.16",
-    "concurrently": "^8.2.1",
     "postcss": "^8.4.30",
     "postcss-nested-ancestors": "^3.0.0",
     "prettier": "^3.0.3",

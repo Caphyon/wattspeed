@@ -36,16 +36,20 @@
           :class="crux[getCrUXGroup] ? 'lh-audit-group' : ''">
           <div>
             <div class="flex items-center pt-2">
-              <svg height="60">
-                <use
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  :xlink:href="`#${getCWVStatusSvg()}`" />
-              </svg>
-              <p
+              <div>
+                <svg
+                  height="60"
+                  class="w-[200px]">
+                  <use
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    :xlink:href="`#${getCWVStatusSvg()}`" />
+                </svg>
+              </div>
+              <div
                 v-if="crux[getCrUXGroup]"
                 class="my-auto">
                 <span v-html="getGroupText()" />
-              </p>
+              </div>
               <p
                 v-else
                 class="my-auto">

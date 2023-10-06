@@ -64,8 +64,8 @@
               </h4>
               <p class="code">
                 <code>
-                  {{ issue.passed ? 'Passed' : 'Failed' }} with the score of {{ +issue?.score?.toFixed(1) }} out of
-                  {{ METRICS[issue.key].weight }}
+                  {{ issue.passed ? 'Passed' : 'Failed' }} with the score of
+                  {{ +intervalNormalization(+issue?.score, 0, METRICS[issue.key].weight, 0, 10)?.toFixed(1) }} / 10
                 </code>
               </p>
             </div>

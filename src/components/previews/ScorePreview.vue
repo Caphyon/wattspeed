@@ -73,14 +73,12 @@ export default {
         a11y: +Number(this.normalizedFillWeight(a11yScore, a11yWeight)),
       };
 
-      console.log(htmlScore);
-      console.log(htmlWeight);
-      console.log(normalizations.html);
       strokes['first'] = [
         {
           id: 1,
           name: 'CrUX',
           color: 'lime-500',
+          routeName: 'crux-url',
           weight: cruxWeight || 0,
           fillWeight: cruxScore || 0,
           normalized: normalizations.crux || 0,
@@ -89,6 +87,7 @@ export default {
           id: 2,
           name: 'Performance',
           color: 'cyan-500',
+          routeName: 'performance',
           weight: performanceWeight || 0,
           fillWeight: performanceScore || 0,
           normalized: normalizations.performance || 0,
@@ -97,6 +96,7 @@ export default {
           id: 3,
           name: 'Security',
           color: 'emerald-500',
+          routeName: 'security',
           weight: securityWeight || 0,
           fillWeight: securityScore || 0,
           normalized: normalizations.security || 0,
@@ -105,6 +105,7 @@ export default {
           id: 4,
           name: 'HTML',
           color: 'rose-500',
+          routeName: 'html',
           weight: htmlWeight || 0,
           fillWeight: htmlScore || 0,
           normalized: normalizations.html || 0,
@@ -113,6 +114,7 @@ export default {
           id: 5,
           name: 'Accessibility',
           color: 'orange-500',
+          routeName: 'a11y',
           weight: a11yWeight || 0,
           fillWeight: a11yScore || 0,
           normalized: normalizations.a11y || 0,

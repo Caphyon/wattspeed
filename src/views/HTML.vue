@@ -74,7 +74,6 @@ export default {
     const filters = {
       'bg-rose-500': [ERROR],
       'bg-amber-500': [WARNING],
-      'bg-emerald-500': [SUCCESS],
     };
 
     return {

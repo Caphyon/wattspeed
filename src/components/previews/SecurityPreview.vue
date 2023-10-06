@@ -37,9 +37,9 @@ export default {
         case 'green':
           return 'badge-success';
         case 'yellow':
-          return 'badge-warning';
+          return 'badge-yellow';
         case 'orange':
-          return 'badge-orange';
+          return 'badge-warning';
         case 'red':
           return 'badge-danger';
         default:

@@ -8,14 +8,6 @@
     "48": "assets/icons/icon-48.png",
     "128": "assets/icons/icon-128.png"
   },
-  "content_scripts": [
-    {
-      "all_frames": false,
-      "js": ["assets/scripts/constants.js", "assets/scripts/helper.js"],
-      "matches": ["http://*/*", "https://*/*"],
-      "run_at": "document_end"
-    }
-  ],
   "action": {
     "default_icon": "assets/icons/icon-48.png",
     "default_popup": "index.html",

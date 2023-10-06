@@ -255,9 +255,11 @@ export default {
           routeName: 'a11y',
         },
       },
-      tab: null,
       score: null,
       crux: null,
+      tab: {
+        url: null,
+      },
       performance: {
         mobile: {
           lighthouse: null,
@@ -311,12 +313,23 @@ export default {
       METRICS: computed(() => this.METRICS),
     };
   },
-  mounted() {
+  async mounted() {
     this.loadSvgSymbols();
-    this.injectProductionScripts();
-    this.refreshData();
+    if (process.env.NODE_ENV === 'production') {
+      await this.getCurrentTab();
+    } else {
+      this.tab.url = 'https://www.caphyon.com/';
+    }
+
+    await this.refreshData();
   },
   methods: {
+    async getCurrentTab() {
+      let queryOptions = { active: true, lastFocusedWindow: true };
+      // `tab` will either be a `tabs.Tab` instance or `undefined`.
+      let [tab] = await chrome.tabs.query(queryOptions);
+      this.tab = tab;
+    },
     requestWrapper(request, section, strategy, callback) {
       this.loading[section] = true;
       if (section === 'crux-url' || section === 'crux-origin') {
@@ -360,47 +373,6 @@ export default {
             this.errors[section] = error.message || 'An error occured while fetching the data';
             reject(this.errors[section]);
           });
-      });
-    },
-    injectProductionScripts() {
-      if (process.env.NODE_ENV === 'production') {
-        chrome.tabs.query({ currentWindow: true, active: true }, (tabs) => {
-          /**
-           * Filter url and close the app if matched as helper.js cannot be
-           * injected on chrome empty pages and chrome store page
-           */
-          if (!tabs[0].url.match(/(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/))
-            window.close();
-          this.injectScript(tabs[0]);
-        });
-      } else {
-        this.tab = {
-          url: 'http://inf.ucv.ro/',
-        };
-      }
-    },
-    injectScript(tab) {
-      // Get all content scripts
-      chrome.manifest = chrome.runtime.getManifest();
-      const injectIntoTab = (tabID) => {
-        const scripts = chrome.manifest.content_scripts[0].js;
-        chrome.scripting.executeScript(
-          {
-            target: { tabId: tabID },
-            files: scripts,
-          },
-          () => {
-            this.tab = tab;
-          }
-        );
-      };
-      chrome.tabs.sendMessage(tab.id, { action: 'VERIFY_INJECTED' }, (status) => {
-        if (!status && !tab.url.match('chrome.google.com')) {
-          // new Promise(() => { localStorage.clear() })
-          //   .then(() => {})
-          //   .catch("could not clear local storage");
-          injectIntoTab(tab.id);
-        } else this.tab = tab;
       });
     },
     loadSvgSymbols() {
@@ -472,13 +444,15 @@ export default {
       ];
 
       const scoreCacheKey = this.Buffer.from(`score${ANY}${this.tab.url}`).toString('base64');
-      if (!this.requestLimit && !clearStorage) {
+      const scoreIsCached = localStorage.getItem(scoreCacheKey);
+
+      if (scoreIsCached) {
         this.getScore(scoreCacheKey);
       }
 
       await Promise.allSettled(promises)
         .then(() => {
-          if (!this.requestLimit && scoreCacheKey) {
+          if (!this.requestLimit && !scoreIsCached) {
             this.getScore(scoreCacheKey);
           }
         })
@@ -585,8 +559,10 @@ export default {
           htmlWarningsScore = this.addScore(htmlScore.errors, 0, 30, 'html-warnings');
         }
 
-        this.score['crux-url'] = this.addScore(this.passesCoreVitals('url'), 0, 1, 'crux-url');
-        this.score['crux-origin'] = this.addScore(this.passesCoreVitals('origin'), 0, 1, 'crux-origin');
+        const cruxURL = this.passesCoreVitals('url');
+        const cruxOrigin = this.passesCoreVitals('origin');
+        this.score['crux-url'] = this.addScore(cruxURL === 2 ? 0 : cruxURL, 0, 1, 'crux-url');
+        this.score['crux-origin'] = this.addScore(cruxOrigin === 2 ? 0 : cruxOrigin, 0, 1, 'crux-origin');
         this.score['performance-mobile'] = this.addScore(this.performance?.mobile?.score, 0, 1, 'performance-mobile');
         this.score['performance-desktop'] = this.addScore(
           this.performance?.desktop?.score,

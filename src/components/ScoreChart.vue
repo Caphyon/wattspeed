@@ -50,7 +50,9 @@ stroke-dasharray:${strokesMath[label][index].fillLength}, 352`" />
       <div v-if="title">{{ title }}</div>
     </div>
     <div v-if="showLegend">
-      <ul class="-mt-2 w-full pr-2">
+      <ul
+        class="-mt-2 w-full pr-2"
+        :class="{ 'z-10': $route.name === 'score' }">
         <li
           v-for="(stroke, index) in strokes[strokeLabels[0]]"
           :key="index"
@@ -59,7 +61,18 @@ stroke-dasharray:${strokesMath[label][index].fillLength}, 352`" />
             class="h-2 min-h-[.5rem] w-2 min-w-[.5rem] rounded"
             :class="`bg-${stroke.color}`"></div>
           <div class="ignore-metrics flex w-full flex-row items-center justify-between gap-x-4 text-sm">
-            <span>
+            <router-link
+              v-if="$route.name === 'score'"
+              class="text-sm"
+              :to="{
+                name: stroke.routeName,
+                query: {
+                  from: 'score',
+                },
+              }">
+              {{ stroke.name }}
+            </router-link>
+            <span v-else>
               {{ stroke.name }}
             </span>
             <div class="ignore-metrics flex items-center">
