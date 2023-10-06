@@ -4,7 +4,7 @@
       <div>
         <Title
           name="Score"
-          icon="pagespeed" />
+          icon="score" />
         <button
           class="absolute right-4 z-10 text-xl"
           @click="goTo('home')"

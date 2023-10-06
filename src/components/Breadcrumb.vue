@@ -4,7 +4,7 @@
       v-if="routeFromScore"
       @click="goTo('score')"
       name="Score"
-      icon="pagespeed"
+      icon="score"
       class="inactive" />
     <slot></slot>
     <button

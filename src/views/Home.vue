@@ -49,7 +49,7 @@ export default {
       sections: [
         {
           title: 'Score',
-          icon: 'pagespeed',
+          icon: 'score',
           routeName: 'score',
           loadingKey: 'score',
           componentName: 'ScorePreview',
