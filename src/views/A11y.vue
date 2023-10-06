@@ -21,7 +21,9 @@
     <div
       class="in-view-content"
       :class="{ loading: loading.a11y }">
-      <LoadingWrapper :loading="loading.a11y">
+      <LoadingWrapper
+        :loading="loading.a11y"
+        :show-yeey="showYeey">
         <div class="space-y-2">
           <div
             v-for="(audit, index) in filteredData"
@@ -33,7 +35,7 @@
               <p
                 class="text-sm"
                 v-html="audit.description"></p>
-              <ul class="list-unstyled">
+              <ul>
                 <li
                   class="code"
                   v-for="(snippet, index) in audit.snippets"
@@ -47,7 +49,7 @@
       </LoadingWrapper>
     </div>
     <Filters
-      v-if="!loading.a11y"
+      v-if="!loading.a11y && !showYeey"
       :filters="filters"
       @emitFilter="onFilterChange" />
   </div>
@@ -137,6 +139,11 @@ export default {
 
         return audit;
       });
+    },
+  },
+  computed: {
+    showYeey() {
+      return this.a11y.score === 100;
     },
   },
 };

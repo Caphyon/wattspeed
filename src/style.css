@@ -267,13 +267,14 @@ a {
 }
 
 div:has(.filters-wrapper) .in-view-content {
-  @apply max-h-[320px] min-h-[320px];
+  @apply max-h-[320px] min-h-[320px] h-[320px];
 }
 
 .in-view-content {
   @apply w-full overflow-y-auto p-4;
   min-height: 344px;
   max-height: 344px;
+  height: 344px;
 
   & .sticky-area {
     @apply sticky -top-4 bg-[#0f172a] py-1;
@@ -335,4 +336,46 @@ div:has(.filters-wrapper) .in-view-content {
   &.active {
     @apply opacity-100;
   }
+}
+
+@keyframes yeey-sparks {
+  from {
+    transform: scale(0);
+    opacity: 10%;
+  }
+  to {
+    transform: scale(1);
+    opacity: 100%;
+  }
+}
+
+@keyframes yeey-check {
+  0% {
+    transform: scale(0.8);
+    transform-origin: center;
+    stroke-dashoffset: 1000;
+    opacity: 60%;
+  }
+  20% {
+    transform: scale(1);
+  }
+  40% {
+    opacity: 100%;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    transform: scale(1);
+    transform-origin: center;
+    opacity: 100%;
+  }
+}
+
+.yeey-check-animation {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  animation: yeey-check 1s linear;
+}
+
+.yeey-sparks-animation {
+  animation: yeey-sparks 0.3s linear;
 }

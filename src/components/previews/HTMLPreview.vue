@@ -31,9 +31,6 @@ export default {
     html: {
       default: () => ({}),
     },
-    errors: {
-      default: () => ({}),
-    },
   },
   props: {
     hideMessages: {

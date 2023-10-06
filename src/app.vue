@@ -328,6 +328,11 @@ export default {
       let queryOptions = { active: true, lastFocusedWindow: true };
       // `tab` will either be a `tabs.Tab` instance or `undefined`.
       let [tab] = await chrome.tabs.query(queryOptions);
+
+      // Filter url and close the app if matched browser empty pages and browser store page
+      if (!tab.url.match(/(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/)) {
+        window.close();
+      }
       this.tab = tab;
     },
     requestWrapper(request, section, strategy, callback) {
@@ -351,8 +356,8 @@ export default {
     makeRequest(request, section, strategy, callback) {
       return new Promise((resolve, reject) => {
         // CrUX URL and CrUX Origin are found in the same request
-        const cache_key = this.Buffer.from(`${section}${strategy}${this.tab.url}`).toString('base64');
-        const data = localStorage.getItem(cache_key);
+        const cacheKey = this.Buffer.from(`${section}${strategy}${this.tab.url}`).toString('base64');
+        const data = localStorage.getItem(cacheKey);
 
         if (data != null) {
           callback(JSON.parse(data));
@@ -366,7 +371,7 @@ export default {
             reject(response.statusText);
           })
           .then((data) => {
-            localStorage.setItem(cache_key, JSON.stringify(data));
+            localStorage.setItem(cacheKey, JSON.stringify(data));
             resolve(callback(data));
           })
           .catch((error) => {
@@ -391,7 +396,8 @@ export default {
       if (clearStorage) {
         this.loading.score = true;
       }
-      const myPromise = new Promise(() => {
+
+      if (clearStorage) {
         let panels = [
           {
             name: 'score',
@@ -422,16 +428,14 @@ export default {
             strategies: [ANY],
           },
         ];
-        if (clearStorage) {
-          panels.forEach((panel) => {
-            panel.strategies.forEach((strategy) => {
-              const cacheKey = this.Buffer.from(`${panel.name}${strategy}${this.tab.url}`).toString('base64');
-              localStorage.removeItem(cacheKey);
-            });
+
+        panels.forEach((panel) => {
+          panel.strategies.forEach((strategy) => {
+            const cacheKey = this.Buffer.from(`${panel.name}${strategy}${this.tab.url}`).toString('base64');
+            localStorage.removeItem(cacheKey);
           });
-        }
-      });
-      myPromise.catch(new Error('could not clear local storage'));
+        });
+      }
 
       const promises = [
         this.getCrUX(),
@@ -458,11 +462,11 @@ export default {
         })
         .catch((e) => console.log(e));
     },
-    normalize(value, inMin, inMax, outMin, outMax, inverse) {
+    normalize(value, inMin, inMax, outMin, outMax, reverse) {
       if (value === null || value === 0) return outMin || 0;
 
       const normalizedValue = ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
-      return inverse ? outMax - normalizedValue : normalizedValue;
+      return reverse ? outMax - normalizedValue : normalizedValue;
     },
     passesCoreVitals(group) {
       const LCP = 'largest_contentful_paint';
@@ -597,7 +601,14 @@ export default {
       this.loading.score = false;
     },
     addScore(value, inMin, inMax, key) {
-      const score = this.normalize(value, inMin, inMax, 0, this.METRICS[key].weight);
+      const score = this.normalize(
+        value,
+        inMin,
+        inMax,
+        0,
+        this.METRICS[key].weight,
+        ['html-errors', 'html-warnings'].includes(key)
+      );
       this.score.issues.push({
         key,
         score,

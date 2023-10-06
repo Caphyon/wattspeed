@@ -1,5 +1,6 @@
 <template>
-  <slot v-if="!loading"></slot>
+  <Yeey v-if="showYeey" />
+  <slot v-else-if="!loading"></slot>
   <div
     v-else
     class="-mt-2 flex h-full items-center justify-center">
@@ -31,9 +32,16 @@
 </template>
 
 <script>
+import Yeey from './Yeey.vue';
+
 export default {
   name: 'LoadingWrapper',
+  components: { Yeey },
   props: {
+    showYeey: {
+      type: Boolean,
+      default: () => false,
+    },
     loading: {
       type: Boolean,
       required: true,

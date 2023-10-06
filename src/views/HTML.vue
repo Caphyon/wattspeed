@@ -23,7 +23,9 @@
     <div
       class="in-view-content"
       :class="{ loading: loading.html }">
-      <LoadingWrapper :loading="loading.html">
+      <LoadingWrapper
+        :loading="loading.html"
+        :show-yeey="showYeey">
         <div class="space-y-2">
           <div
             v-for="(issue, index) in filteredData"
@@ -41,7 +43,7 @@
       </LoadingWrapper>
     </div>
     <Filters
-      v-if="!loading.html"
+      v-if="!loading.html && !showYeey"
       :filters="filters"
       @emitFilter="onFilterChange" />
   </div>
@@ -132,6 +134,17 @@ export default {
 
         return newItem;
       });
+    },
+  },
+  computed: {
+    errors() {
+      return this.html?.messages?.filter((message) => message.type === 'error')?.length || 0;
+    },
+    warnings() {
+      return this.html?.messages?.filter((message) => message.type !== 'error')?.length || 0;
+    },
+    showYeey() {
+      return this.errors === 0 && this.warnings === 0;
     },
   },
 };
