@@ -39,3 +39,10 @@ export const sortObjectsData = (object, orderArray, sortingKey) => {
     return acc;
   }, {});
 };
+
+export const pluralSingularConverter = (count, pl, sg) => {
+  if (count === 1 || count === -1) {
+    return sg;
+  }
+  return pl;
+};

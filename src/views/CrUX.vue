@@ -1,20 +1,18 @@
 <template>
   <div class="lh-vars">
     <div class="preview-card in-view">
-      <div>
-        <Breadcrumb>
-          <Title
-            name="CrUX URL"
-            icon="crux"
-            @click="goTo('crux-url')"
-            :class="{ inactive: $route.name === 'crux-origin' }" />
-          <Title
-            name="CrUX Origin"
-            icon="crux"
-            @click="goTo('crux-origin')"
-            :class="{ inactive: $route.name === 'crux-url' }" />
-        </Breadcrumb>
-      </div>
+      <Breadcrumb>
+        <Title
+          name="CrUX URL"
+          icon="crux"
+          @click="goTo('crux-url')"
+          :class="{ inactive: $route.name === 'crux-origin' }" />
+        <Title
+          name="CrUX Origin"
+          icon="crux"
+          @click="goTo('crux-origin')"
+          :class="{ inactive: $route.name === 'crux-url' }" />
+      </Breadcrumb>
       <div class="content in-view mt-4">
         <LoadingWrapper
           :loading="loading.crux"

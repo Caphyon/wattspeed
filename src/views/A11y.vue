@@ -1,13 +1,11 @@
 <template>
   <div>
     <div class="preview-card in-view">
-      <div>
-        <Breadcrumb>
-          <Title
-            name="Accessibility"
-            icon="a11y" />
-        </Breadcrumb>
-      </div>
+      <Breadcrumb>
+        <Title
+          name="Accessibility"
+          icon="a11y" />
+      </Breadcrumb>
       <div class="content in-view">
         <LoadingWrapper
           :loading="loading.a11y"

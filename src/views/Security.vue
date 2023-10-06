@@ -1,13 +1,11 @@
 <template>
   <div>
     <div class="preview-card in-view">
-      <div>
-        <Breadcrumb>
-          <Title
-            name="Security"
-            icon="shield" />
-        </Breadcrumb>
-      </div>
+      <Breadcrumb>
+        <Title
+          name="Security"
+          icon="shield" />
+      </Breadcrumb>
       <div class="content in-view">
         <LoadingWrapper
           :loading="loading.security"

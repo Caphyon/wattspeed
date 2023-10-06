@@ -1,45 +1,29 @@
 <template>
-  <div
-    v-if="hasData"
-    class="flex flex-col gap-2">
-    <span
-      v-if="isValid"
-      class="badge badge-success">
-      No html issues found.
-    </span>
-    <template v-else>
-      <p class="badge badge-danger">Html issues found while checking the page.</p>
-      <ul
-        v-if="!hideMessages"
-        class="space-y-2">
-        <li
-          v-for="(message, index) in getMessages()"
-          :key="index"
-          class="badge"
-          :class="message.class">
-          <p v-html="message.msg"></p>
-        </li>
-      </ul>
-    </template>
-  </div>
-  <template v-else>
-    <div class="text-center">
-      <span
-        v-if="isValid"
-        class="badge badge-success"
-        >This page does not contain HTML5 issues.</span
-      >
-      <span
-        v-else
-        class="badge badge-warning"
-        >No data found</span
-      >
+  <div class="preview-card-metrics">
+    <div>
+      <h3
+        class="badge font-semibold"
+        :class="getClass(errors)">
+        <template v-if="errors > 999"> 999+ </template>
+        <template v-else>
+          {{ errors }}
+        </template>
+      </h3>
+      <span class="metric-title">{{ pluralSingularConverter(errors, 'errors', 'error') }}</span>
     </div>
-  </template>
+    <div>
+      <h3
+        class="badge font-semibold"
+        :class="getClass(warnings)">
+        {{ warnings }}
+      </h3>
+      <span class="metric-title">{{ pluralSingularConverter(warnings, 'warnings', 'warning') }}</span>
+    </div>
+  </div>
 </template>
 
 <script>
-import { marked } from 'marked';
+import { pluralSingularConverter } from '../../assets/scripts/helper';
 
 export default {
   name: 'HTMLPreview',
@@ -58,47 +42,22 @@ export default {
     },
   },
   methods: {
-    getClass(type) {
-      const typeToClasses = {
-        warning: 'badge-warning',
-        info: 'badge-warning',
-        error: 'badge-danger',
-      };
-
-      return typeToClasses[type] || 'badge-success';
+    pluralSingularConverter(count, pl, sg) {
+      return pluralSingularConverter(count, pl, sg);
     },
-    getMessages() {
-      if (this.html.messages.length > 0) {
-        return this.html.messages.map((message) => {
-          return {
-            msg: marked.parseInline(message.message),
-            type: message.subType || message.type,
-            mark: message.extract,
-            class: this.getClass(message.type),
-          };
-        });
+    getClass(count) {
+      if (count > 0) {
+        return 'badge-danger';
       }
-
-      return [];
+      return 'badge-success';
     },
   },
   computed: {
-    isValid() {
-      for (let i in this.html.messages) {
-        const message = this.html.messages[i];
-        if (message.type === 'warning' || message.type === 'error' || message.type === 'info') {
-          return false;
-        }
-      }
-
-      return true;
+    errors() {
+      return this.html?.messages?.filter((message) => message.type === 'error')?.length || 0;
     },
-    hasData() {
-      try {
-        return !this.errors.html && this.html.messages.length > 0;
-      } catch (e) {
-        this.errors.html = 'Something went wrong, please try again!';
-      }
+    warnings() {
+      return this.html?.messages?.filter((message) => message.type !== 'error')?.length || 0;
     },
   },
 };

@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run clean-build && vite build && npm run build:copy",
-    "build:copy": "@powershell copy './src/manifest.json' './dist' && @powershell copy './src/assets/icons' './dist/assets'  -Recurse && @powershell copy './src/assets/scripts' './dist/assets' -Recurse",
+    "build:copy": "@powershell copy './src/manifest.json' './dist' && @powershell copy './src/assets/icons' './dist/assets' -Recurse && @powershell copy './src/assets/scripts' './dist/assets' -Recurse",
     "preview": "vite preview",
     "clean-build": "@powershell If (Test-Path dist) {Remove-Item –path dist -Recurse -Force}"
   },

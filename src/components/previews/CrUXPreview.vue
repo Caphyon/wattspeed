@@ -6,7 +6,7 @@
         :class="getCWVStatusTextPreview(passesCoreVitalsPreview('url'))">
         {{ getCWVStatusTextPreview(passesCoreVitalsPreview('url'), true) }}
       </h3>
-      <span class="uppercase">URL</span>
+      <span class="metric-title">URL</span>
     </div>
     <div>
       <h3
@@ -14,7 +14,7 @@
         :class="getCWVStatusTextPreview(passesCoreVitalsPreview('origin'))">
         {{ getCWVStatusTextPreview(passesCoreVitalsPreview('origin'), true) }}
       </h3>
-      <span class="uppercase">Origin</span>
+      <span class="metric-title">Origin</span>
     </div>
   </div>
 </template>

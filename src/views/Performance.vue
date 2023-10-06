@@ -1,20 +1,18 @@
 <template>
   <div>
     <div class="preview-card in-view">
-      <div>
-        <Breadcrumb>
-          <Title
-            name="Performance"
-            icon="pagespeed"
-            :class="{ inactive: $route.name === 'mobile' }"
-            @click="goTo('performance')" />
-          <Title
-            name="Mobile"
-            icon="mobile"
-            :class="{ inactive: $route.name === 'performance' }"
-            @click="goTo('mobile')" />
-        </Breadcrumb>
-      </div>
+      <Breadcrumb>
+        <Title
+          name="Performance"
+          icon="pagespeed"
+          :class="{ inactive: $route.name === 'mobile' }"
+          @click="goTo('performance')" />
+        <Title
+          name="Mobile"
+          icon="mobile"
+          :class="{ inactive: $route.name === 'performance' }"
+          @click="goTo('mobile')" />
+      </Breadcrumb>
       <div class="content in-view">
         <LoadingWrapper
           :loading="loading.performance"

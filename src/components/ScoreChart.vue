@@ -148,12 +148,14 @@ export default {
   computed: {
     displayScore() {
       try {
-        return +Number(
+        const score = +Number(
           this.strokes[this.strokeLabels[0]]
             .map((obj) => obj.fillWeight)
             .reduce((prevVal, currValue) => prevVal + currValue, 0)
             .toFixed(2)
         );
+
+        return `${Math.floor(score)}/100`;
       } catch (e) {
         return '?';
       }

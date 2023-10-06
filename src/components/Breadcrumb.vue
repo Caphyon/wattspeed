@@ -1,18 +1,20 @@
 <template>
-  <Title
-    v-if="routeFromScore"
-    @click="goTo('score')"
-    name="Score"
-    icon="pagespeed"
-    class="inactive" />
-  <slot></slot>
-  <button
-    class="absolute right-4 z-10 text-xl"
-    @click="goTo('home')"
-    aria-label="Close button"
-    title="Close">
-    ×
-  </button>
+  <div class="breadcrumb">
+    <Title
+      v-if="routeFromScore"
+      @click="goTo('score')"
+      name="Score"
+      icon="pagespeed"
+      class="inactive" />
+    <slot></slot>
+    <button
+      class="absolute right-4 z-10 text-xl"
+      @click="goTo('home')"
+      aria-label="Close button"
+      title="Close">
+      ×
+    </button>
+  </div>
 </template>
 
 <script>

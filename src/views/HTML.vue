@@ -1,13 +1,11 @@
 <template>
   <div>
     <div class="preview-card in-view">
-      <div>
-        <Breadcrumb>
-          <Title
-            name="HTML5"
-            icon="html5" />
-        </Breadcrumb>
-      </div>
+      <Breadcrumb>
+        <Title
+          name="HTML5"
+          icon="html5" />
+      </Breadcrumb>
       <div class="content in-view mt-6">
         <LoadingWrapper
           :loading="loading.html"

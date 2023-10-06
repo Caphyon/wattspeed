@@ -61,6 +61,7 @@ nav {
     border-top: 20px solid rgb(9 9 11 / 0.8);
     border-bottom: 20px solid rgb(9 9 11 / 0.8);
     border-left: 20px solid transparent;
+    clip-path: polygon(100% 0, 100% 50%, 100% 100%, 0% 100%, 100% 50%, 0% 0%);
   }
 
   &:after {
@@ -69,6 +70,7 @@ nav {
     border-top: 20px solid transparent;
     border-bottom: 20px solid transparent;
     border-left: 20px solid rgb(9 9 11 / 0.8);
+    clip-path: polygon(0 0, 0 100%, 100% 50%);
   }
 
   &.inactive {
@@ -165,6 +167,10 @@ nav {
     & .title {
       @apply w-[200px] transition ease-in-out;
     }
+  }
+
+  .metric-title {
+    @apply uppercase text-sm font-semibold;
   }
 }
 

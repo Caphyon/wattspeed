@@ -6,7 +6,7 @@
         :class="getScoreClass(performance.mobile.score)">
         {{ (performance.mobile.score * 100).toFixed(0) }}
       </h3>
-      <span class="uppercase">Mobile</span>
+      <span class="metric-title">Mobile</span>
     </div>
     <div>
       <h3
@@ -14,7 +14,7 @@
         :class="getScoreClass(performance.desktop.score)">
         {{ (performance.desktop.score * 100).toFixed(0) }}
       </h3>
-      <span class="uppercase">Desktop</span>
+      <span class="metric-title">Desktop</span>
     </div>
   </div>
 </template>

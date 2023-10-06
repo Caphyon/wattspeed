@@ -6,7 +6,7 @@
         :class="getGradeClass(security.grades.headersGrade)">
         {{ getGrade(security.grades.headersGrade) }}
       </h3>
-      <span class="uppercase">Headers</span>
+      <span class="metric-title">Headers</span>
     </div>
     <div>
       <h3
@@ -14,7 +14,7 @@
         :class="getGradeClass(security.grades.sslGrade)">
         {{ getGrade(security.grades.sslGrade) }}
       </h3>
-      <span class="uppercase">SSL</span>
+      <span class="metric-title">SSL</span>
     </div>
   </div>
 </template>

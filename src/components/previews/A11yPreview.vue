@@ -4,7 +4,7 @@
       <h3 class="badge badge-danger font-semibold">
         {{ a11y.issuesCount }}
       </h3>
-      <span class="uppercase">Issues</span>
+      <span class="metric-title">{{ pluralSingularConverter(a11y.issuesCount, 'issues', 'issue') }}</span>
     </div>
     <div>
       <h3
@@ -12,12 +12,14 @@
         :class="getScoreClass(a11y.score)">
         {{ a11y.score }}%
       </h3>
-      <span class="uppercase">Score</span>
+      <span class="metric-title">Score</span>
     </div>
   </div>
 </template>
 
 <script>
+import { pluralSingularConverter } from '../../assets/scripts/helper';
+
 export default {
   name: 'A11yPreview',
   inject: {
@@ -26,6 +28,9 @@ export default {
     },
   },
   methods: {
+    pluralSingularConverter(count, pl, sg) {
+      return pluralSingularConverter(count, pl, sg);
+    },
     getScoreClass(score) {
       if (score < 0.5) return 'badge-danger';
       if (score < 0.9) return 'badge-warning';
