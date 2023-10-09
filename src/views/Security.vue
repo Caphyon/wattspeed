@@ -100,15 +100,24 @@ export default {
   },
   data() {
     const filters = {
-      'bg-rose-500': ['danger', 'red'],
-      'bg-amber-500': ['warning', 'yellow', 'orange'],
-      'bg-emerald-500': ['success', 'green'],
+      'bg-rose-500': {
+        identifiers: ['danger', 'red'],
+        title: 'Toggle errors',
+      },
+      'bg-amber-500': {
+        identifiers: ['warning', 'yellow', 'orange'],
+        title: 'Toggle warnings',
+      },
+      'bg-emerald-500': {
+        identifiers: ['success', 'green'],
+        title: 'Toggle passed',
+      },
     };
 
     return {
       filters: filters,
       activeFilters: Object.keys(filters)
-        .map((key) => filters[key])
+        .map((key) => filters[key].identifiers)
         .flat(),
     };
   },
@@ -136,7 +145,7 @@ export default {
     sslErrorsFilterActive() {
       let show = false;
 
-      this.filters['bg-rose-500'].forEach((key) => {
+      this.filters['bg-rose-500'].identifiers.forEach((key) => {
         if (this.activeFilters.includes(key)) {
           show = true;
         }
@@ -147,7 +156,7 @@ export default {
     sslWarningsFilterActive() {
       let show = false;
 
-      this.filters['bg-amber-500'].forEach((key) => {
+      this.filters['bg-amber-500'].identifiers.forEach((key) => {
         if (this.activeFilters.includes(key)) {
           show = true;
         }
@@ -158,7 +167,7 @@ export default {
     sslSuccessFilterActive() {
       let show = false;
 
-      this.filters['bg-emerald-500'].forEach((key) => {
+      this.filters['bg-emerald-500'].identifiers.forEach((key) => {
         if (this.activeFilters.includes(key)) {
           show = true;
         }

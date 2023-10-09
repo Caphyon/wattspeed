@@ -51,7 +51,10 @@
               <p
                 v-else
                 class="my-auto">
-                <span class="lh-audit-group__title">Field Data</span>
+                <span class="lh-audit-group__title">
+                  <template v-if="$route.name === 'crux-url'">Field Data</template>
+                  <template v-else>Origin Summary</template>
+                </span>
                 <span v-html="getNoDataText()" />
               </p>
             </div>

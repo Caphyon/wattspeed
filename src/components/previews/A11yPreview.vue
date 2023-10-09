@@ -34,8 +34,8 @@ export default {
       return pluralSingularConverter(count, pl, sg);
     },
     getScoreClass(score) {
-      if (score < 0.5) return 'badge-danger';
-      if (score < 0.9) return 'badge-warning';
+      if (score < 50) return 'badge-danger';
+      if (score < 100) return 'badge-warning';
       return 'badge-success';
     },
     getIssuesClass() {

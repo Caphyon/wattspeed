@@ -7,7 +7,7 @@
         class="filter-item"
         :class="getFilterClass(key)"
         @click="toggleFilter(key)"
-        title="Toggle success checks">
+        :title="filters[key].title">
       </label>
     </template>
   </div>
@@ -33,7 +33,7 @@ export default {
         'emitFilter',
         Object.keys(this.filters)
           .filter((key) => this.activeFilters.includes(key))
-          .map((key) => this.filters[key])
+          .map((key) => this.filters[key].identifiers)
           .flat()
       );
     },

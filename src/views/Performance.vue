@@ -89,15 +89,24 @@ export default {
   },
   data() {
     const filters = {
-      'bg-rose-500': [ERROR],
-      'bg-amber-500': [WARNING],
-      'bg-emerald-500': [SUCCESS],
+      'bg-rose-500': {
+        identifiers: [ERROR],
+        title: 'Toggle errors',
+      },
+      'bg-amber-500': {
+        identifiers: [WARNING],
+        title: 'Toggle warnings',
+      },
+      'bg-emerald-500': {
+        identifiers: [SUCCESS],
+        title: 'Toggle passed',
+      },
     };
 
     return {
       filters,
       activeFilters: Object.keys(filters)
-        .map((key) => filters[key])
+        .map((key) => filters[key].identifiers)
         .flat(),
       initialMobileData: [],
       initialDesktopData: [],

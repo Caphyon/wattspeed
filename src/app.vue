@@ -135,7 +135,7 @@
           <a
             href="https://www.advancedwebranking.com/?utm_source=wattspeedextension&utm_medium=referral"
             target="_blank"
-            title="Made by Advanced Web Ranking">
+            title="Made with ❤ by Advanced Web Ranking">
             <svg
               width="18"
               height="18"
@@ -148,16 +148,16 @@
         </li>
         <li>
           <a
-            href="https://twitter.com/wattspeed"
+            href="https://x.com/wattspeed"
             target="_blank"
-            title="Find us on Twitter">
+            title="Find us on X (formerly Twitter)">
             <svg
               width="18"
               height="18"
               data-icon>
               <use
                 xmlns:xlink="http://www.w3.org/1999/xlink"
-                xlink:href="#twitter" />
+                xlink:href="#X" />
             </svg>
           </a>
         </li>
@@ -165,7 +165,7 @@
           <a
             href="https://github.com/Caphyon/wattspeed"
             target="_blank"
-            title="View the code on Github">
+            title="View the code on GitHub">
             <svg
               width="18"
               height="18"
@@ -347,8 +347,10 @@ export default {
         } else if (data.code === 2) {
           this.errors[section] = 'Something went wrong, please try again!';
           this.loading[section] = false;
+          this.requestLimit = false;
         } else {
           this.errors[section] = null;
+          this.requestLimit = false;
           callback(data);
         }
       });
@@ -463,7 +465,7 @@ export default {
         .catch((e) => console.log(e));
     },
     normalize(value, inMin, inMax, outMin, outMax, reverse) {
-      if (value === null || value === 0) return outMin || 0;
+      if (value === null || value <= 0) return outMin || 0;
 
       const normalizedValue = ((value - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
       return reverse ? outMax - normalizedValue : normalizedValue;
@@ -518,14 +520,20 @@ export default {
     },
     getPerformanceMobileSubsectionScore() {
       const scores = [];
-      Object.keys(this.performanceMobile.audits).forEach((auditKey) => {
-        if (['viewport', 'font-size', 'plugins', 'content-width'].indexOf(auditKey) >= 0) {
-          scores.push(
-            this.performanceMobile.audits[auditKey].score !== null ? this.performanceMobile.audits[auditKey].score : 0
-          );
-        }
-      });
-      return scores.reduce((previousValue, currentValue) => previousValue + currentValue, 0) / scores.length;
+      const audits = this.performanceMobile?.audits && Object.keys(this.performanceMobile.audits);
+
+      if (audits.length) {
+        audits.forEach((auditKey) => {
+          if (['viewport', 'font-size', 'plugins', 'content-width'].indexOf(auditKey) >= 0) {
+            scores.push(
+              this.performanceMobile.audits[auditKey].score !== null ? this.performanceMobile.audits[auditKey].score : 0
+            );
+          }
+        });
+      }
+      return scores.length === 0
+        ? 0
+        : scores.reduce((previousValue, currentValue) => previousValue + currentValue, 0) / scores.length;
     },
     getHtmlScore() {
       return {
@@ -553,15 +561,6 @@ export default {
           F: 200,
           T: 100,
         };
-
-        let htmlErrorsScore = 0;
-        let htmlWarningsScore = 0;
-        if (htmlScore.errors >= 1 && htmlScore.errors <= 16) {
-          htmlErrorsScore = this.addScore(htmlScore.errors, 0, 16, 'html-errors');
-        }
-        if (htmlScore.warnings >= 1 && htmlScore.warnings <= 30) {
-          htmlWarningsScore = this.addScore(htmlScore.errors, 0, 30, 'html-warnings');
-        }
 
         const cruxURL = this.passesCoreVitals('url');
         const cruxOrigin = this.passesCoreVitals('origin');
@@ -592,8 +591,8 @@ export default {
           800,
           'security-ssl'
         );
-        this.score['html-errors'] = htmlErrorsScore;
-        this.score['html-warnings'] = htmlWarningsScore;
+        this.score['html-errors'] = this.addScore(htmlScore.errors, 0, 16, 'html-errors');
+        this.score['html-warnings'] = this.addScore(htmlScore.warnings, 0, 30, 'html-warnings');
         this.score['a11y-score'] = this.addScore(this.a11y?.score, 0, 100, 'a11y-score');
 
         localStorage.setItem(scoreCacheKey, JSON.stringify(this.score));
@@ -601,14 +600,16 @@ export default {
       this.loading.score = false;
     },
     addScore(value, inMin, inMax, key) {
-      const score = this.normalize(
-        value,
-        inMin,
-        inMax,
-        0,
-        this.METRICS[key].weight,
-        ['html-errors', 'html-warnings'].includes(key)
-      );
+      const isHtmlKey = ['html-errors', 'html-warnings'].includes(key);
+
+      let score;
+
+      if (isHtmlKey && value > inMax) {
+        score = 0;
+      } else {
+        score = this.normalize(value, inMin, inMax, 0, this.METRICS[key].weight, isHtmlKey);
+      }
+
       this.score.issues.push({
         key,
         score,

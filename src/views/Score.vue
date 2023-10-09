@@ -114,14 +114,20 @@ export default {
   },
   data() {
     const filters = {
-      'bg-rose-500': [false],
-      'bg-emerald-500': [true],
+      'bg-rose-500': {
+        identifiers: [false],
+        title: 'Toggle failed',
+      },
+      'bg-emerald-500': {
+        identifiers: [true],
+        title: 'Toggle passed',
+      },
     };
 
     return {
       filters: filters,
       activeFilters: Object.keys(filters)
-        .map((key) => filters[key])
+        .map((key) => filters[key].identifiers)
         .flat(),
       initialData: [],
       filteredData: [],

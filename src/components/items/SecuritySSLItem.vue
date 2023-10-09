@@ -14,7 +14,7 @@ export default {
       required: true,
     },
     message: {
-      type: Object,
+      type: String,
       required: true,
     },
   },

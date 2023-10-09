@@ -77,15 +77,24 @@ export default {
   },
   data() {
     const filters = {
-      'bg-rose-500': [ERROR],
-      'bg-amber-500': [WARNING],
-      'bg-emerald-500': [SUCCESS],
+      'bg-rose-500': {
+        identifiers: [ERROR],
+        title: 'Toggle errors',
+      },
+      'bg-amber-500': {
+        identifiers: [WARNING],
+        title: 'Toggle warnings',
+      },
+      'bg-emerald-500': {
+        identifiers: [SUCCESS],
+        title: 'Toggle passed',
+      },
     };
 
     return {
       filters: filters,
       activeFilters: Object.keys(filters)
-        .map((key) => filters[key])
+        .map((key) => filters[key].identifiers)
         .flat(),
       initialData: [],
       filteredData: [],
@@ -132,7 +141,7 @@ export default {
         if (audit.severity === 'critical' || audit.severity === 'serious') {
           audit.class = 'badge-danger';
           audit.type = ERROR;
-        } else if (audit.severity === 'moderate' || audit.severity === 'minor') {
+        } else if (audit.severity === 'moderate' || audit.severity === 'minor' || audit.severity === '') {
           audit.class = 'badge-warning';
           audit.type = WARNING;
         }
