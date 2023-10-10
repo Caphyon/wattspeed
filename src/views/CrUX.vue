@@ -192,8 +192,8 @@ export default {
           id: 'first_contentful_paint',
           title: 'First Contentful Paint',
         },
-        experimental_interaction_to_next_paint: {
-          id: 'experimental_interaction_to_next_paint',
+        interaction_to_next_paint: {
+          id: 'interaction_to_next_paint',
           title: 'Interaction to Next Paint',
           coreVitals: false,
         },
