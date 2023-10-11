@@ -1,26 +1,20 @@
 ## Wattspeed &bull; [https://wattspeed.com/](https://wattspeed.com/)
 
-Wattspeed is a FREE Chrome extension by [Advanced Web Ranking](https://www.advancedwebranking.com/) that offers powerful web technologies insights each time you open a new web page.
+Wattspeed is a FREE Chrome/Edge extension by [Advanced Web Ranking](https://www.advancedwebranking.com/) that offers powerful web performance insights and CrUX data each time you open a new web page.
 
 [![Wattspeed](/docs/preview.png)](https://www.wattspeed.com/)
 
-- Mobile-friendly test
+- A score based on extension-verified metrics
+- CrUX URL/Origin data
 - Google Lighthouse scores
+- Mobile-friendly test
+- Security checks based on headers and SSL
 - HTML5 validation
 - Accessibility checker
-- Mixed content & JSON-LD structured data snippet detection
-
-and more...
-
-- What web server is behind the URL?
-- What Analytics tool is used to get visitor insights?
-- What Marketing or Chat tools are used to convert the visitors?
-- What Advertising network is running in order to sell ads?
-- What CMS powers the forum, blog or the online shop?
-- What CSS and JS frameworks are used to build that user interface?
 
 ## Install the browser extension
 - [Chrome extension](https://chrome.google.com/webstore/detail/mbkehkfjhncahcaggkncdaacfnikmoid/)
+- [Edge add-on](https://microsoftedge.microsoft.com/addons/detail/wattspeed/gfkdjnndhppobppfkojgenkjeabkcaac)
 
 ## How to run it
 - Install dependencies: `npm install`
