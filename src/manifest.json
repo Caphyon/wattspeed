@@ -13,6 +13,6 @@
     "default_popup": "index.html",
     "default_title": "Wattspeed"
   },
-  "permissions": ["tabs", "scripting", "activeTab", "storage", "unlimitedStorage"],
+  "permissions": ["tabs", "activeTab", "unlimitedStorage"],
   "host_permissions": ["http://*/*", "https://*/*"]
 }
